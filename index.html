@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>原始点 академиясы — Денсаулыққа арналған онлайн курстар</title>
+  <meta name="description" content="原始点 академиясы: қауіпсіз табиғи әдістерді үйреніп, денсаулықты жақсартыңыз. Онлайн курстар, Kaspi арқылы төлеу, қолдау WhatsApp-та."/>
+  <meta name="theme-color" content="#D93C3C"/>
+  <meta name="color-scheme" content="light only"/>
+
+  <!-- OpenGraph -->
+  <meta property="og:title" content="原始点 академиясы — Онлайн курстар"/>
+  <meta property="og:description" content="Себепті нүкте (原始点) әдісін үйде-ақ меңгеріңіз. Қарапайым қадамдар, нақты нәтиже."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://dummyimage.com/1200x630/D93C3C/ffffff&text=%E5%8E%9F%E5%A7%8B%E7%82%B9+Academy"/>
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    :root{
+      --brand:#D93C3C; --brand-700:#B72B2B; --brand-light:#FFECEC;
+      --accent:#0EA5E9; --ok:#10B981; --warn:#F59E0B;
+      --ink:#0B1220; --text:#1F2937; --muted:#6B7280;
+      --line:#E5E7EB; --bg:#F7F7FB; --card:#fff;
+
+      --grad-brand:linear-gradient(135deg,#E05252 0%,#B4212A 100%);
+      --grad-soft:linear-gradient(135deg,#FFF5F5 0%,#FFECEC 100%);
+      --grad-hero: radial-gradient(1200px 420px at 60% -40%, #FFD7D7 0%, transparent 60%),
+                   radial-gradient(900px 360px at 100% -40%, #FEE2E2 0%, transparent 60%),
+                   linear-gradient(180deg, #FFF 0%, #FEF2F2 100%);
+
+      --h1:clamp(30px,4.5vw,54px); --h2:clamp(22px,3.2vw,36px); --h3:clamp(18px,2.3vw,22px);
+      --body:16px; --lead:1.7;
+      --r:16px; --r-lg:24px;
+      --sh-1:0 6px 18px rgba(15,23,42,.06);
+      --sh-2:0 16px 44px rgba(15,23,42,.14);
+      --trans:.3s ease;
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:var(--body);line-height:var(--lead);overflow-x:hidden}
+    a{text-decoration:none;color:inherit}
+    img{max-width:100%;display:block}
+    .container{width:100%;max-width:1200px;margin:0 auto;padding:0 20px}
+    .grid{display:grid;gap:20px}
+    .grid-2{grid-template-columns:repeat(2,1fr)}
+    .grid-3{grid-template-columns:repeat(3,1fr)}
+    .grid-auto{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+
+    /* Header */
+    header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(140%) blur(8px);background:rgba(255,255,255,.78);border-bottom:1px solid rgba(0,0,0,.06)}
+    .navbar{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+    .logo{display:flex;gap:10px;align-items:center;font-weight:900;color:var(--ink)}
+    .logo img{width:40px;height:40px;border-radius:12px;box-shadow:0 10px 20px rgba(217,60,60,.18)}
+    .nav{display:flex;gap:10px;align-items:center}
+    .nav-links{display:flex;gap:10px;list-style:none}
+    .nav-links a{padding:8px 12px;border-radius:10px;font-weight:700;transition:var(--trans)}
+    .nav-links a:hover{background:#fff;box-shadow:var(--sh-1);color:var(--brand)}
+    .burger{display:none;border:1px solid var(--line);border-radius:12px;width:42px;height:42px;place-items:center;background:#fff;cursor:pointer}
+    .burger i{font-size:18px}
+    .btn{display:inline-flex;gap:10px;align-items:center;border:0;border-radius:12px;padding:12px 16px;cursor:pointer;font-weight:800;transition:var(--trans);font-family:inherit}
+    .btn:focus-visible{outline:0;box-shadow:0 0 0 4px rgba(217,60,60,.14)}
+    .btn-primary{background:var(--grad-brand);color:#fff;box-shadow:0 12px 30px rgba(217,60,60,.28)}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(217,60,60,.35)}
+    .btn-ghost{background:#fff;border:1px solid var(--line)}
+    .btn-ghost:hover{background:var(--bg);transform:translateY(-2px)}
+    .chip{padding:6px 12px;border-radius:999px;background:rgba(16,185,129,.12);color:#065F46;font-weight:800;font-size:12px}
+
+    /* Mobile menu */
+    #mobileMenu{position:fixed;inset:58px 0 auto 0;background:#fff;border-top:1px solid var(--line);box-shadow:var(--sh-2);display:none;z-index:40;transform:translateY(-8px);opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease}
+    #mobileMenu.show{display:block;opacity:1;transform:translateY(0);pointer-events:auto}
+    #mobileMenu a{display:block;padding:16px 20px;border-bottom:1px solid var(--line);font-weight:700;transition:var(--trans)}
+    #mobileMenu a:hover{background:#F9FAFB;color:var(--brand)}
+    .menu-backdrop{position:fixed;top:58px;left:0;right:0;bottom:0;background:rgba(0,0,0,.35);backdrop-filter:blur(2px);display:none;z-index:39}
+    .menu-backdrop.show{display:block}
+    body.no-scroll{overflow:hidden}
+
+    /* Hero */
+    .hero{background:var(--grad-hero);padding:90px 0 40px;position:relative;overflow:hidden}
+    .hero h1{font-size:var(--h1);font-weight:1000;color:var(--ink);letter-spacing:.2px}
+    .hero p{max-width:720px;margin-top:14px;color:var(--muted);font-size:18px}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+    .floating{position:absolute;inset:auto;pointer-events:none;opacity:.45;filter:drop-shadow(0 8px 20px rgba(217,60,60,.22))}
+    .f1{width:220px;height:220px;right:-40px;top:-40px;background:radial-gradient(closest-side at 40% 40%, #FFD6D6, transparent 70%);border-radius:50%;animation:float 11s ease-in-out infinite}
+    .f2{width:160px;height:160px;left:-30px;bottom:-30px;background:radial-gradient(closest-side at 60% 60%, #FEE2E2, transparent 70%);border-radius:50%;animation:float 9s ease-in-out infinite reverse}
+    @keyframes float{
+      0%{transform:translateY(0) translateX(0)}
+      50%{transform:translateY(12px) translateX(6px)}
+      100%{transform:translateY(0) translateX(0)}
+    }
+
+    /* Sections */
+    section{padding:70px 0}
+    .section-title{text-align:center;margin-bottom:36px}
+    .section-title h2{font-size:var(--h2);font-weight:1000}
+    .section-title p{max-width:720px;margin:10px auto 0;color:var(--muted)}
+
+    /* Metric counters */
+    .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}
+    .metric{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 16px;text-align:center;box-shadow:var(--sh-1)}
+    .metric .num{font-size:28px;font-weight:1000;color:var(--brand)}
+    .metric .label{color:var(--muted);font-weight:700}
+
+    /* Cards */
+    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--sh-1);overflow:hidden;display:flex;flex-direction:column;transition:transform .35s ease, box-shadow .35s ease}
+    .card:hover{transform:translateY(-6px);box-shadow:var(--sh-2)}
+    .card-body{padding:20px;display:flex;flex-direction:column;gap:10px}
+    .card-media{aspect-ratio:16/9;background:var(--grad-soft)}
+    .price{font-weight:1000;color:var(--brand)}
+
+    /* Tilt hover */
+    .tilt{transform-style:preserve-3d;perspective:900px}
+    .tilt:hover .card{transform:rotateX(4deg) rotateY(-5deg) translateY(-6px)}
+
+    /* Steps */
+    .step{display:flex;gap:14px;align-items:flex-start;padding:16px;border-radius:14px;border:1px dashed var(--line);background:#fff}
+    .step i{flex:0 0 auto;font-size:20px;color:var(--brand);background:var(--brand-light);border-radius:10px;padding:10px}
+
+    /* Testimonials */
+    .ts-wrap{position:relative}
+    .ts{display:flex;gap:14px;overflow:auto;scroll-snap-type:x mandatory;padding-bottom:4px}
+    .ts::-webkit-scrollbar{height:8px}
+    .ts::-webkit-scrollbar-thumb{background:#e5e7eb;border-radius:999px}
+    .t-card{scroll-snap-align:start;min-width:320px;max-width:360px}
+    .ts-nav{position:absolute;right:0;top:-56px;display:flex;gap:8px}
+    .icon-btn{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:#fff;display:grid;place-items:center;box-shadow:var(--sh-1);cursor:pointer;transition:var(--trans)}
+    .icon-btn:hover{background:var(--bg);transform:translateY(-2px)}
+
+    /* FAQ */
+    .accordion{display:grid;gap:12px;max-width:900px;margin:0 auto}
+    .acc{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+    .acc-head{padding:16px;font-weight:900;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+    .acc-head i{transition:transform .3s ease}
+    .acc-body{display:none;padding:0 16px 16px;color:var(--muted)}
+    .acc.show .acc-body{display:block;animation:fade .25s ease}
+    .acc.show .acc-head{color:var(--brand)}
+    .acc.show .acc-head i{transform:rotate(180deg)}
+    @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+    /* CTA band */
+    .cta{background:linear-gradient(180deg,#fff, #FFF5F5);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .cta-inner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px}
+
+    /* Footer */
+    footer{background:#0B1220;color:#C9D1E1}
+    .foot{padding:60px 0 24px}
+    .foot-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:30px}
+    .foot h4{color:#fff;margin-bottom:12px;font-size:18px}
+    .foot a{color:#A7B0BF;display:flex;gap:8px;align-items:center}
+    .foot a:hover{color:#fff}
+    .foot-bottom{border-top:1px solid rgba(255,255,255,.12);padding-top:18px;text-align:center;color:#9CA3AF;font-size:14px;margin-top:24px}
+
+    /* Reveal animations */
+    .reveal{opacity:0;transform:translateY(12px);transition:opacity .6s ease, transform .6s ease}
+    .reveal.show{opacity:1;transform:none}
+
+    /* Responsive */
+    @media (max-width:980px){ .grid-3{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:860px){
+      .nav-links{display:none}
+      .burger{display:grid}
+    }
+    @media (max-width:680px){
+      .grid-3,.grid-2{grid-template-columns:1fr}
+      .hero{padding:70px 0 24px}
+      section{padding:56px 0}
+      .metrics{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width:480px){
+      .container{padding:0 16px}
+      .metrics{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container navbar">
+      <a class="logo" href="#home" aria-label="Басты бет">
+        <img alt="logo" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4MT0iMCIgY3kxPSIwIiBjeDI9IjEiIGN5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjRTA1MjUyIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjQjQyMTJBIi8+PC9yYWRpYWxHcmFkaWVudD48cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHJ4PSIxNCIgZmlsbD0idXJsKCNnKSIvPjxwYXRoIGQ9Ik0zMiAyMWMtNy45IDAtMTMuNiA2LjQtMTMuNiAxMy40IDAgMTAuNCAxMy42IDIwLjYgMTMuNiAyMC42cyAxMy42LTEwLjIgMTMuNi0yMC42QzQ1LjYgMjcuNCA0MC4xIDIxIDMyIDIxWiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOSI+PC9wYXRoPjwvc3ZnPg==">
+        原始点 академиясы
+      </a>
+      <nav class="nav">
+        <ul class="nav-links" id="topNavLinks">
+          <li><a href="#about">Әдіс</a></li>
+          <li><a href="#courses">Курстар</a></li>
+          <li><a href="#benefits">Артықшылық</a></li>
+          <li><a href="#pricing">Төлем</a></li>
+          <li><a href="#faq">Сұрақ-жауап</a></li>
+        </ul>
+        <button class="burger" id="burger" aria-label="Мәзір"><i class="fa-solid fa-bars"></i></button>
+      </nav>
+      <div class="right">
+        <!-- <a class="btn btn-ghost" id="loginBtn"><i class="fa-solid fa-right-to-bracket"></i> Платформа</a> -->
+        <a class="btn btn-primary" id="whatsBtn"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+      </div>
+    </div>
+    <nav id="mobileMenu" aria-label="Мобиль мәзір"></nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="home" aria-label="Басты бөлім">
+    <div class="floating f1"></div>
+    <div class="floating f2"></div>
+    <div class="container">
+      <span class="chip reveal">Табиғи ем – қауіпсіз тәжірибе</span>
+      <h1 class="reveal" style="margin-top:10px">Себепті нүкте (原始点) әдісін
+        <span style="color:var(--brand)">онлайн</span> меңгеріңіз</h1>
+      <p class="reveal">Үйде-ақ орындауға болатын қарапайым әрі нәтижелі техникалар. Қадам-қадам курс, бейнелер, материалдар және қолдау.</p>
+      <div class="actions reveal">
+        <a class="btn btn-primary" href="#courses"><i class="fa-solid fa-book-open"></i> Курстарды көру</a>
+        <a class="btn btn-ghost" href="#about"><i class="fa-solid fa-circle-info"></i> Әдіс жайлы</a>
+      </div>
+
+      <!-- Live metrics -->
+      <div class="metrics reveal" id="metrics">
+        <div class="metric">
+          <div class="num" data-counter="modules">0</div>
+          <div class="label">Курс модулі</div>
+        </div>
+        <div class="metric">
+          <div class="num" data-counter="lessons">0</div>
+          <div class="label">Бейне сабақ</div>
+        </div>
+        <div class="metric">
+          <div class="num" data-counter="success">98%</div>
+          <div class="label">Қатысушылар қанағаттануы*</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container">
+      <div class="section-title reveal">
+        <h2>原始点 әдісі — қысқаша</h2>
+        <p>Дененің өзін-өзі қалпына келтіру әлеуетін себепке әсер ету арқылы іске қосу. Жұмсақ әсер, жылумен қолдау, өз-өзіне көмек.</p>
+      </div>
+      <div class="grid grid-3">
+        <div class="card reveal">
+          <div class="card-media" style="display:grid;place-items:center"><i class="fa-solid fa-leaf" style="font-size:44px;color:var(--brand)"></i></div>
+          <div class="card-body">
+            <h3>Қауіпсіз және табиғи</h3>
+            <p>Майда техника, қарсы көрсетілімдер ескеріліп түсіндіріледі.</p>
+          </div>
+        </div>
+        <div class="card reveal">
+          <div class="card-media" style="display:grid;place-items:center"><i class="fa-solid fa-person-running" style="font-size:44px;color:var(--brand)"></i></div>
+          <div class="card-body">
+            <h3>Нәтижеге бағытталған</h3>
+            <p>Практикалық бөлімдер, үй тапсырмалары, бақылау тізімдері.</p>
+          </div>
+        </div>
+        <div class="card reveal">
+          <div class="card-media" style="display:grid;place-items:center"><i class="fa-solid fa-clock" style="font-size:44px;color:var(--brand)"></i></div>
+          <div class="card-body">
+            <h3>Күнге 10–20 минут</h3>
+            <p>Қарапайым кешендер, өмір салтына оңай енеді.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Courses (from Sheets) -->
+  <!-- <section id="courses" aria-label="Курстар">
+    <div class="container">
+      <div class="section-title reveal">
+        <h2>Онлайн курстар</h2>
+        <p>Төмендегі тізім Google Sheets-тен жүктеледі. Карточкадан курсқа өтіңіз.</p>
+      </div>
+      <div class="grid grid-auto" id="coursesGrid">
+        <div class="card" style="padding:20px;text-align:center">
+          <div style="display:flex;flex-direction:column;align-items:center;color:var(--muted);padding:40px 0">
+            <div class="spinner" style="width:36px;height:36px;border:4px solid rgba(217,60,60,.12);border-top-color:var(--brand);border-radius:50%;animation:spin 1.2s linear infinite;margin-bottom:12px"></div>
+            Жүктелуде…
+          </div>
+        </div>
+      </div>
+    </div>
+  </section> -->
+
+  <!-- Benefits -->
+  <section id="benefits">
+    <div class="container">
+      <div class="section-title reveal">
+        <h2>Неге 原始点 академиясы?</h2>
+        <p>Сапалы мазмұн, ыңғайлы платформа және мықты қолдау.</p>
+      </div>
+      <div class="grid grid-2">
+        <div class="step reveal">
+          <i class="fa-solid fa-video"></i>
+          <div>
+            <h3 style="margin-bottom:6px">Бейне + материал</h3>
+            <p>Әр сабаққа қысқа түсіндірме, PDF, чек-листтер.</p>
+          </div>
+        </div>
+        <div class="step reveal">
+          <i class="fa-solid fa-comments"></i>
+          <div>
+            <h3 style="margin-bottom:6px">Кері байланыс</h3>
+            <p>Пікірлер мен сұрақтарға жауап. Қиын тұстарды талқылаймыз.</p>
+          </div>
+        </div>
+        <div class="step reveal">
+          <i class="fa-solid fa-shield-heart"></i>
+          <div>
+            <h3 style="margin-bottom:6px">Қауіпсіздік</h3>
+            <p>Қарсы көрсетілімдер, «не істеуге болмайды» — бәрі нақты.</p>
+          </div>
+        </div>
+        <div class="step reveal">
+          <i class="fa-solid fa-wallet"></i>
+          <div>
+            <h3 style="margin-bottom:6px">Kaspi арқылы төлем</h3>
+            <p>Жылдам әрі ыңғайлы. Чек жіберген соң қолжетімділік ашылады.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials" aria-label="Пікірлер">
+    <div class="container ts-wrap">
+      <div class="section-title reveal">
+        <h2>Оқушылар пікірі</h2>
+        <p>Шынайы нәтижелер — мотивацияның ең мықтысы.</p>
+      </div>
+      <div class="ts-nav">
+        <button class="icon-btn" id="tsPrev" aria-label="Алдыңғы"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="icon-btn" id="tsNext" aria-label="Келесі"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+      <div class="ts" id="ts">
+        <div class="card t-card reveal">
+          <div class="card-body">
+            <div style="display:flex;align-items:center;gap:8px;color:#F59E0B">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <h3>«Жеңіл және түсінікті»</h3>
+            <p>Жаттығуларды күнде істеймін. Белім біраздан кейін ауырудан қалды.</p>
+            <div class="chip">Айжан</div>
+          </div>
+        </div>
+        <div class="card t-card reveal">
+          <div class="card-body">
+            <div style="display:flex;align-items:center;gap:8px;color:#F59E0B">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+            </div>
+            <h3>«Үйренуге ыңғайлы»</h3>
+            <p>Қысқа видеолар, нақты тапсырма. Уақыт үнемделеді.</p>
+            <div class="chip">Данияр</div>
+          </div>
+        </div>
+        <div class="card t-card reveal">
+          <div class="card-body">
+            <div style="display:flex;align-items:center;gap:8px;color:#F59E0B">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>
+            </div>
+            <h3>«Қолдау ұнады»</h3>
+            <p>Сұрағыма тез жауап берді. Материалдар өте пайдалы.</p>
+            <div class="chip">Салтанат</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing / Payment -->
+  <section id="pricing">
+    <div class="container">
+      <div class="section-title reveal">
+        <h2>Төлем және қолжетімділік</h2>
+        <p>Kaspi арқылы төлеңіз, чек жіберіңіз — менеджер қолжетімділікті бірден қосады.</p>
+      </div>
+      <div class="grid grid-2">
+        <div class="card reveal">
+          <div class="card-body">
+            <h3>Kaspi Pay</h3>
+            <p style="color:var(--muted)">Төмендегі батырманы басып төлеңіз. Сұрақтар болса — WhatsApp.</p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px">
+              <a class="btn btn-primary" id="kaspiPay"><i class="fa-solid fa-link"></i> Kaspi-ге өту</a>
+              <a class="btn btn-ghost" id="wPay"><i class="fa-brands fa-whatsapp"></i> Чек жіберу</a>
+            </div>
+          </div>
+        </div>
+        <div class="card reveal">
+          <div class="card-body">
+            <h3>Платформаға кіру</h3>
+            <p style="color:var(--muted)">Төлемен кейін «Платформа» батырмасы арқылы аккаунтқа кіріңіз.</p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px">
+              <a class="btn btn-ghost" id="openApp"><i class="fa-solid fa-right-to-bracket"></i> Платформа</a>
+              <a class="btn btn-primary" href="#courses"><i class="fa-solid fa-book-open"></i> Курстар</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="reveal" style="color:var(--muted);margin-top:10px;font-size:14px">* Қанағаттану көрсеткіші — ішкі сауалнама негізінде.</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <!-- <section id="faq">
+    <div class="container">
+      <div class="section-title reveal">
+        <h2>Жиі қойылатын сұрақтар</h2>
+        <p>Кликтерді ашып қараңыз.</p>
+      </div>
+      <div class="accordion" id="faqList"></div>
+    </div>
+  </section> -->
+
+  <!-- CTA band -->
+  <section class="cta" aria-label="Байланыс">
+    <div class="container cta-inner">
+      <div>
+        <h3 style="font-size:22px;font-weight:900;color:var(--ink)">Бастауға дайынсыз ба?</h3>
+        <p style="color:var(--muted);margin-top:4px">WhatsApp-қа жазыңыз немесе курстарды бірден көріңіз.</p>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn btn-primary" id="whatsCta"><i class="fa-brands fa-whatsapp"></i> Жазу</a>
+        <a class="btn btn-ghost" href="#courses"><i class="fa-solid fa-book"></i> Курстар</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contacts">
+    <div class="container foot">
+      <div class="foot-grid">
+        <div>
+          <h4>原始点 академиясы</h4>
+          <p>Сертификатталған маман — Тұрсынгүл Әсемхан</p>
+          <div style="display:flex;gap:10px;margin-top:12px">
+            <a class="btn btn-ghost" id="whatsFooter"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+            <a class="btn btn-ghost" id="mailFooter"><i class="fa-solid fa-envelope"></i> Email</a>
+          </div>
+        </div>
+        <div>
+          <h4>Навигация</h4>
+          <div style="display:grid;gap:10px">
+            <a href="#about"><i class="fa-solid fa-chevron-right"></i> Әдіс</a>
+            <a href="#courses"><i class="fa-solid fa-chevron-right"></i> Курстар</a>
+            <a href="#pricing"><i class="fa-solid fa-chevron-right"></i> Төлем</a>
+            <a href="#faq"><i class="fa-solid fa-chevron-right"></i> Сұрақ-жауап</a>
+          </div>
+        </div>
+        <div>
+          <h4>Байланыс</h4>
+          <div style="display:grid;gap:10px" id="contactList">
+            <a href="tel:+77777777777"><i class="fa-solid fa-phone"></i> +7 777 777 77 77</a>
+            <a href="mailto:info@example.com"><i class="fa-solid fa-envelope"></i> info@example.com</a>
+            <a href="#"><i class="fa-solid fa-location-dot"></i> Алматы, Қазақстан</a>
+          </div>
+        </div>
+      </div>
+      <div class="foot-bottom">© <span id="yearNow"></span> 原始点 академиясы. Барлық құқықтар қорғалған.</div>
+    </div>
+  </footer>
+
+  <div class="menu-backdrop" id="menuBackdrop"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+      /* ========= CONFIG ========= */
+      const APP_URL   = 'app.html'; // ← поменяй на путь к твоей платформе (SPA)
+      const WHATSAPP  = '77479894879';
+      const KASPI_URL = 'https://pay.kaspi.kz/pay';
+      const CONFIG = {
+        spreadsheetId: '1d-BH0H4LhL90X0MjlIrRdA9pDfMlAnOpBdNBiMDW7hI',
+        sheets: { modules:'Модули', lessons:'Видеоуроки' }
+      };
+
+      /* ========= DOM ========= */
+      const $ = s => document.querySelector(s);
+      const $$ = s => document.querySelectorAll(s);
+      const DOM = {
+        burger: $('#burger'),
+        mobileMenu: $('#mobileMenu'),
+        backdrop: $('#menuBackdrop'),
+        whatsBtn: $('#whatsBtn'),
+        whatsCta: $('#whatsCta'),
+        whatsFooter: $('#whatsFooter'),
+        mailFooter: $('#mailFooter'),
+        kaspiPay: $('#kaspiPay'),
+        wPay: $('#wPay'),
+        openApp: $('#openApp'),
+        loginBtn: $('#loginBtn'),
+        coursesGrid: $('#coursesGrid'),
+        metrics: $('#metrics'),
+        yearNow: $('#yearNow'),
+        ts: $('#ts'),
+        tsPrev: $('#tsPrev'),
+        tsNext: $('#tsNext'),
+        faqList: $('#faqList'),
+        topNavLinks: $('#topNavLinks')
+      };
+
+      /* ========= Utils ========= */
+      function waLink(text){ return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`; }
+      function setStaticLinks(){
+        const msg = 'Сәлеметсіз бе! 原始点 академиясы туралы ақпарат алғым келеді.';
+        [DOM.whatsBtn, DOM.whatsCta, DOM.whatsFooter, DOM.wPay].forEach(a=>a.href = waLink(msg));
+        DOM.mailFooter.href = 'mailto:info@example.com';
+        DOM.kaspiPay.href = KASPI_URL;
+        DOM.openApp.href = APP_URL;
+        DOM.loginBtn.href = APP_URL;
+        DOM.yearNow.textContent = new Date().getFullYear();
+      }
+
+      async function fetchSheetData(sheetName){
+        const url = `https://docs.google.com/spreadsheets/d/${CONFIG.spreadsheetId}/gviz/tq?sheet=${encodeURIComponent(sheetName)}&tqx=out:json&_=${Date.now()}`;
+        const res = await fetch(url, {cache:'no-store'});
+        if(!res.ok) throw new Error(res.status);
+        const text = await res.text();
+        const json = JSON.parse(text.slice(text.indexOf('{'), text.lastIndexOf('}')+1));
+        const columns = json.table.cols.map(col => (col.label||'').trim());
+        const rows = json.table.rows || [];
+        return rows.map(row=>{
+          const obj = {};
+          (row.c||[]).forEach((cell,i)=>{
+            const key = columns[i] || `col${i}`;
+            obj[key] = cell && cell.v != null ? String(cell.v).trim() : '';
+          });
+          return obj;
+        });
+      }
+
+      /* ========= Reveal on scroll ========= */
+      const revealEls = $$('.reveal');
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }
+        });
+      },{threshold:.12});
+      revealEls.forEach(el=>io.observe(el));
+
+      /* ========= Counters ========= */
+      function animateNumber(el, to, dur=900){
+        const start = 0, diff = to - start;
+        const t0 = performance.now();
+        function frame(t){
+          const p = Math.min(1, (t - t0)/dur);
+          el.textContent = Math.round(start + diff * (p<.5 ? 2*p*p : -1+(4-2*p)*p)); // ease
+          if(p<1) requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+      }
+
+      /* ========= Courses load ========= */
+      async function loadCourses(){
+        try{
+          const [modules, lessons] = await Promise.all([fetchSheetData(CONFIG.sheets.modules), fetchSheetData(CONFIG.sheets.lessons)]);
+          // Counters
+          const modulesCount = modules.length;
+          const lessonsCount = lessons.length;
+          const mEl = DOM.metrics.querySelector('[data-counter="modules"]');
+          const lEl = DOM.metrics.querySelector('[data-counter="lessons"]');
+          animateNumber(mEl, modulesCount);
+          animateNumber(lEl, lessonsCount);
+
+          // Render top modules
+          DOM.coursesGrid.innerHTML = '';
+          const lessonCounts = lessons.reduce((acc,l)=>{ const k=String(l.module_id); acc[k]=(acc[k]||0)+1; return acc; },{});
+          modules.slice(0,6).forEach((m,i)=>{
+            const card = document.createElement('div');
+            card.className = 'tilt';
+            card.innerHTML = `
+              <div class="card reveal" style="animation-delay:${i*60}ms">
+                <div class="card-media" style="display:grid;place-items:center">
+                  <i class="fa-solid fa-book-open" style="font-size:46px;color:var(--brand)"></i>
+                </div>
+                <div class="card-body">
+                  <h3 style="font-weight:900">${m.name||'Курс'}</h3>
+                  <p style="color:var(--muted)}">${m.description||''}</p>
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px">
+                    <span class="price">${lessonCounts[String(m.id)]||0} сабақ</span>
+                    <a class="btn btn-primary" href="${APP_URL}#lessons?moduleId=${encodeURIComponent(m.id)}&moduleName=${encodeURIComponent(m.name||'Курс')}">
+                      <i class="fa-solid fa-arrow-right"></i> Көру
+                    </a>
+                  </div>
+                </div>
+              </div>`;
+            DOM.coursesGrid.appendChild(card);
+          });
+        }catch(e){
+          console.error(e);
+          DOM.coursesGrid.innerHTML = `
+          <div class="card" style="padding:20px;text-align:center">
+            <h3 style="margin-bottom:6px">Курстарды жүктеу мүмкін емес</h3>
+            <p style="color:var(--muted)">Кейінірек қайталап көріңіз</p>
+          </div>`;
+        }
+      }
+
+      /* ========= FAQ ========= */
+      function loadFAQ(){
+        const data = [
+          {q:'Қалай кірем?', a:'Жоғарыдағы «Платформа» батырмасын басып, нөмір мен құпиясөзді енгізесіз.'},
+          {q:'Төлемнен кейін қолжетімділік?', a:'Kaspi чегін WhatsApp арқылы жібересіз — менеджер қолжетімділікті қосады.'},
+          {q:'Видео ашылмаса?', a:'Интернет пен браузер кэшін тексеріңіз немесе бізге жазыңыз.'},
+        ];
+        DOM.faqList.innerHTML = '';
+        data.forEach((it,i)=>{
+          const acc = document.createElement('div');
+          acc.className = 'acc reveal';
+          acc.style.animationDelay = `${i*60}ms`;
+          acc.innerHTML = `
+            <div class="acc-head"><span>${it.q}</span><i class="fa-solid fa-chevron-down"></i></div>
+            <div class="acc-body"><p>${it.a}</p></div>`;
+          acc.querySelector('.acc-head').addEventListener('click',()=>acc.classList.toggle('show'));
+          DOM.faqList.appendChild(acc);
+        });
+      }
+
+      /* ========= Testimonials nav ========= */
+      function setupTs(){
+        const el = DOM.ts;
+        DOM.tsPrev.addEventListener('click', ()=> el.scrollBy({left:-360,behavior:'smooth'}));
+        DOM.tsNext.addEventListener('click', ()=> el.scrollBy({left:360,behavior:'smooth'}));
+      }
+
+      /* ========= Mobile menu ========= */
+      function setupMobileMenu(){
+        // собрать ссылки из верхнего меню
+        const links = DOM.topNavLinks?.querySelectorAll('a')||[];
+        DOM.mobileMenu.innerHTML = '';
+        links.forEach(a=>{
+          const clone = a.cloneNode(true);
+          clone.addEventListener('click', (e)=>{
+            e.preventDefault();
+            closeMenu();
+            const href = clone.getAttribute('href')||'#';
+            if(href.startsWith('#')) smoothScrollTo(href); else location.href=href;
+          });
+          DOM.mobileMenu.appendChild(clone);
+        });
+        DOM.burger.setAttribute('aria-controls','mobileMenu');
+        DOM.burger.setAttribute('aria-expanded','false');
+        DOM.burger.addEventListener('click', ()=> DOM.mobileMenu.classList.contains('show') ? closeMenu() : openMenu());
+        DOM.backdrop.addEventListener('click', closeMenu);
+        document.addEventListener('keydown', e=>{ if(e.key==='Escape' && DOM.mobileMenu.classList.contains('show')) closeMenu(); });
+        window.addEventListener('resize', ()=>{ if(innerWidth>860 && DOM.mobileMenu.classList.contains('show')) closeMenu(); });
+
+        function openMenu(){ DOM.mobileMenu.classList.add('show'); DOM.backdrop.classList.add('show'); document.body.classList.add('no-scroll'); DOM.burger.setAttribute('aria-expanded','true'); }
+        function closeMenu(){ DOM.mobileMenu.classList.remove('show'); DOM.backdrop.classList.remove('show'); document.body.classList.remove('no-scroll'); DOM.burger.setAttribute('aria-expanded','false'); DOM.burger.focus({preventScroll:true}); }
+        function smoothScrollTo(hash){
+          const target = document.querySelector(hash);
+          if(!target){ history.replaceState(null,'',hash); return; }
+          const header = document.querySelector('header'); const offset = (header?header.offsetHeight:0)+8;
+          const y = target.getBoundingClientRect().top + window.pageYOffset - offset;
+          window.scrollTo({top:y,behavior:'smooth'}); history.replaceState(null,'',hash);
+        }
+      }
+
+      /* ========= Init ========= */
+      setStaticLinks();
+      setupMobileMenu();
+      setupTs();
+      loadFAQ();
+      loadCourses();
+
+      // маленькая подсветка активной секции
+      const sections = ['about','courses','benefits','pricing','faq'].map(id=>document.getElementById(id));
+      const navLinks = [...document.querySelectorAll('.nav-links a')];
+      const spy = new IntersectionObserver((entries)=>{
+        entries.forEach(en=>{
+          if(en.isIntersecting){
+            const id = en.target.id;
+            navLinks.forEach(a=>a.classList.toggle('active', a.getAttribute('href')==='#'+id));
+          }
+        });
+      },{rootMargin:'-60% 0px -35% 0px',threshold:0});
+      sections.forEach(s=>s && spy.observe(s));
+    });
+  </script>
+</body>
+</html>

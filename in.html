@@ -22,8 +22,8 @@
 
   <style>
     :root {
-      --brand: #D93C3C;
-      --brand-700: #B72B2B;
+      --brand: #008000;
+      --brand-700: #008000;
       --brand-light: #FFECEC;
       --accent: #0EA5E9;
       --ok: #10B981;
@@ -35,7 +35,7 @@
       --bg: #F7F7FB;
       --card: #fff;
 
-      --grad-brand: linear-gradient(135deg, #E05252 0%, #B4212A 100%);
+      --grad-brand: linear-gradient(135deg, #6bf46b 0%, #008000 100%);
       --grad-soft: linear-gradient(135deg, #FFF5F5 0%, #FFECEC 100%);
       --grad-hero: radial-gradient(1200px 420px at 60% -40%, #FFD7D7 0%, transparent 60%),
                    radial-gradient(900px 360px at 100% -40%, #FEE2E2 0%, transparent 60%),
@@ -53,9 +53,9 @@
       --trans: .3s ease;
 
       /* Kamalbay variables */
-      --primary: #D93C3C;
-      --primary-light: #FFECEC;
-      --primary-dark: #B72B2B;
+      --primary: #008000;
+      --primary-light: #efffec;
+      --primary-dark: #00c016;
       --secondary: #0e9f6e;
       --accent-old: #3a86ff;
       --light: #f9fafb;
@@ -63,7 +63,7 @@
       --gray: #718096;
       --light-gray: #e2e8f0;
       --success: #48bb78;
-      --error: #e53e3e;
+      --error: #ff7979;
       --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
       --card-hover-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
       --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -1578,8 +1578,8 @@ header .right{ display:flex; align-items:center; gap:8px; }
       <header>
         <div class="container navbar">
           <a href="#" class="logo" aria-label="Басты бет">
-            <img alt="logo" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4MT0iMCIgY3kxPSIwIiBjeDI9IjEiIGN5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjRTA1MjUyIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjQjQyMTJBIi8+PC9yYWRpYWxHcmFkaWVudD48cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHJ4PSIxNCIgZmlsbD0idXJsKCNnKSIvPjxwYXRoIGQ9Ik0zMiAyMWMtNy45IDAtMTMuNiA2LjQtMTMuNiAxMy40IDAgMTAuNCAxMy42IDIwLjYgMTMuNiAyMC42cyAxMy42LTEwLjIgMTMuNi0yMC42QzQ1LjYgMjcuNCA0MC4xIDIxIDMyIDIxWiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOSI+PC9wYXRoPjwvc3ZnPg==">
-            原始点 академиясы
+            <img alt="logo" src="logo.png">
+            "Себепті нүкте" академиясы
           </a>
           <nav class="nav">
             <ul class="nav-links" id="topNavLinks">
@@ -1612,12 +1612,12 @@ header .right{ display:flex; align-items:center; gap:8px; }
             <span style="color:var(--brand)">онлайн</span> меңгеріңіз</h1>
           <p class="reveal">Үйде-ақ орындауға болатын қарапайым әрі нәтижелі техникалар. Қадам-қадам курс, бейнелер, материалдар және қолдау.</p>
           <div class="actions reveal">
-            <a class="btn btn-primary" href="#modules"><i class="fa-solid fa-book-open"></i> Курстарды көру</a>
-            <a class="btn btn-ghost" href="#about"><i class="fa-solid fa-circle-info"></i> Әдіс жайлы</a>
+            <a class="btn btn-primary" href="#modules"><i class="fa-solid fa-book-open"></i> Таныстыру</a>
+            <a class="btn btn-ghost" href="#about"><i class="fa-solid fa-circle-info"></i> Автор жайлы</a>
           </div>
 
           <!-- Live metrics -->
-          <div class="metrics reveal" id="metrics">
+          <div class="metrics reveal" id="metrics" style="display: none;">
             <div class="metric">
               <div class="num" data-counter="modules">0</div>
               <div class="label">Курс модулі</div>
@@ -1634,6 +1634,27 @@ header .right{ display:flex; align-items:center; gap:8px; }
         </div>
       </section>
 
+      
+
+      <!-- Modules -->
+      <section id="modules">
+        <div class="container">
+          <div class="section-title reveal">
+            <h2>Онлайн курстар</h2>
+            <p>Төмендегі тізім Google Sheets-тен жүктеледі. Карточкадан курсқа өтіңіз.</p>
+          </div>
+          <div class="academy-modules-grid" id="modulesContainer">
+            <div class="card" style="padding:20px;text-align:center">
+              <div style="display:flex;flex-direction:column;align-items:center;color:var(--muted);padding:40px 0">
+                <div class="spinner" style="width:36px;height:36px;border:4px solid rgba(217,60,60,.12);border-top-color:var(--brand);border-radius:50%;animation:spin 1.2s linear infinite;margin-bottom:12px"></div>
+                Жүктелуде…
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      
       <!-- About -->
       <section id="about">
         <div class="container">
@@ -1667,23 +1688,7 @@ header .right{ display:flex; align-items:center; gap:8px; }
         </div>
       </section>
 
-      <!-- Modules -->
-      <section id="modules">
-        <div class="container">
-          <div class="section-title reveal">
-            <h2>Онлайн курстар</h2>
-            <p>Төмендегі тізім Google Sheets-тен жүктеледі. Карточкадан курсқа өтіңіз.</p>
-          </div>
-          <div class="academy-modules-grid" id="modulesContainer">
-            <div class="card" style="padding:20px;text-align:center">
-              <div style="display:flex;flex-direction:column;align-items:center;color:var(--muted);padding:40px 0">
-                <div class="spinner" style="width:36px;height:36px;border:4px solid rgba(217,60,60,.12);border-top-color:var(--brand);border-radius:50%;animation:spin 1.2s linear infinite;margin-bottom:12px"></div>
-                Жүктелуде…
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      
 
       <!-- Benefits -->
       <section id="benefits">
@@ -1788,27 +1793,18 @@ header .right{ display:flex; align-items:center; gap:8px; }
             <h2>Төлем және қолжетімділік</h2>
             <p>Kaspi арқылы төлеңіз, чек жіберіңіз — менеджер қолжетімділікті бірден қосады.</p>
           </div>
-          <div class="grid grid-2">
+          <div class="grid grid-1">
             <div class="card reveal">
               <div class="card-body">
-                <h3>Kaspi Pay</h3>
-                <p style="color:var(--muted)">Төмендегі батырманы басып төлеңіз. Сұрақтар болса — WhatsApp.</p>
+                <h3>Kaspi арқылы төлем жасау</h3>
+                <p style="color:var(--muted)">Төмендегі батырманы басып төлеңіз. Чекті WhatsApp-қа жіберіңіз.</p>
                 <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px">
                   <a class="btn btn-primary" id="kaspiPay"><i class="fa-solid fa-link"></i> Kaspi-ге өту</a>
                   <a class="btn btn-ghost" id="wPay"><i class="fa-brands fa-whatsapp"></i> Чек жіберу</a>
                 </div>
               </div>
             </div>
-            <div class="card reveal">
-              <div class="card-body">
-                <h3>Платформаға кіру</h3>
-                <p style="color:var(--muted)">Төлемен кейін «Платформа» батырмасы арқылы аккаунтқа кіріңіз.</p>
-                <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px">
-                  <a class="btn btn-ghost" id="openApp"><i class="fa-solid fa-right-to-bracket"></i> Платформа</a>
-                  <a class="btn btn-primary" href="#modules"><i class="fa-solid fa-book-open"></i> Курстар</a>
-                </div>
-              </div>
-            </div>
+           
           </div>
           <p class="reveal" style="color:var(--muted);margin-top:10px;font-size:14px">* Қанағаттану көрсеткіші — ішкі сауалнама негізінде.</p>
         </div>
@@ -2047,12 +2043,12 @@ header .right{ display:flex; align-items:center; gap:8px; }
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // URLs
-      const SESS_URL = 'https://script.google.com/macros/s/AKfycbyMohlt3z7HnPE_csp6pbeqG4hBHjK5XbiRAXNZrFtzZjwxHpHSOoNHsHPti9oXDC5wcw/exec';
+      const SESS_URL = 'https://script.google.com/macros/s/AKfycbwp61ZemVXyhVy3s2CBDYnfWBZaVhmsGiqzG9U4i4KGCoNykLNZrHwQRBny6iaAJusZ/exec';
       const CONFIG = {
-        spreadsheetId: '1ZCrJaBfflCkemGIklThtGSpDtd4gNGNan4TaiUWQTcA',
+        spreadsheetId: '1fBxicZo7HkKXpoUVRtZvc628oG7rxLeSgcIgmruTd5Y',
         sheets: { modules:'Модули', lessons:'Видеоуроки', users:'Юзеры', comments:'comment' }
       };
-      const COMMENT_URL = 'https://script.google.com/macros/s/AKfycbzXzGw70Ni6rwYL58EN2IgDDHXZyIBoYEauvpoC5zrVQkFyPQmABxNnGOkw-bFXpCTU3Q/exec';
+      const COMMENT_URL = 'https://script.google.com/macros/s/AKfycbwiWkQUZHiw9TcQNcXsQxwHBK-Qi6nzFrXQwEEe_NO-SxjNLNwp2e841WzvoxCrGWny/exec';
 
       const state = {
         currentModule: null,

@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>原始点 академиясы — Денсаулыққа арналған онлайн курстар</title>
   <meta name="description" content="原始点 академиясы: қауіпсіз табиғи әдістерді үйреніп, денсаулықты жақсартыңыз. Онлайн курстар, Kaspi арқылы төлеу, қолдау WhatsApp-та.">
-  <meta name="theme-color" content="#D93C3C">
+  <meta name="theme-color" content="#008000">
   <meta name="color-scheme" content="light only">
 
   <!-- OpenGraph -->
   <meta property="og:title" content="原始点 академиясы — Онлайн курстар">
   <meta property="og:description" content="Себепті нүкте (原始点) әдісін үйде-ақ меңгеріңіз. Қарапайым қадамдар, нақты нәтиже.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://dummyimage.com/1200x630/D93C3C/ffffff&text=%E5%8E%9F%E5%A7%8B%E7%82%B9+Academy">
+  <meta property="og:image" content="https://dummyimage.com/1200x630/008000/ffffff&text=%E5%8E%9F%E5%A7%8B%E7%82%B9+Academy">
 
   <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
@@ -24,7 +24,7 @@
     :root {
       --brand: #008000;
       --brand-700: #008000;
-      --brand-light: #FFECEC;
+      --brand-light: #efffec;
       --accent: #0EA5E9;
       --ok: #10B981;
       --warn: #F59E0B;
@@ -37,9 +37,9 @@
 
       --grad-brand: linear-gradient(135deg, #6bf46b 0%, #008000 100%);
       --grad-soft: linear-gradient(135deg, #FFF5F5 0%, #FFECEC 100%);
-      --grad-hero: radial-gradient(1200px 420px at 60% -40%, #FFD7D7 0%, transparent 60%),
-                   radial-gradient(900px 360px at 100% -40%, #FEE2E2 0%, transparent 60%),
-                   linear-gradient(180deg, #FFF 0%, #FEF2F2 100%);
+      --grad-hero: radial-gradient(1200px 420px at 60% -40%, #d7ffd7 0%, transparent 60%),
+                   radial-gradient(900px 360px at 100% -40%, #e2fee2 0%, transparent 60%),
+                   linear-gradient(180deg, #FFF 0%, #F2FEF2 100%);
 
       --h1: clamp(30px, 4.5vw, 54px);
       --h2: clamp(22px, 3.2vw, 36px);
@@ -134,43 +134,45 @@
     header {
       position: sticky;
       top: 0;
-      z-index: 50;
-      backdrop-filter: saturate(140%) blur(8px);
-      background: rgba(255, 255, 255, .78);
-      border-bottom: 1px solid rgba(0, 0, 0, .06);
+      z-index: 60;
+      backdrop-filter: saturate(140%) blur(10px);
+      background: rgba(255, 255, 255, .86);
+      border-bottom: 1px solid rgba(15, 23, 42, .06);
     }
 
     .navbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 0;
+      gap: 14px;
+      padding: 8px 0;
+      min-height: 60px;
     }
 
     .logo {
-      display: flex;
       gap: 10px;
-      align-items: center;
-      font-weight: 900;
       color: var(--ink);
+      font-weight: 900;
+      letter-spacing: .2px;
+      display: flex;
+      align-items: center;
     }
 
     .logo img {
       width: 40px;
       height: 40px;
       border-radius: 12px;
-      box-shadow: 0 10px 20px rgba(217, 60, 60, .18);
     }
 
     .nav {
       display: flex;
-      gap: 10px;
       align-items: center;
+      gap: 8px;
     }
 
     .nav-links {
       display: flex;
-      gap: 10px;
+      gap: 4px;
       list-style: none;
     }
 
@@ -178,67 +180,101 @@
       padding: 8px 12px;
       border-radius: 10px;
       font-weight: 700;
-      transition: var(--trans);
+      color: var(--ink);
+      transition: background .2s ease, color .2s ease, transform .2s ease;
     }
 
     .nav-links a:hover {
       background: #fff;
-      box-shadow: var(--sh-1);
       color: var(--brand);
+      transform: translateY(-1px);
     }
 
     .burger {
       display: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
       border: 1px solid var(--line);
-      border-radius: 12px;
-      width: 42px;
-      height: 42px;
-      place-items: center;
       background: #fff;
+      place-items: center;
       cursor: pointer;
+      box-shadow: none;
+      transition: background .2s ease, transform .2s ease;
     }
 
-    .burger i {
-      font-size: 18px;
+    .burger:hover {
+      background: #F9FAFB;
+      transform: translateY(-1px);
+    }
+
+    header .right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .user-info {
+      height: 40px;
+      padding: 0 10px;
+      gap: 8px;
+      border-radius: 10px;
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: none;
+      font-weight: 600;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+    }
+
+    .user-info i {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: #F1F5F9;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .btn {
-      display: inline-flex;
-      gap: 10px;
-      align-items: center;
-      border: 0;
-      border-radius: 12px;
-      padding: 12px 16px;
-      cursor: pointer;
+      height: 40px;
+      padding: 0 14px;
+      border-radius: 10px;
+      gap: 8px;
       font-weight: 800;
-      transition: var(--trans);
+      box-shadow: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: none;
       font-family: inherit;
-    }
-
-    .btn:focus-visible {
-      outline: 0;
-      box-shadow: 0 0 0 4px rgba(217, 60, 60, .14);
+      transition: all 0.3s ease;
     }
 
     .btn-primary {
       background: var(--grad-brand);
       color: #fff;
-      box-shadow: 0 12px 30px rgba(217, 60, 60, .28);
+      box-shadow: none;
     }
 
     .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 16px 40px rgba(217, 60, 60, .35);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(0, 128, 0, .18);
     }
 
     .btn-ghost {
       background: #fff;
       border: 1px solid var(--line);
+      color: var(--ink);
     }
 
     .btn-ghost:hover {
-      background: var(--bg);
-      transform: translateY(-2px);
+      background: #F9FAFB;
+      transform: translateY(-1px);
     }
 
     .chip {
@@ -248,61 +284,80 @@
       color: #065F46;
       font-weight: 800;
       font-size: 12px;
+      display: inline-block;
     }
 
     /* Mobile menu */
-    #mobileMenu {
+    .mobile-menu {
       position: fixed;
-      inset: 58px 0 auto 0;
+      top: 60px;
+      left: 0;
+      right: 0;
       background: #fff;
       border-top: 1px solid var(--line);
-      box-shadow: var(--sh-2);
-      display: none;
-      z-index: 40;
-      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(15, 23, 42, .12);
+      z-index: 59;
+      transform: translateY(-10px);
       opacity: 0;
-      pointer-events: none;
-      transition: opacity .25s ease, transform .25s ease;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      padding: 6px 0;
     }
 
-    #mobileMenu.show {
-      display: block;
-      opacity: 1;
+    .mobile-menu.active {
       transform: translateY(0);
-      pointer-events: auto;
+      opacity: 1;
+      visibility: visible;
     }
 
-    #mobileMenu a {
+    .mobile-menu a {
       display: block;
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--line);
+      padding: 14px 18px;
       font-weight: 700;
-      transition: var(--trans);
+      color: var(--ink);
+      border-radius: 0;
+      border-bottom: 1px solid var(--line);
     }
 
-    #mobileMenu a:hover {
+    .mobile-menu a:last-child {
+      border-bottom: none;
+    }
+
+    .mobile-menu a:hover {
       background: #F9FAFB;
       color: var(--brand);
     }
 
     .menu-backdrop {
       position: fixed;
-      top: 58px;
+      top: 60px;
       left: 0;
       right: 0;
       bottom: 0;
       background: rgba(0, 0, 0, .35);
       backdrop-filter: blur(2px);
-      display: none;
-      z-index: 39;
+      z-index: 58;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
     }
 
-    .menu-backdrop.show {
-      display: block;
+    .menu-backdrop.active {
+      opacity: 1;
+      visibility: visible;
     }
 
-    body.no-scroll {
+    body.menu-open {
       overflow: hidden;
+    }
+
+    @media (max-width: 860px) {
+      .nav-links {
+        display: none;
+      }
+      .burger {
+        display: grid;
+      }
     }
 
     /* Hero */
@@ -339,7 +394,7 @@
       inset: auto;
       pointer-events: none;
       opacity: .45;
-      filter: drop-shadow(0 8px 20px rgba(217, 60, 60, .22));
+      filter: drop-shadow(0 8px 20px rgba(0, 128, 0, .22));
     }
 
     .f1 {
@@ -347,7 +402,7 @@
       height: 220px;
       right: -40px;
       top: -40px;
-      background: radial-gradient(closest-side at 40% 40%, #FFD6D6, transparent 70%);
+      background: radial-gradient(closest-side at 40% 40%, #d6ffd6, transparent 70%);
       border-radius: 50%;
       animation: float 11s ease-in-out infinite;
     }
@@ -357,7 +412,7 @@
       height: 160px;
       left: -30px;
       bottom: -30px;
-      background: radial-gradient(closest-side at 60% 60%, #FEE2E2, transparent 70%);
+      background: radial-gradient(closest-side at 60% 60%, #e2fee2, transparent 70%);
       border-radius: 50%;
       animation: float 9s ease-in-out infinite reverse;
     }
@@ -457,7 +512,7 @@
       color: var(--brand);
     }
 
-    /* Academy Card Styles (from Kamalbay) */
+    /* Academy Card Styles */
     .academy-card {
       background: #fff;
       border-radius: var(--border-radius);
@@ -681,7 +736,7 @@
 
     /* CTA band */
     .cta {
-      background: linear-gradient(180deg, #fff, #FFF5F5);
+      background: linear-gradient(180deg, #fff, #f5fff5);
       border-top: 1px solid var(--line);
       border-bottom: 1px solid var(--line);
     }
@@ -748,7 +803,7 @@
       transform: none;
     }
 
-    /* Kamalbay styles */
+    /* Pages */
     .page {
       display: none;
       opacity: 0;
@@ -906,35 +961,6 @@
 
     .auth-form.active {
       display: block;
-    }
-
-    .user-info {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--dark);
-      font-weight: 500;
-      padding: 10px 18px;
-      border-radius: 12px;
-      background: rgba(90, 103, 216, 0.05);
-      transition: var(--transition);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
-    }
-
-    .user-info:hover {
-      background: rgba(90, 103, 216, 0.1);
-      transform: translateY(-2px);
-    }
-
-    .user-info i {
-      background: var(--secondary);
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 8px -1px rgba(0, 0, 0, 0.06);
     }
 
     .module-bg {
@@ -1377,15 +1403,6 @@
       }
     }
 
-    @media (max-width: 860px) {
-      .nav-links {
-        display: none;
-      }
-      .burger {
-        display: grid;
-      }
-    }
-
     @media (max-width: 680px) {
       .grid-3, .grid-2 {
         grid-template-columns: 1fr;
@@ -1445,9 +1462,6 @@
       .payment-container {
         padding: 25px 20px;
       }
-    }
-
-    @media (max-width: 480px) {
       .hero h1 {
         font-size: 1.8rem;
       }
@@ -1464,111 +1478,22 @@
       }
     }
 
-    /* ===== Header tidy ===== */
-header{
-  position: sticky; top:0; z-index:60;
-  backdrop-filter: saturate(140%) blur(10px);
-  background: rgba(255,255,255,.86);
-  border-bottom: 1px solid rgba(15,23,42,.06);
-}
-.navbar{
-  display:flex; align-items:center; justify-content:space-between;
-  gap:14px; padding:8px 0; min-height:60px;
-}
+    .user-info span {
+      display: inline-block;
+      max-width: 120px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      vertical-align: middle;
+      font-variant-numeric: tabular-nums;
+    }
 
-/* Logo: кішірек көлеңке, мәтінге тыныс */
-.logo{ gap:10px; color:var(--ink); font-weight:900; letter-spacing:.2px; }
-.logo img{ width:40px; height:40px; border-radius:12px; box-shadow:none; }
-
-/* Нав сілтемелер: минимал hover, underline жоқ */
-.nav{ display:flex; align-items:center; gap:8px; }
-.nav-links{ display:flex; gap:4px; list-style:none; }
-.nav-links a{
-  padding:8px 12px; border-radius:10px; font-weight:700; color:var(--ink);
-  transition: background .2s ease, color .2s ease, transform .2s ease;
-}
-.nav-links a:hover{ background:#fff; color:var(--brand); transform: translateY(-1px); }
-.nav-links a::after{ display:none; } /* бұрынғы градиент сызықты өшірдік */
-
-/* Burger: таза, көлеңкесіз */
-.burger{
-  display:none; width:40px; height:40px; border-radius:10px;
-  border:1px solid var(--line); background:#fff; place-items:center; cursor:pointer;
-  box-shadow:none; transition:background .2s ease, transform .2s ease;
-}
-.burger:hover{ background:#F9FAFB; transform:translateY(-1px); }
-
-/* Оң жақ блок: бір биіктікке, «пилл» емес — жеңіл чип */
-header .right{ display:flex; align-items:center; gap:8px; }
-
-/* Пайдаланушы чипі */
-.user-info{
-  height:40px; padding:0 10px; gap:8px;
-  border-radius:10px; background:#fff; border:1px solid var(--line);
-  box-shadow:none; font-weight:600; color:var(--ink);
-}
-.user-info i{
-  width:26px; height:26px; border-radius:8px;
-  background:#F1F5F9; color:#0f172a;
-}
-
-/* Батырмалар: бірдей өлшем, жұмсақ контур */
-.btn{
-  height:40px; padding:0 14px; border-radius:10px; gap:8px; font-weight:800;
-  box-shadow:none;
-}
-.btn-primary{
-  background: var(--grad-brand); color:#fff; box-shadow:none;
-}
-.btn-primary:hover{ transform:translateY(-1px); box-shadow:0 8px 20px rgba(217,60,60,.18); }
-.btn-ghost{
-  background:#fff; border:1px solid var(--line); color:var(--ink);
-}
-.btn-ghost:hover{ background:#F9FAFB; transform:translateY(-1px); }
-
-/* Мобиль: тек керегін қалдыру */
-@media (max-width: 860px){
-  .nav-links{ display:none; }
-  .burger{ display:grid; }
-  .navbar{ min-height:56px; }
-}
-
-/* Фокус */
-.logo:focus-visible, .nav-links a:focus-visible, .burger:focus-visible,
-.user-info:focus-visible, header .right .btn:focus-visible{
-  outline:0; box-shadow:0 0 0 3px rgba(217,60,60,.18);
-}
-/* user chip ішіндегі мәтін тым созылмасын */
-.user-info span{
-  display:inline-block; max-width:120px; white-space:nowrap;
-  overflow:hidden; text-overflow:ellipsis; vertical-align:middle;
-  font-variant-numeric: tabular-nums; /* цифрлар секірмесін */
-}
-@media (max-width: 480px){
-  .user-info span{ max-width:0px; display: none; }
-}
-
-#mobileMenu, #mobileMenuLessons{
-  position: fixed; left:0; right:0;
-  /* top JS-тан беріледі */
-  background:#fff; border-top:1px solid var(--line);
-  box-shadow: 0 20px 40px rgba(15,23,42,.12);
-  z-index: 60; /* header-ден төмен емес болсын */
-  transform: translateY(-8px); opacity:0; pointer-events:none;
-  transition: opacity .2s ease, transform .2s ease;
-  padding:6px 0;
-}
-#mobileMenu.show, #mobileMenuLessons.show{
-  opacity:1; transform: translateY(0); pointer-events:auto;
-}
-#mobileMenu a, #mobileMenuLessons a{
-  display:block; padding:14px 18px; font-weight:700; color:var(--ink);
-  border-radius:0; border-bottom:1px solid var(--line);
-}
-#mobileMenu a:last-child, #mobileMenuLessons a:last-child{ border-bottom:none; }
-#mobileMenu a:hover, #mobileMenuLessons a:hover{ background:#F9FAFB; color:var(--brand); }
-
-.menu-backdrop{ z-index: 59; } /* менюден бір саты төмен */
+    @media (max-width: 480px) {
+      .user-info span {
+        max-width: 0px;
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1589,7 +1514,9 @@ header .right{ display:flex; align-items:center; gap:8px; }
               <li><a href="#pricing">Төлем</a></li>
               <li><a href="#faq">Сұрақ-жауап</a></li>
             </ul>
-            <button class="burger" id="burger" aria-label="Мәзір"><i class="fa-solid fa-bars"></i></button>
+            <button class="burger" id="burger" aria-label="Мәзір" aria-expanded="false" aria-controls="mobileMenu">
+              <i class="fa-solid fa-bars"></i>
+            </button>
           </nav>
           <div class="right">
             <div id="userInfo" class="user-info" style="display:none;">
@@ -1599,9 +1526,14 @@ header .right{ display:flex; align-items:center; gap:8px; }
             <a href="#" class="btn btn-primary" id="loginButton"><i class="fas fa-sign-in-alt"></i> Кіру</a>
           </div>
         </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="mobile-menu" role="navigation" aria-label="Мобиль мәзір">
+          <!-- Menu items will be populated by JavaScript -->
+        </div>
       </header>
 
-      <nav id="mobileMenu" aria-label="Мобиль мәзір"></nav>
+      <div class="menu-backdrop" id="menuBackdrop"></div>
 
       <section class="hero" id="home" aria-label="Басты бөлім">
         <div class="floating f1"></div>
@@ -1634,8 +1566,6 @@ header .right{ display:flex; align-items:center; gap:8px; }
         </div>
       </section>
 
-      
-
       <!-- Modules -->
       <section id="modules">
         <div class="container">
@@ -1646,7 +1576,7 @@ header .right{ display:flex; align-items:center; gap:8px; }
           <div class="academy-modules-grid" id="modulesContainer">
             <div class="card" style="padding:20px;text-align:center">
               <div style="display:flex;flex-direction:column;align-items:center;color:var(--muted);padding:40px 0">
-                <div class="spinner" style="width:36px;height:36px;border:4px solid rgba(217,60,60,.12);border-top-color:var(--brand);border-radius:50%;animation:spin 1.2s linear infinite;margin-bottom:12px"></div>
+                <div class="spinner" style="width:36px;height:36px;border:4px solid rgba(0,128,0,.12);border-top-color:var(--brand);border-radius:50%;animation:spin 1.2s linear infinite;margin-bottom:12px"></div>
                 Жүктелуде…
               </div>
             </div>
@@ -1654,7 +1584,6 @@ header .right{ display:flex; align-items:center; gap:8px; }
         </div>
       </section>
 
-      
       <!-- About -->
       <section id="about">
         <div class="container">
@@ -1687,8 +1616,6 @@ header .right{ display:flex; align-items:center; gap:8px; }
           </div>
         </div>
       </section>
-
-      
 
       <!-- Benefits -->
       <section id="benefits">
@@ -1804,7 +1731,6 @@ header .right{ display:flex; align-items:center; gap:8px; }
                 </div>
               </div>
             </div>
-           
           </div>
           <p class="reveal" style="color:var(--muted);margin-top:10px;font-size:14px">* Қанағаттану көрсеткіші — ішкі сауалнама негізінде.</p>
         </div>
@@ -1889,14 +1815,20 @@ header .right{ display:flex; align-items:center; gap:8px; }
         <div class="container navbar">
           <a href="#" id="backButton" class="logo"><i class="fas fa-arrow-left"></i> Артқа</a>
           <ul class="nav-links"><li><a href="#" id="currentModuleName">Модуль</a></li></ul>
+          <button class="burger" id="burgerLessons" aria-label="Мәзір" aria-expanded="false" aria-controls="mobileMenuLessons">
+            <i class="fa-solid fa-bars"></i>
+          </button>
           <div class="right">
             <div id="userInfoLessons" class="user-info" style="display:none;"><i class="fas fa-user"></i><span id="userNameLessons">Пайдаланушы</span></div>
             <a href="#" class="btn btn-primary" id="loginButtonLessons"><i class="fas fa-sign-in-alt"></i> Кіру</a>
           </div>
         </div>
+        
+        <!-- Mobile Menu for Lessons -->
+        <div id="mobileMenuLessons" class="mobile-menu" role="navigation" aria-label="Мобиль мәзір">
+          <!-- Menu items will be populated by JavaScript -->
+        </div>
       </header>
-
-      <nav id="mobileMenuLessons" aria-label="Мобиль мәзір"></nav>
 
       <section class="container lessons-header">
         <div class="section-title"><h2 id="moduleTitle">Модуль сабақтары</h2><p id="moduleDescription">Оқу үшін сабақты таңдаңыз</p></div>
@@ -2038,8 +1970,6 @@ header .right{ display:flex; align-items:center; gap:8px; }
     </div>
   </div>
 
-  <div class="menu-backdrop" id="menuBackdrop"></div>
-
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // URLs
@@ -2088,12 +2018,12 @@ header .right{ display:flex; align-items:center; gap:8px; }
         uploadArea: document.getElementById('uploadArea'),
         sendReceipt: document.getElementById('sendReceipt'),
         burger: document.getElementById('burger'),
+        burgerLessons: document.getElementById('burgerLessons'),
         mobileMenu: document.getElementById('mobileMenu'),
         mobileMenuLessons: document.getElementById('mobileMenuLessons'),
         menuBackdrop: document.getElementById('menuBackdrop'),
         kaspiPay: document.getElementById('kaspiPay'),
         wPay: document.getElementById('wPay'),
-        openApp: document.getElementById('openApp'),
         whatsCta: document.getElementById('whatsCta'),
         whatsFooter: document.getElementById('whatsFooter'),
         mailFooter: document.getElementById('mailFooter'),
@@ -2105,6 +2035,99 @@ header .right{ display:flex; align-items:center; gap:8px; }
         topNavLinks: document.getElementById('topNavLinks'),
         metrics: document.getElementById('metrics')
       };
+
+      // Mobile Menu Management
+      function initMobileMenu() {
+        // Initialize main page mobile menu
+        if (DOM.burger && DOM.mobileMenu) {
+          DOM.burger.addEventListener('click', toggleMobileMenu);
+          
+          // Populate mobile menu with navigation links
+          const navLinks = DOM.topNavLinks.querySelectorAll('a');
+          DOM.mobileMenu.innerHTML = '';
+          navLinks.forEach(link => {
+            const menuItem = link.cloneNode(true);
+            menuItem.addEventListener('click', closeMobileMenu);
+            DOM.mobileMenu.appendChild(menuItem);
+          });
+        }
+
+        // Initialize lessons page mobile menu
+        if (DOM.burgerLessons && DOM.mobileMenuLessons) {
+          DOM.burgerLessons.addEventListener('click', toggleMobileMenuLessons);
+          
+          // Populate lessons mobile menu
+          const lessonsNavLinks = document.querySelectorAll('#lessonsPage .nav-links a');
+          DOM.mobileMenuLessons.innerHTML = '';
+          lessonsNavLinks.forEach(link => {
+            const menuItem = link.cloneNode(true);
+            menuItem.addEventListener('click', closeMobileMenu);
+            DOM.mobileMenuLessons.appendChild(menuItem);
+          });
+        }
+
+        // Close menu when clicking on backdrop
+        if (DOM.menuBackdrop) {
+          DOM.menuBackdrop.addEventListener('click', closeAllMenus);
+        }
+
+        // Close menu when pressing Escape key
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            closeAllMenus();
+          }
+        });
+
+        // Close menu when window is resized above mobile breakpoint
+        window.addEventListener('resize', () => {
+          if (window.innerWidth > 860) {
+            closeAllMenus();
+          }
+        });
+      }
+
+      function toggleMobileMenu() {
+        if (DOM.mobileMenu.classList.contains('active')) {
+          closeMobileMenu();
+        } else {
+          openMobileMenu();
+        }
+      }
+
+      function toggleMobileMenuLessons() {
+        if (DOM.mobileMenuLessons.classList.contains('active')) {
+          closeMobileMenu();
+        } else {
+          openMobileMenuLessons();
+        }
+      }
+
+      function openMobileMenu() {
+        DOM.mobileMenu.classList.add('active');
+        DOM.menuBackdrop.classList.add('active');
+        document.body.classList.add('menu-open');
+        DOM.burger.setAttribute('aria-expanded', 'true');
+      }
+
+      function openMobileMenuLessons() {
+        DOM.mobileMenuLessons.classList.add('active');
+        DOM.menuBackdrop.classList.add('active');
+        document.body.classList.add('menu-open');
+        DOM.burgerLessons.setAttribute('aria-expanded', 'true');
+      }
+
+      function closeMobileMenu() {
+        DOM.mobileMenu.classList.remove('active');
+        DOM.mobileMenuLessons.classList.remove('active');
+        DOM.menuBackdrop.classList.remove('active');
+        document.body.classList.remove('menu-open');
+        DOM.burger.setAttribute('aria-expanded', 'false');
+        DOM.burgerLessons.setAttribute('aria-expanded', 'false');
+      }
+
+      function closeAllMenus() {
+        closeMobileMenu();
+      }
 
       // Helpers
       function extractGoogleDriveId(url) {
@@ -2606,65 +2629,6 @@ header .right{ display:flex; align-items:center; gap:8px; }
         }
       }
 
-      // Mobile menu
-      function setupMobileMenu() {
-        const links = DOM.topNavLinks?.querySelectorAll('a') || [];
-        DOM.mobileMenu.innerHTML = '';
-        links.forEach(a => {
-          const clone = a.cloneNode(true);
-          clone.addEventListener('click', (e) => {
-            e.preventDefault();
-            closeMenu();
-            const href = clone.getAttribute('href') || '#';
-            if (href.startsWith('#')) {
-              smoothScrollTo(href);
-            } else {
-              location.href = href;
-            }
-          });
-          DOM.mobileMenu.appendChild(clone);
-        });
-
-        DOM.burger.setAttribute('aria-controls', 'mobileMenu');
-        DOM.burger.setAttribute('aria-expanded', 'false');
-        DOM.burger.addEventListener('click', () => DOM.mobileMenu.classList.contains('show') ? closeMenu() : openMenu());
-        DOM.menuBackdrop.addEventListener('click', closeMenu);
-        document.addEventListener('keydown', e => {
-          if (e.key === 'Escape' && DOM.mobileMenu.classList.contains('show')) closeMenu();
-        });
-        window.addEventListener('resize', () => {
-          if (innerWidth > 860 && DOM.mobileMenu.classList.contains('show')) closeMenu();
-        });
-
-        function openMenu() {
-          DOM.mobileMenu.classList.add('show');
-          DOM.menuBackdrop.classList.add('show');
-          document.body.classList.add('no-scroll');
-          DOM.burger.setAttribute('aria-expanded', 'true');
-        }
-
-        function closeMenu() {
-          DOM.mobileMenu.classList.remove('show');
-          DOM.menuBackdrop.classList.remove('show');
-          document.body.classList.remove('no-scroll');
-          DOM.burger.setAttribute('aria-expanded', 'false');
-          DOM.burger.focus({ preventScroll: true });
-        }
-
-        function smoothScrollTo(hash) {
-          const target = document.querySelector(hash);
-          if (!target) {
-            history.replaceState(null, '', hash);
-            return;
-          }
-          const header = document.querySelector('header');
-          const offset = (header ? header.offsetHeight : 0) + 8;
-          const y = target.getBoundingClientRect().top + window.pageYOffset - offset;
-          window.scrollTo({ top: y, behavior: 'smooth' });
-          history.replaceState(null, '', hash);
-        }
-      }
-
       // Static links
       function setStaticLinks() {
         const msg = 'Сәлеметсіз бе! 原始点 академиясы туралы ақпарат алғым келеді.';
@@ -2775,7 +2739,7 @@ header .right{ display:flex; align-items:center; gap:8px; }
 
       // Init
       async function init() {
-        setupMobileMenu();
+        initMobileMenu();
         setStaticLinks();
         setupTestimonials();
         setupFAQ();

@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>原始点 академиясы — Денсаулыққа арналған онлайн курстар</title>
   <meta name="description" content="原始点 академиясы: қауіпсіз табиғи әдістерді үйреніп, денсаулықты жақсартыңыз. Онлайн курстар, Kaspi арқылы төлеу, қолдау WhatsApp-та.">
-  <meta name="theme-color" content="#D93C3C">
+  <meta name="theme-color" content="#008000">
   <meta name="color-scheme" content="light only">
 
   <!-- OpenGraph -->
   <meta property="og:title" content="原始点 академиясы — Онлайн курстар">
   <meta property="og:description" content="Себепті нүкте (原始点) әдісін үйде-ақ меңгеріңіз. Қарапайым қадамдар, нақты нәтиже.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://dummyimage.com/1200x630/D93C3C/ffffff&text=%E5%8E%9F%E5%A7%8B%E7%82%B9+Academy">
+  <meta property="og:image" content="https://dummyimage.com/1200x630/008000/ffffff&text=%E5%8E%9F%E5%A7%8B%E7%82%B9+Academy">
 
   <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
@@ -24,7 +24,7 @@
     :root {
       --brand: #008000;
       --brand-700: #008000;
-      --brand-light: #FFECEC;
+      --brand-light: #efffec;
       --accent: #0EA5E9;
       --ok: #10B981;
       --warn: #F59E0B;
@@ -37,9 +37,9 @@
 
       --grad-brand: linear-gradient(135deg, #6bf46b 0%, #008000 100%);
       --grad-soft: linear-gradient(135deg, #FFF5F5 0%, #FFECEC 100%);
-      --grad-hero: radial-gradient(1200px 420px at 60% -40%, #FFD7D7 0%, transparent 60%),
-                   radial-gradient(900px 360px at 100% -40%, #FEE2E2 0%, transparent 60%),
-                   linear-gradient(180deg, #FFF 0%, #FEF2F2 100%);
+      --grad-hero: radial-gradient(1200px 420px at 60% -40%, #d7ffd7 0%, transparent 60%),
+                   radial-gradient(900px 360px at 100% -40%, #e2fee2 0%, transparent 60%),
+                   linear-gradient(180deg, #FFF 0%, #F2FEF2 100%);
 
       --h1: clamp(30px, 4.5vw, 54px);
       --h2: clamp(22px, 3.2vw, 36px);
@@ -134,43 +134,45 @@
     header {
       position: sticky;
       top: 0;
-      z-index: 50;
-      backdrop-filter: saturate(140%) blur(8px);
-      background: rgba(255, 255, 255, .78);
-      border-bottom: 1px solid rgba(0, 0, 0, .06);
+      z-index: 60;
+      backdrop-filter: saturate(140%) blur(10px);
+      background: rgba(255, 255, 255, .86);
+      border-bottom: 1px solid rgba(15, 23, 42, .06);
     }
 
     .navbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 0;
+      gap: 14px;
+      padding: 8px 0;
+      min-height: 60px;
     }
 
     .logo {
-      display: flex;
       gap: 10px;
-      align-items: center;
-      font-weight: 900;
       color: var(--ink);
+      font-weight: 900;
+      letter-spacing: .2px;
+      display: flex;
+      align-items: center;
     }
 
     .logo img {
       width: 40px;
       height: 40px;
       border-radius: 12px;
-      box-shadow: 0 10px 20px rgba(217, 60, 60, .18);
     }
 
     .nav {
       display: flex;
-      gap: 10px;
       align-items: center;
+      gap: 8px;
     }
 
     .nav-links {
       display: flex;
-      gap: 10px;
+      gap: 4px;
       list-style: none;
     }
 
@@ -178,67 +180,101 @@
       padding: 8px 12px;
       border-radius: 10px;
       font-weight: 700;
-      transition: var(--trans);
+      color: var(--ink);
+      transition: background .2s ease, color .2s ease, transform .2s ease;
     }
 
     .nav-links a:hover {
       background: #fff;
-      box-shadow: var(--sh-1);
       color: var(--brand);
+      transform: translateY(-1px);
     }
 
     .burger {
       display: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
       border: 1px solid var(--line);
-      border-radius: 12px;
-      width: 42px;
-      height: 42px;
-      place-items: center;
       background: #fff;
+      place-items: center;
       cursor: pointer;
+      box-shadow: none;
+      transition: background .2s ease, transform .2s ease;
     }
 
-    .burger i {
-      font-size: 18px;
+    .burger:hover {
+      background: #F9FAFB;
+      transform: translateY(-1px);
+    }
+
+    header .right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .user-info {
+      height: 40px;
+      padding: 0 10px;
+      gap: 8px;
+      border-radius: 10px;
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: none;
+      font-weight: 600;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+    }
+
+    .user-info i {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: #F1F5F9;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .btn {
-      display: inline-flex;
-      gap: 10px;
-      align-items: center;
-      border: 0;
-      border-radius: 12px;
-      padding: 12px 16px;
-      cursor: pointer;
+      height: 40px;
+      padding: 0 14px;
+      border-radius: 10px;
+      gap: 8px;
       font-weight: 800;
-      transition: var(--trans);
+      box-shadow: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: none;
       font-family: inherit;
-    }
-
-    .btn:focus-visible {
-      outline: 0;
-      box-shadow: 0 0 0 4px rgba(217, 60, 60, .14);
+      transition: all 0.3s ease;
     }
 
     .btn-primary {
       background: var(--grad-brand);
       color: #fff;
-      box-shadow: 0 12px 30px rgba(217, 60, 60, .28);
+      box-shadow: none;
     }
 
     .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 16px 40px rgba(217, 60, 60, .35);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(0, 128, 0, .18);
     }
 
     .btn-ghost {
       background: #fff;
       border: 1px solid var(--line);
+      color: var(--ink);
     }
 
     .btn-ghost:hover {
-      background: var(--bg);
-      transform: translateY(-2px);
+      background: #F9FAFB;
+      transform: translateY(-1px);
     }
 
     .chip {
@@ -248,50 +284,82 @@
       color: #065F46;
       font-weight: 800;
       font-size: 12px;
+      display: inline-block;
     }
 
-  
+    /* Mobile menu */
+    .mobile-menu {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-top: 1px solid var(--line);
+      box-shadow: 0 20px 40px rgba(15, 23, 42, .12);
+      z-index: 59;
+      transform: translateY(-10px);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      padding: 6px 0;
+    }
 
-    /* Mobile menu - LEFT SIDEBAR (единственный) */
-/* Mobile menu — левый сайдбар (единственный вариант) */
-/* сайдбар — на реальную высоту окна */
-#mobileMenu{
-  position: fixed;
-  top: 0;
-  left: -300px;
-  width: 300px;
-  height: 100dvh;                /* вместо 100vh — правильно на iOS */
-  background: #fff;
-  border-right: 1px solid var(--line);
-  box-shadow: var(--sh-2);
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  overscroll-behavior: contain;  /* внутри меню скролл не «прокидывается» в фон */
-  z-index: 10010;
-  transition: left .3s ease;
-}
-#mobileMenu.show{ left: 0; }
+    .mobile-menu.active {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
 
-.menu-backdrop{
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.35);
-  backdrop-filter: blur(2px);
-  display: none;
-  z-index: 10000;
-}
-.menu-backdrop.show{ display:block; }
+    .mobile-menu a {
+      display: block;
+      padding: 14px 18px;
+      font-weight: 700;
+      color: var(--ink);
+      border-radius: 0;
+      border-bottom: 1px solid var(--line);
+    }
 
-/* вместо просто overflow:hidden — полноценная блокировка */
-body.menu-open{
-  position: fixed;
-  width: 100%;
-  /* top выставим из JS как отрицательный scrollY: var(--lock-top) */
-  top: var(--lock-top, 0);
-  overflow: hidden;              /* на всякий */
-  touch-action: none;            /* не даём «толкать» фон на тачах */
-}
+    .mobile-menu a:last-child {
+      border-bottom: none;
+    }
+
+    .mobile-menu a:hover {
+      background: #F9FAFB;
+      color: var(--brand);
+    }
+
+    .menu-backdrop {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, .35);
+      backdrop-filter: blur(2px);
+      z-index: 58;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .menu-backdrop.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    @media (max-width: 860px) {
+      .nav-links {
+        display: none;
+      }
+      .burger {
+        display: grid;
+      }
+    }
+
     /* Hero */
     .hero {
       background: var(--grad-hero);
@@ -326,7 +394,7 @@ body.menu-open{
       inset: auto;
       pointer-events: none;
       opacity: .45;
-      filter: drop-shadow(0 8px 20px rgba(217, 60, 60, .22));
+      filter: drop-shadow(0 8px 20px rgba(0, 128, 0, .22));
     }
 
     .f1 {
@@ -334,7 +402,7 @@ body.menu-open{
       height: 220px;
       right: -40px;
       top: -40px;
-      background: radial-gradient(closest-side at 40% 40%, #FFD6D6, transparent 70%);
+      background: radial-gradient(closest-side at 40% 40%, #d6ffd6, transparent 70%);
       border-radius: 50%;
       animation: float 11s ease-in-out infinite;
     }
@@ -344,7 +412,7 @@ body.menu-open{
       height: 160px;
       left: -30px;
       bottom: -30px;
-      background: radial-gradient(closest-side at 60% 60%, #FEE2E2, transparent 70%);
+      background: radial-gradient(closest-side at 60% 60%, #e2fee2, transparent 70%);
       border-radius: 50%;
       animation: float 9s ease-in-out infinite reverse;
     }
@@ -444,7 +512,7 @@ body.menu-open{
       color: var(--brand);
     }
 
-    /* Academy Card Styles (from Kamalbay) */
+    /* Academy Card Styles */
     .academy-card {
       background: #fff;
       border-radius: var(--border-radius);
@@ -668,7 +736,7 @@ body.menu-open{
 
     /* CTA band */
     .cta {
-      background: linear-gradient(180deg, #fff, #FFF5F5);
+      background: linear-gradient(180deg, #fff, #f5fff5);
       border-top: 1px solid var(--line);
       border-bottom: 1px solid var(--line);
     }
@@ -735,7 +803,7 @@ body.menu-open{
       transform: none;
     }
 
-    /* Kamalbay styles */
+    /* Pages */
     .page {
       display: none;
       opacity: 0;
@@ -893,35 +961,6 @@ body.menu-open{
 
     .auth-form.active {
       display: block;
-    }
-
-    .user-info {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--dark);
-      font-weight: 500;
-      padding: 10px 18px;
-      border-radius: 12px;
-      background: rgba(90, 103, 216, 0.05);
-      transition: var(--transition);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
-    }
-
-    .user-info:hover {
-      background: rgba(90, 103, 216, 0.1);
-      transform: translateY(-2px);
-    }
-
-    .user-info i {
-      background: var(--secondary);
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 8px -1px rgba(0, 0, 0, 0.06);
     }
 
     .module-bg {
@@ -1364,15 +1403,6 @@ body.menu-open{
       }
     }
 
-    @media (max-width: 860px) {
-      .nav-links {
-        display: none;
-      }
-      .burger {
-        display: grid;
-      }
-    }
-
     @media (max-width: 680px) {
       .grid-3, .grid-2 {
         grid-template-columns: 1fr;
@@ -1432,9 +1462,6 @@ body.menu-open{
       .payment-container {
         padding: 25px 20px;
       }
-    }
-
-    @media (max-width: 480px) {
       .hero h1 {
         font-size: 1.8rem;
       }
@@ -1451,368 +1478,22 @@ body.menu-open{
       }
     }
 
-    /* ===== Header tidy ===== */
-header{
-  position: sticky; top:0; z-index:60;
-  backdrop-filter: saturate(140%) blur(10px);
-  background: rgba(255,255,255,.86);
-  border-bottom: 1px solid rgba(15,23,42,.06);
-}
-.navbar{
-  display:flex; align-items:center; justify-content:space-between;
-  gap:14px; padding:8px 0; min-height:60px;
-}
+    .user-info span {
+      display: inline-block;
+      max-width: 120px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      vertical-align: middle;
+      font-variant-numeric: tabular-nums;
+    }
 
-/* Logo: кішірек көлеңке, мәтінге тыныс */
-.logo{ gap:10px; color:var(--ink); font-weight:900; letter-spacing:.2px; }
-.logo img{ width:40px; height:40px; border-radius:12px; box-shadow:none; }
-
-/* Нав сілтемелер: минимал hover, underline жоқ */
-.nav{ display:flex; align-items:center; gap:8px; }
-.nav-links{ display:flex; gap:4px; list-style:none; }
-.nav-links a{
-  padding:8px 12px; border-radius:10px; font-weight:700; color:var(--ink);
-  transition: background .2s ease, color .2s ease, transform .2s ease;
-}
-.nav-links a:hover{ background:#fff; color:var(--brand); transform: translateY(-1px); }
-.nav-links a::after{ display:none; } /* бұрынғы градиент сызықты өшірдік */
-
-/* Burger: таза, көлеңкесіз */
-.burger{
-  display:none; width:40px; height:40px; border-radius:10px;
-  border:1px solid var(--line); background:#fff; place-items:center; cursor:pointer;
-  box-shadow:none; transition:background .2s ease, transform .2s ease;
-}
-.burger:hover{ background:#F9FAFB; transform:translateY(-1px); }
-
-/* Оң жақ блок: бір биіктікке, «пилл» емес — жеңіл чип */
-header .right{ display:flex; align-items:center; gap:8px; }
-
-/* Пайдаланушы чипі */
-.user-info{
-  height:40px; padding:0 10px; gap:8px;
-  border-radius:10px; background:#fff; border:1px solid var(--line);
-  box-shadow:none; font-weight:600; color:var(--ink);
-}
-.user-info i{
-  width:26px; height:26px; border-radius:8px;
-  background:#F1F5F9; color:#0f172a;
-}
-
-/* Батырмалар: бірдей өлшем, жұмсақ контур */
-.btn{
-  height:40px; padding:0 14px; border-radius:10px; gap:8px; font-weight:800;
-  box-shadow:none;
-}
-.btn-primary{
-  background: var(--grad-brand); color:#fff; box-shadow:none;
-}
-.btn-primary:hover{ transform:translateY(-1px); box-shadow:0 8px 20px rgba(217,60,60,.18); }
-.btn-ghost{
-  background:#fff; border:1px solid var(--line); color:var(--ink);
-}
-.btn-ghost:hover{ background:#F9FAFB; transform:translateY(-1px); }
-
-/* Мобиль: тек керегін қалдыру */
-@media (max-width: 860px){
-  .nav-links{ display:none; }
-  .burger{ display:grid; }
-  .navbar{ min-height:56px; }
-}
-
-/* Фокус */
-.logo:focus-visible, .nav-links a:focus-visible, .burger:focus-visible,
-.user-info:focus-visible, header .right .btn:focus-visible{
-  outline:0; box-shadow:0 0 0 3px rgba(217,60,60,.18);
-}
-/* user chip ішіндегі мәтін тым созылмасын */
-.user-info span{
-  display:inline-block; max-width:120px; white-space:nowrap;
-  overflow:hidden; text-overflow:ellipsis; vertical-align:middle;
-  font-variant-numeric: tabular-nums; /* цифрлар секірмесін */
-}
-@media (max-width: 480px){
-  .user-info span{ max-width:0px; display: none; }
-}
-
-/* ===== Mobile menu (LEFT SIDEBAR) ===== */
-#mobileMenu{
-  position: fixed;
-  top: 0;
-  left: -300px;
-  width: 300px;
-  height: 100vh;
-  background: #fff;
-  border-right: 1px solid var(--line);
-  box-shadow: var(--sh-2);
-  display: flex;
-  flex-direction: column;
-  z-index: 1000;
-  transition: left 0.3s ease;
-  overflow-y: auto;
-  padding-top: 70px;
-}
-
-#mobileMenu.show {
-  left: 0;
-}
-
-#mobileMenu a{
-  display:block; padding:14px 18px; font-weight:700; color:var(--ink);
-  border-bottom:1px solid var(--line);
-  transition: all 0.2s ease;
-}
-#mobileMenu a:last-child{ border-bottom:none; }
-#mobileMenu a:hover{ background:#F9FAFB; color:var(--brand); }
-
-.menu-backdrop{ 
-  z-index: 999; 
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,.35);
-  backdrop-filter: blur(2px);
-  display: none;
-}
-.menu-backdrop.show{ display: block; }
-
-.body-lock{
-  position: fixed; left:0; right:0; width:100%;
-  overflow: hidden;
-}
-
-#mobileMenuLessons {
-  position: fixed;
-  top: 0;
-  left: -300px;
-  width: 300px;
-  height: 100vh;
-  background: #fff;
-  border-right: 1px solid var(--line);
-  box-shadow: var(--sh-2);
-  display: flex;
-  flex-direction: column;
-  z-index: 1000;
-  transition: left 0.3s ease;
-  overflow-y: auto;
-  padding-top: 70px;
-}
-
-#mobileMenuLessons.show {
-  left: 0;
-}
-
-#mobileMenuLessons a{
-  display:block; padding:14px 18px; font-weight:700; color:var(--ink);
-  border-bottom:1px solid var(--line);
-  transition: all 0.2s ease;
-}
-#mobileMenuLessons a:last-child{ border-bottom:none; }
-#mobileMenuLessons a:hover{ background:#F9FAFB; color:var(--brand); }
-
-
-/* ===== Offline 8-day Course ===== */
-.offline {
-  background:#fff;
-  border-top:1px solid var(--line);
-  border-bottom:1px solid var(--line);
-}
-.offline .badge {
-  display:inline-block; padding:6px 12px; border-radius:999px;
-  background:rgba(16,185,129,.12); color:#065F46; font-weight:800; font-size:12px;
-}
-.slider {
-  position:relative; max-width:1000px; margin:22px auto 0; border-radius:16px;
-  overflow:hidden; box-shadow: var(--sh-2); background:#000;
-}
-.slider-track {
-  display:flex; transition: transform .6s ease; will-change: transform;
-}
-.slide {
-  flex:0 0 100%; height:0; padding-bottom:56.25%; position:relative; overflow:hidden;
-}
-.slide img {
-  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-}
-.slider-nav {
-  position:absolute; inset:auto 0 10px 0; display:flex; justify-content:center; gap:8px;
-}
-.dot {
-  width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,.45);
-  border:1px solid rgba(255,255,255,.6); cursor:pointer; transition:transform .2s ease;
-}
-.dot.active { background:#fff; transform:scale(1.15); }
-.slider-btn {
-  position:absolute; top:50%; transform:translateY(-50%);
-  width:42px; height:42px; border-radius:50%; border:1px solid rgba(255,255,255,.5);
-  background:rgba(0,0,0,.35); color:#fff; display:grid; place-items:center;
-  cursor:pointer; backdrop-filter: blur(4px);
-}
-.slider-btn:hover { background:rgba(0,0,0,.55); }
-.slider-btn.prev { left:10px; } .slider-btn.next { right:10px; }
-@media (max-width:680px){ .slider { margin-top:14px; } }
-
-/* ==== HERO BG SLIDER ==== */
-.hero.hero-has-slider { background: none; } /* артқы градиентті псевдо-элементке көшіреміз */
-
-.hero-bg{
-  position:absolute; inset:0; z-index:-1; overflow:hidden;
-  background:#000; /* қара фон сурет жүктелгенше */
-}
-.hero-bg::after{
-  content:"";
-  position:absolute; inset:0;
-  /* жұмсақ үстем-градиент: үсті ашығырақ, асты қоюлау */
-  background: linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,.25) 30%, rgba(0,0,0,.45) 100%),
-              radial-gradient(1200px 420px at 60% -40%, rgba(255,215,215,.7) 0%, transparent 60%),
-              radial-gradient(900px 360px at 100% -40%, rgba(254,226,226,.6) 0%, transparent 60%);
-  pointer-events:none;
-}
-
-.hero-bg img{
-  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-  opacity:0; transition: opacity .9s ease, transform 6s ease;
-  transform: scale(1.04); /* аздап параллакс-эффект */
-  filter: saturate(105%) contrast(102%);
-  will-change: opacity, transform;
-}
-.hero-bg img.active{
-  opacity:1;
-  transform: scale(1); /* белсенді кадр баяу зум-аут */
-}
-
-/* hover кезінде тоқтату хабары жоқ, бірақ курсор үстінде ауысуды тоқтатамыз */
-.hero:hover .hero-bg img.active{ transform: scale(1.01); }
-
-/* Кіші экрандарда мәтін оқылымы үшін сәл көбірек қараңғылау */
-@media (max-width:680px){
-  .hero-bg::after{ background:
-    linear-gradient(180deg, rgba(0,0,0,.45) 0%, rgba(0,0,0,.35) 30%, rgba(0,0,0,.55) 100%),
-    radial-gradient(900px 300px at 80% -40%, rgba(254,226,226,.5) 0%, transparent 60%);
-  }
-}
-
-.hero-bg::before {
-  content:"";
-  position:absolute; inset:0;
-  background: rgba(255, 255, 255, 0.648); /* ақшыл перде */
-  z-index:1;
-  pointer-events:none;
-}
-.hero-bg img,
-.hero-bg::after {
-  z-index:0;
-}
-
-
-/* ==== AUTHOR SECTION ==== */
-#author {
-  padding: 70px 0;
-  background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
-}
-
-.author-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 40px;
-  flex-wrap: wrap;
-  text-align: left;
-}
-
-.author-photo img {
-  width: 340px;
-  height: 340px;
-  object-fit: cover;
-  border-radius: 20px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  border: 2px solid #fff;
-}
-
-.author-info {
-  max-width: 580px;
-}
-
-.author-info h2 {
-  font-size: clamp(22px, 2.2vw, 30px);
-  font-weight: 800;
-  color: var(--ink, #111);
-  margin-bottom: 10px;
-}
-
-.author-info p {
-  color: #444;
-  line-height: 1.7;
-  font-size: 16px;
-  margin-bottom: 16px;
-}
-
-.author-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.author-tags span {
-  background: #f1f5f9;
-  border-radius: 10px;
-  padding: 6px 12px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 14px;
-  color: #111;
-  border: 1px solid #e3e7ec;
-}
-
-.author-tags i {
-  color: var(--brand, #009688);
-}
-
-/* ==== AUTHOR VIDEO ==== */
-.author-video {
-  margin-top: 50px;
-  text-align: center;
-}
-
-.author-video h3 {
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 20px;
-  color: var(--ink, #111);
-}
-
-.video-wrapper {
-  position: relative;
-  max-width: 720px;
-  margin: 0 auto;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  aspect-ratio: 16 / 9;
-  background: #000;
-}
-
-.video-wrapper iframe,
-.video-wrapper video {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-/* Mobile */
-@media (max-width: 680px) {
-  .author-container {
-    flex-direction: column;
-    text-align: center;
-  }
-  .author-photo img {
-    width: 160px;
-    height: 160px;
-  }
-}
+    @media (max-width: 480px) {
+      .user-info span {
+        max-width: 0px;
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1823,19 +1504,17 @@ header .right{ display:flex; align-items:center; gap:8px; }
         <div class="container navbar">
           <a href="#" class="logo" aria-label="Басты бет">
             <img alt="logo" src="logo.png">
-            "Себепті нүкте сауықтыру" орталығы
+            "Себепті нүкте" академиясы
           </a>
           <nav class="nav">
             <ul class="nav-links" id="topNavLinks">
+              <li><a href="#about">Әдіс</a></li>
               <li><a href="#modules">Курстар</a></li>
-              <li><a href="#offline">Оффлайн курс</a></li>
+              <li><a href="#benefits">Артықшылық</a></li>
               <li><a href="#pricing">Төлем</a></li>
               <li><a href="#faq">Сұрақ-жауап</a></li>
             </ul>
-            <button class="burger" id="burger"
-                    aria-label="Мәзір"
-                    aria-controls="mobileMenu"
-                    aria-expanded="false">
+            <button class="burger" id="burger" aria-label="Мәзір" aria-expanded="false" aria-controls="mobileMenu">
               <i class="fa-solid fa-bars"></i>
             </button>
           </nav>
@@ -1847,29 +1526,23 @@ header .right{ display:flex; align-items:center; gap:8px; }
             <a href="#" class="btn btn-primary" id="loginButton"><i class="fas fa-sign-in-alt"></i> Кіру</a>
           </div>
         </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="mobile-menu" role="navigation" aria-label="Мобиль мәзір">
+          <!-- Menu items will be populated by JavaScript -->
+        </div>
       </header>
 
-      <nav id="mobileMenu" aria-label="Мобиль мәзір"></nav>
       <div class="menu-backdrop" id="menuBackdrop"></div>
 
-      <section class="hero hero-has-slider" id="home" aria-label="Басты бөлім">
-        <!-- BG slider -->
-        <div class="hero-bg" id="heroBg" aria-hidden="true">
-          <!-- 1920x1080 немесе 1600x900 суреттер -->
-          <img src="img/1.jpeg" alt="" loading="eager" fetchpriority="high" />
-          <img src="img/2.jpeg" alt="" loading="lazy" />
-          <img src="img/3.jpeg" alt="" loading="lazy" />
-          <img src="img/4.jpeg" alt="" loading="lazy" />
-        </div>
-      
+      <section class="hero" id="home" aria-label="Басты бөлім">
         <div class="floating f1"></div>
         <div class="floating f2"></div>
         <div class="container">
-
-          <span class="chip reveal">Себебін тапсаң-шипасы табылады </span>
+          <span class="chip reveal">Табиғи ем – қауіпсіз тәжірибе</span>
           <h1 class="reveal" style="margin-top:10px">Себепті нүкте (原始点) әдісін
             <span style="color:var(--brand)">онлайн</span> меңгеріңіз</h1>
-          <p class="reveal" style="color: black;">Үйде-ақ орындауға болатын қарапайым әрі нәтижелі техникалар. Қадам-қадам курс, бейнелер, материалдар және қолдау.</p>
+          <p class="reveal">Үйде-ақ орындауға болатын қарапайым әрі нәтижелі техникалар. Қадам-қадам курс, бейнелер, материалдар және қолдау.</p>
           <div class="actions reveal">
             <a class="btn btn-primary" href="#modules"><i class="fa-solid fa-book-open"></i> Таныстыру</a>
             <a class="btn btn-ghost" href="#about"><i class="fa-solid fa-circle-info"></i> Автор жайлы</a>
@@ -1893,49 +1566,6 @@ header .right{ display:flex; align-items:center; gap:8px; }
         </div>
       </section>
 
-      
-      <section id="author" aria-label="Автор туралы">
-        <div class="container author-container reveal">
-          <div class="author-photo">
-            <img src="img/1.jpeg" alt="Тұрсынгүл Әсемхан" loading="lazy">
-          </div>
-          <div class="author-info">
-            <h2>Тұрсынгүл Әсемхан</h2>
-            <p>
-              原始点 (Иуан шы дянь) әдісінің 10 жыл тәжірибесі бар медицина маманы. 
-              Жань Жау Кханьның тікелей шәкірті, Себепті нүкте әдісінің негізін қалаушы.
-            </p>
-            <div class="author-tags">
-              <span><i class="fa-solid fa-stethoscope"></i> 10+ жыл тәжірибе</span>
-              <span><i class="fa-solid fa-heart-pulse"></i> Дәстүрлі ем</span>
-              <span><i class="fa-solid fa-leaf"></i> Табиғи сауықтыру</span>
-            </div>
-          </div>
-        </div>
-      
-        <!-- Қысқаша видео-таныстыру -->
-        <div class="author-video reveal">
-          <h3>🎥 Қысқаша видео-таныстыру</h3>
-          <div class="video-wrapper">
-            <!-- YouTube iframe -->
-            <iframe
-              src="https://www.youtube.com/embed/ВАШ_ВИДЕО_ID"
-              title="Тұрсынгүл Әсемхан – Себепті нүкте әдісі"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen>
-            </iframe>
-      
-            <!-- Егер видео файл өзіңізде болса -->
-            <!-- <video controls poster="img/video-preview.jpg">
-              <source src="video/author-intro.mp4" type="video/mp4">
-              Браузеріңіз видео форматты қолдамайды.
-            </video> -->
-          </div>
-        </div>
-      </section>
-      
-
       <!-- Modules -->
       <section id="modules">
         <div class="container">
@@ -1946,7 +1576,7 @@ header .right{ display:flex; align-items:center; gap:8px; }
           <div class="academy-modules-grid" id="modulesContainer">
             <div class="card" style="padding:20px;text-align:center">
               <div style="display:flex;flex-direction:column;align-items:center;color:var(--muted);padding:40px 0">
-                <div class="spinner" style="width:36px;height:36px;border:4px solid rgba(217,60,60,.12);border-top-color:var(--brand);border-radius:50%;animation:spin 1.2s linear infinite;margin-bottom:12px"></div>
+                <div class="spinner" style="width:36px;height:36px;border:4px solid rgba(0,128,0,.12);border-top-color:var(--brand);border-radius:50%;animation:spin 1.2s linear infinite;margin-bottom:12px"></div>
                 Жүктелуде…
               </div>
             </div>
@@ -1954,15 +1584,44 @@ header .right{ display:flex; align-items:center; gap:8px; }
         </div>
       </section>
 
-      
-      
-      
+      <!-- About -->
+      <section id="about">
+        <div class="container">
+          <div class="section-title reveal">
+            <h2>原始点 әдісі — қысқаша</h2>
+            <p>Дененің өзін-өзі қалпына келтіру әлеуетін себепке әсер ету арқылы іске қосу. Жұмсақ әсер, жылумен қолдау, өз-өзіне көмек.</p>
+          </div>
+          <div class="grid grid-3">
+            <div class="card reveal">
+              <div class="card-media" style="display:grid;place-items:center"><i class="fa-solid fa-leaf" style="font-size:44px;color:var(--brand)"></i></div>
+              <div class="card-body">
+                <h3>Қауіпсіз және табиғи</h3>
+                <p>Майда техника, қарсы көрсетілімдер ескеріліп түсіндіріледі.</p>
+              </div>
+            </div>
+            <div class="card reveal">
+              <div class="card-media" style="display:grid;place-items:center"><i class="fa-solid fa-person-running" style="font-size:44px;color:var(--brand)"></i></div>
+              <div class="card-body">
+                <h3>Нәтижеге бағытталған</h3>
+                <p>Практикалық бөлімдер, үй тапсырмалары, бақылау тізімдері.</p>
+              </div>
+            </div>
+            <div class="card reveal">
+              <div class="card-media" style="display:grid;place-items:center"><i class="fa-solid fa-clock" style="font-size:44px;color:var(--brand)"></i></div>
+              <div class="card-body">
+                <h3>Күнге 10–20 минут</h3>
+                <p>Курстар қысқа, өмір салтына оңай енеді.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <!-- Benefits -->
       <section id="benefits">
         <div class="container">
           <div class="section-title reveal">
-            <h2>Менің сабақтарымның ерекшелігі:</h2>
+            <h2>Неге 原始点 академиясы?</h2>
             <p>Сапалы мазмұн, ыңғайлы платформа және мықты қолдау.</p>
           </div>
           <div class="grid grid-2">
@@ -1970,21 +1629,21 @@ header .right{ display:flex; align-items:center; gap:8px; }
               <i class="fa-solid fa-video"></i>
               <div>
                 <h3 style="margin-bottom:6px">Бейне + материал</h3>
-                <p>Әр сабаққа видеоматериалдар береміз.</p>
+                <p>Әр сабаққа қысқа түсіндірме, PDF, чек-листтер.</p>
               </div>
             </div>
             <div class="step reveal">
               <i class="fa-solid fa-comments"></i>
               <div>
                 <h3 style="margin-bottom:6px">Кері байланыс</h3>
-                <p>Пікірлер мен сұрақтарға жауап береміз.</p>
+                <p>Пікірлер мен сұрақтарға жауап. Қиын тұстарды талқылаймыз.</p>
               </div>
             </div>
             <div class="step reveal">
               <i class="fa-solid fa-shield-heart"></i>
               <div>
                 <h3 style="margin-bottom:6px">Қауіпсіздік</h3>
-                <p>Сабақты мұқият тыңдап барып, нүктелерді жасаңыздар! </p>
+                <p>Қарсы көрсетілімдер, «не істеуге болмайды» — бәрі нақты.</p>
               </div>
             </div>
             <div class="step reveal">
@@ -1998,101 +1657,12 @@ header .right{ display:flex; align-items:center; gap:8px; }
         </div>
       </section>
 
-          <!-- Offline 8-day Course -->
-<section id="offline" class="offline" aria-label="Оффлайн 8 күндік курс">
-  <div class="container">
-    <div class="section-title reveal">
-      <span class="badge">Оффлайн бағдарлама</span>
-      <h2 style="margin-top:10px">8 күндік интенсив — жүздеген түлектер, жоғары қанағат</h2>
-      <p>Тәжірибеге негізделген сабақтар, дене-қолдау техникасы, үй жұмыстары және менторлық.</p>
-    </div>
-
-    <div class="slider reveal" id="offlineSlider" aria-roledescription="carousel">
-      <button class="slider-btn prev" aria-label="Алдыңғы слайд"><i class="fa-solid fa-chevron-left"></i></button>
-      <div class="slider-track" id="offlineTrack">
-        <!-- Фотоларыңызды мына жерге қойыңыз -->
-        <div class="slide"><img loading="lazy" src="img/11.jpeg" alt="Оффлайн курс — 1-күн сәттері"></div>
-        <div class="slide"><img loading="lazy" src="img/2.jpeg" alt="Оффлайн курс — 1-күн сәттері"></div>
-        <div class="slide"><img loading="lazy" src="img/3.jpeg" alt="Оффлайн курс — 1-күн сәттері"></div>
-        <div class="slide"><img loading="lazy" src="img/4.jpeg" alt="Оффлайн курс — 1-күн сәттері"></div>
-        <div class="slide"><img loading="lazy" src="img/5.jpeg" alt="Оффлайн курс — 1-күн сәттері"></div>
-        <div class="slide"><img loading="lazy" src="img/6.jpeg" alt="Оффлайн курс — 1-күн сәттері"></div>
-        <div class="slide"><img loading="lazy" src="img/7.jpeg" alt="Оффлайн курс — 1-күн сәттері"></div>
-        <div class="slide"><img loading="lazy" src="img/8.jpeg" alt="Оффлайн курс — 1-күн сәттері"></div>
-        <div class="slide"><img loading="lazy" src="img/9.jpeg" alt="Оффлайн курс — 1-күн сәттері"></div>
-        <div class="slide"><img loading="lazy" src="img/10.jpeg" alt="Оффлайн курс — 1-күн сәттері"></div>
-        <div class="slide"><img loading="lazy" src="img/11.jpeg" alt="Оффлайн курс — 1-күн сәттері"></div>
-        <div class="slide"><img loading="lazy" src="img/12.jpeg" alt="Оффлайн курс — 1-күн сәттері"></div>
-      </div>
-      <button class="slider-btn next" aria-label="Келесі слайд"><i class="fa-solid fa-chevron-right"></i></button>
-      <div class="slider-nav" id="offlineDots" aria-label="Слайд индикаторлары"></div>
-    </div>
-
-    <div class="grid grid-2" style="margin-top:24px">
-      <div class="step reveal">
-        <i class="fa-solid fa-calendar-check"></i>
-        <div>
-          <h3 style="margin-bottom:6px">Ұзақтығы: 8 күн</h3>
-          <p>Күн сайынғы теория + практика. Сертификат, өшпес білім</p>
-        </div>
-      </div>
-      <div class="step reveal">
-        <i class="fa-solid fa-user-check"></i>
-        <div>
-          <h3 style="margin-bottom:6px">Кімдерге арналған?</h3>
-          <p>Жаңадан бастаушыларға да, отбасысына көмектескісі келетіндерге де.</p>
-        </div>
-      </div>
-    </div>
-
-    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px" class="reveal">
-      <a class="btn btn-primary"
-      href="https://wa.me/77479894879?text=%D0%9E%D1%84%D1%84%D0%BB%D0%B0%D0%B9%D0%BD%208%20%D0%BA%D2%AF%D0%BD%D0%B4%D1%96%D0%BA%20%D0%BA%D1%83%D1%80%D1%81%20%D1%82%D1%83%D1%80%D0%B0%D0%BB%D1%8B%20%D1%82%D0%BE%D0%BB%D1%8B%D2%9B%20%D0%B1%D1%96%D0%BB%D0%B3%D1%96%D0%BC%20%D0%BA%D0%B5%D0%BB%D0%B5%D0%B4%D1%96"
-      target="_blank" rel="noopener">
-      <i class="fa-brands fa-whatsapp"></i> Оффлайн курсқа қатысамын!
-    </a>
-    </div>
-  </div>
-</section>
-
-
-<!-- About -->
-<section id="about">
-  <div class="container">
-    <div class="section-title reveal">
-      <h2>СЕБЕПТІ НҮКТЕ  ЕМІ - АУРУДЫҢ СЕБЕБІМЕН КҮРЕСЕДІ!</h2>
-      <p>Егер адам азғасы өзін-өзі емдейтініне 1000% сеніп, емнің шартын бірге-бір бұлжытпай орындасаңыз, нәтиже болады</p>
-    </div>
-    <div class="grid grid-3">
-      <div class="card reveal">
-        <div class="card-media" style="display:grid;place-items:center"><i class="fa-solid fa-leaf" style="font-size:44px;color:var(--brand)"></i></div>
-        <div class="card-body">
-          <p>Сабақта үй жағдайында балаларды дәрі-дәрмексіз жылумен емдейтін жолдарымен бөлістім. Балалар тез жазылады!</p>
-        </div>
-      </div>
-      <div class="card reveal">
-        <div class="card-media" style="display:grid;place-items:center"><i class="fa-solid fa-person-running" style="font-size:44px;color:var(--brand)"></i></div>
-        <div class="card-body">
-          <p>Нүктелерді ерінбей жасаңыздар! Профилактика ретінде күнде жасасаңыздар, балаларыңыз ауырмайтын болады. </p>
-        </div>
-      </div>
-      <div class="card reveal">
-        <div class="card-media" style="display:grid;place-items:center"><i class="fa-solid fa-clock" style="font-size:44px;color:var(--brand)"></i></div>
-        <div class="card-body">
-          <p>Сабақтар жоғары деңгейде түсірілді. Тек қана көрмей, бірден іске асырыңыздар!</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
       <!-- Testimonials -->
       <section id="testimonials" aria-label="Пікірлер">
         <div class="container ts-wrap">
           <div class="section-title reveal">
             <h2>Оқушылар пікірі</h2>
-            <p>Нәтижелер сөйлесін</p>
+            <p>Шынайы нәтижелер — мотивацияның ең мықтысы.</p>
           </div>
           <div class="ts-nav">
             <button class="icon-btn" id="tsPrev" aria-label="Алдыңғы"><i class="fa-solid fa-chevron-left"></i></button>
@@ -2144,7 +1714,7 @@ header .right{ display:flex; align-items:center; gap:8px; }
       </section>
 
       <!-- Pricing / Payment -->
-      <!-- <section id="pricing">
+      <section id="pricing">
         <div class="container">
           <div class="section-title reveal">
             <h2>Төлем және қолжетімділік</h2>
@@ -2161,14 +1731,10 @@ header .right{ display:flex; align-items:center; gap:8px; }
                 </div>
               </div>
             </div>
-           
           </div>
           <p class="reveal" style="color:var(--muted);margin-top:10px;font-size:14px">* Қанағаттану көрсеткіші — ішкі сауалнама негізінде.</p>
         </div>
-      </section> -->
-
-
-  
+      </section>
 
       <!-- FAQ -->
       <section id="faq">
@@ -2194,11 +1760,8 @@ header .right{ display:flex; align-items:center; gap:8px; }
         </div>
       </section>
 
-
-      
-
       <!-- CTA band -->
-      <!-- <section class="cta" aria-label="Байланыс">
+      <section class="cta" aria-label="Байланыс">
         <div class="container cta-inner">
           <div>
             <h3 style="font-size:22px;font-weight:900;color:var(--ink)">Бастауға дайынсыз ба?</h3>
@@ -2209,7 +1772,7 @@ header .right{ display:flex; align-items:center; gap:8px; }
             <a class="btn btn-ghost" href="#modules"><i class="fa-solid fa-book"></i> Курстар</a>
           </div>
         </div>
-      </section> -->
+      </section>
 
       <!-- Footer -->
       <footer id="contacts">
@@ -2226,6 +1789,7 @@ header .right{ display:flex; align-items:center; gap:8px; }
             <div>
               <h4>Навигация</h4>
               <div style="display:grid;gap:10px">
+                <a href="#about"><i class="fa-solid fa-chevron-right"></i> Әдіс</a>
                 <a href="#modules"><i class="fa-solid fa-chevron-right"></i> Курстар</a>
                 <a href="#pricing"><i class="fa-solid fa-chevron-right"></i> Төлем</a>
                 <a href="#faq"><i class="fa-solid fa-chevron-right"></i> Сұрақ-жауап</a>
@@ -2251,14 +1815,20 @@ header .right{ display:flex; align-items:center; gap:8px; }
         <div class="container navbar">
           <a href="#" id="backButton" class="logo"><i class="fas fa-arrow-left"></i> Артқа</a>
           <ul class="nav-links"><li><a href="#" id="currentModuleName">Модуль</a></li></ul>
+          <button class="burger" id="burgerLessons" aria-label="Мәзір" aria-expanded="false" aria-controls="mobileMenuLessons">
+            <i class="fa-solid fa-bars"></i>
+          </button>
           <div class="right">
             <div id="userInfoLessons" class="user-info" style="display:none;"><i class="fas fa-user"></i><span id="userNameLessons">Пайдаланушы</span></div>
             <a href="#" class="btn btn-primary" id="loginButtonLessons"><i class="fas fa-sign-in-alt"></i> Кіру</a>
           </div>
         </div>
+        
+        <!-- Mobile Menu for Lessons -->
+        <div id="mobileMenuLessons" class="mobile-menu" role="navigation" aria-label="Мобиль мәзір">
+          <!-- Menu items will be populated by JavaScript -->
+        </div>
       </header>
-
-      <nav id="mobileMenuLessons" aria-label="Мобиль мәзір"></nav>
 
       <section class="container lessons-header">
         <div class="section-title"><h2 id="moduleTitle">Модуль сабақтары</h2><p id="moduleDescription">Оқу үшін сабақты таңдаңыз</p></div>
@@ -2400,7 +1970,6 @@ header .right{ display:flex; align-items:center; gap:8px; }
     </div>
   </div>
 
-
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // URLs
@@ -2449,12 +2018,12 @@ header .right{ display:flex; align-items:center; gap:8px; }
         uploadArea: document.getElementById('uploadArea'),
         sendReceipt: document.getElementById('sendReceipt'),
         burger: document.getElementById('burger'),
+        burgerLessons: document.getElementById('burgerLessons'),
         mobileMenu: document.getElementById('mobileMenu'),
         mobileMenuLessons: document.getElementById('mobileMenuLessons'),
         menuBackdrop: document.getElementById('menuBackdrop'),
         kaspiPay: document.getElementById('kaspiPay'),
         wPay: document.getElementById('wPay'),
-        openApp: document.getElementById('openApp'),
         whatsCta: document.getElementById('whatsCta'),
         whatsFooter: document.getElementById('whatsFooter'),
         mailFooter: document.getElementById('mailFooter'),
@@ -2466,6 +2035,99 @@ header .right{ display:flex; align-items:center; gap:8px; }
         topNavLinks: document.getElementById('topNavLinks'),
         metrics: document.getElementById('metrics')
       };
+
+      // Mobile Menu Management
+      function initMobileMenu() {
+        // Initialize main page mobile menu
+        if (DOM.burger && DOM.mobileMenu) {
+          DOM.burger.addEventListener('click', toggleMobileMenu);
+          
+          // Populate mobile menu with navigation links
+          const navLinks = DOM.topNavLinks.querySelectorAll('a');
+          DOM.mobileMenu.innerHTML = '';
+          navLinks.forEach(link => {
+            const menuItem = link.cloneNode(true);
+            menuItem.addEventListener('click', closeMobileMenu);
+            DOM.mobileMenu.appendChild(menuItem);
+          });
+        }
+
+        // Initialize lessons page mobile menu
+        if (DOM.burgerLessons && DOM.mobileMenuLessons) {
+          DOM.burgerLessons.addEventListener('click', toggleMobileMenuLessons);
+          
+          // Populate lessons mobile menu
+          const lessonsNavLinks = document.querySelectorAll('#lessonsPage .nav-links a');
+          DOM.mobileMenuLessons.innerHTML = '';
+          lessonsNavLinks.forEach(link => {
+            const menuItem = link.cloneNode(true);
+            menuItem.addEventListener('click', closeMobileMenu);
+            DOM.mobileMenuLessons.appendChild(menuItem);
+          });
+        }
+
+        // Close menu when clicking on backdrop
+        if (DOM.menuBackdrop) {
+          DOM.menuBackdrop.addEventListener('click', closeAllMenus);
+        }
+
+        // Close menu when pressing Escape key
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            closeAllMenus();
+          }
+        });
+
+        // Close menu when window is resized above mobile breakpoint
+        window.addEventListener('resize', () => {
+          if (window.innerWidth > 860) {
+            closeAllMenus();
+          }
+        });
+      }
+
+      function toggleMobileMenu() {
+        if (DOM.mobileMenu.classList.contains('active')) {
+          closeMobileMenu();
+        } else {
+          openMobileMenu();
+        }
+      }
+
+      function toggleMobileMenuLessons() {
+        if (DOM.mobileMenuLessons.classList.contains('active')) {
+          closeMobileMenu();
+        } else {
+          openMobileMenuLessons();
+        }
+      }
+
+      function openMobileMenu() {
+        DOM.mobileMenu.classList.add('active');
+        DOM.menuBackdrop.classList.add('active');
+        document.body.classList.add('menu-open');
+        DOM.burger.setAttribute('aria-expanded', 'true');
+      }
+
+      function openMobileMenuLessons() {
+        DOM.mobileMenuLessons.classList.add('active');
+        DOM.menuBackdrop.classList.add('active');
+        document.body.classList.add('menu-open');
+        DOM.burgerLessons.setAttribute('aria-expanded', 'true');
+      }
+
+      function closeMobileMenu() {
+        DOM.mobileMenu.classList.remove('active');
+        DOM.mobileMenuLessons.classList.remove('active');
+        DOM.menuBackdrop.classList.remove('active');
+        document.body.classList.remove('menu-open');
+        DOM.burger.setAttribute('aria-expanded', 'false');
+        DOM.burgerLessons.setAttribute('aria-expanded', 'false');
+      }
+
+      function closeAllMenus() {
+        closeMobileMenu();
+      }
 
       // Helpers
       function extractGoogleDriveId(url) {
@@ -2712,8 +2374,9 @@ header .right{ display:flex; align-items:center; gap:8px; }
         DOM.lessonsContainer.innerHTML = `
           <div class="error-message" style="text-align:center;">
             <i class="fas fa-lock" style="font-size:3rem;margin-bottom:10px;"></i>
-            <p>Қол жеткізу үшін сілтеме бойынша курсты төлеңіз:</p>
+            <p>Қол жеткізу үшін QR-код арқылы немесе сілтеме бойынша курсты төлеңіз:</p>
             <div style="display:flex; flex-direction: column; gap:10px;justify-content:center;align-items:center;margin:10px 0;">
+              <img src="kaspi.png" alt="Төлем QR коды" style="width:250px;height:250px;border-radius:15px;box-shadow:0 4px 10px rgba(0,0,0,0.1);" />
               <a href="https://pay.kaspi.kz/pay/nobdj9ge" class="btn btn-primary" target="_blank" style="white-space:nowrap; background:#fff; color:#000">
                 <i class="fas fa-link"></i> Онлайн төлеу
               </a>
@@ -2883,7 +2546,7 @@ header .right{ display:flex; align-items:center; gap:8px; }
             const r = await fetch(`${SESS_URL}?action=heartbeat&login=${encodeURIComponent(u.login)}&token=${encodeURIComponent(u.token)}`);
             const d = await r.json();
             if (!d.ok) {
-              forceLogout('Сіз басқа құрылғыдан шықтыңыз. Сессия жабылды.');
+              forceLogout('Сіз басқа құрылғыдан шықтыңіз. Сессия жабылды.');
             }
           } catch { }
         })();
@@ -2895,7 +2558,7 @@ header .right{ display:flex; align-items:center; gap:8px; }
             const r = await fetch(`${SESS_URL}?action=heartbeat&login=${encodeURIComponent(u.login)}&token=${encodeURIComponent(u.token)}`);
             const d = await r.json();
             if (!d.ok) {
-              forceLogout('Сіз басқа құрылғыдан шықтыңыз. Сессия жабылды.');
+              forceLogout('Сіз басқа құрылғыдан шықтыңіз. Сессия жабылды.');
             }
           } catch { }
         }, 20000);
@@ -2965,81 +2628,6 @@ header .right{ display:flex; align-items:center; gap:8px; }
           }
         }
       }
-
-      // Mobile menu - LEFT SIDEBAR
-      function setupMobileMenu() {
-  const links = DOM.topNavLinks?.querySelectorAll('a') || [];
-  const menu  = DOM.mobileMenu;
-  const btn   = DOM.burger;
-  const dim   = DOM.menuBackdrop;
-  if(!menu || !btn || !dim) return;
-
-  // наполнить
-  menu.innerHTML = '';
-  links.forEach(a => {
-    const link = document.createElement('a');
-    link.href = a.getAttribute('href') || '#';
-    link.textContent = a.textContent;
-    link.style.padding = '16px 20px';
-    link.style.borderBottom = '1px solid var(--line)';
-    link.style.fontWeight = '700';
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      closeMenu();
-      const href = link.getAttribute('href') || '#';
-      if (href.startsWith('#')) smoothScrollTo(href);
-      else location.href = href;
-    });
-    menu.appendChild(link);
-  });
-
-  btn.setAttribute('aria-controls','mobileMenu');
-  btn.setAttribute('aria-expanded','false');
-
-  btn.addEventListener('click', () => menu.classList.contains('show') ? closeMenu() : openMenu());
-  dim.addEventListener('click', closeMenu);
-  document.addEventListener('keydown', e => { if(e.key==='Escape' && menu.classList.contains('show')) closeMenu(); });
-  window.addEventListener('resize', ()=>{ if(innerWidth>860 && menu.classList.contains('show')) closeMenu(); }, {passive:true});
-
-  let savedScrollY = 0;
-
-  function openMenu(){
-    // фиксируем текущий скролл и «прибиваем» body
-    savedScrollY = window.scrollY || document.documentElement.scrollTop || 0;
-    document.documentElement.style.setProperty('--lock-top', `-${savedScrollY}px`);
-    document.body.classList.add('menu-open');
-
-    menu.classList.add('show');
-    dim.classList.add('show');
-    btn.setAttribute('aria-expanded','true');
-
-    // фокус
-    (menu.querySelector('a')||menu).focus?.({preventScroll:true});
-  }
-
-  function closeMenu(){
-    menu.classList.remove('show');
-    dim.classList.remove('show');
-    btn.setAttribute('aria-expanded','false');
-
-    // возвращаем нормальный flow
-    document.body.classList.remove('menu-open');
-    document.documentElement.style.removeProperty('--lock-top');
-    // возвращаемся на тот же скролл
-    window.scrollTo(0, savedScrollY);
-
-    btn.focus?.({preventScroll:true});
-  }
-
-  function smoothScrollTo(hash){
-    const el = document.querySelector(hash);
-    if(!el){ history.replaceState(null,'',hash); return; }
-    const headerH = (document.querySelector('header')?.offsetHeight || 0) + 8;
-    const top = el.getBoundingClientRect().top + window.pageYOffset - headerH;
-    window.scrollTo({ top, behavior:'smooth' });
-    history.replaceState(null,'',hash);
-  }
-}
 
       // Static links
       function setStaticLinks() {
@@ -3149,119 +2737,9 @@ header .right{ display:flex; align-items:center; gap:8px; }
         revealEls.forEach(el => io.observe(el));
       }
 
-      // ===== Offline slider =====
-function setupOfflineSlider() {
-  const track = document.getElementById('offlineTrack');
-  const prev = document.querySelector('#offlineSlider .prev');
-  const next = document.querySelector('#offlineSlider .next');
-  const dotsWrap = document.getElementById('offlineDots');
-  if (!track || !prev || !next || !dotsWrap) return;
-
-  const slides = Array.from(track.children);
-  let index = 0, timer = null, hover = false;
-  slides.forEach((_, i) => {
-    const d = document.createElement('button');
-    d.className = 'dot' + (i === 0 ? ' active' : '');
-    d.setAttribute('aria-label', `Слайд ${i+1}`);
-    d.addEventListener('click', () => goTo(i));
-    dotsWrap.appendChild(d);
-  });
-
-  const dots = Array.from(dotsWrap.children);
-  function goTo(i) {
-    index = (i + slides.length) % slides.length;
-    track.style.transform = `translateX(-${index * 100}%)`;
-    dots.forEach((d, k) => d.classList.toggle('active', k === index));
-  }
-
-  function nextAuto(){ goTo(index + 1); }
-  function start(){ if (timer) clearInterval(timer); timer = setInterval(() => { if (!hover) nextAuto(); }, 3500); }
-  function stop(){ if (timer) clearInterval(timer); }
-
-  prev.addEventListener('click', () => { goTo(index - 1); start(); });
-  next.addEventListener('click', () => { goTo(index + 1); start(); });
-
-  const sliderEl = document.getElementById('offlineSlider');
-  sliderEl.addEventListener('mouseenter', () => { hover = true; });
-  sliderEl.addEventListener('mouseleave', () => { hover = false; });
-
-  // Авто-старт тек көрінгенде
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) start(); else stop();
-    });
-  }, { threshold: 0.3 });
-  io.observe(sliderEl);
-
-  // Свип (мобайл)
-  let startX = 0;
-  sliderEl.addEventListener('touchstart', (e)=>{ startX = e.touches[0].clientX; }, {passive:true});
-  sliderEl.addEventListener('touchend', (e)=>{
-    const dx = e.changedTouches[0].clientX - startX;
-    if (Math.abs(dx) > 40) { dx < 0 ? next.click() : prev.click(); }
-  }, {passive:true});
-}
-
-function setupHeroBgSlider(){
-  const wrap = document.getElementById('heroBg');
-  if(!wrap) return;
-  const slides = Array.from(wrap.querySelectorAll('img'));
-  if(slides.length === 0) return;
-
-  let i = 0, timer = null, hover = false;
-  const PREFERS_REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const DURATION = 6000; // 6s
-
-  // бастапқы кадр
-  slides[0].classList.add('active');
-
-  function goTo(n){
-    slides[i]?.classList.remove('active');
-    i = (n + slides.length) % slides.length;
-    slides[i]?.classList.add('active');
-  }
-  function next(){ goTo(i+1); }
-
-  function start(){
-    if (PREFERS_REDUCED) return; // қозғалысқа сезімталдарға анимацияны тоқтатамыз
-    if(timer) clearInterval(timer);
-    timer = setInterval(() => { if(!hover) next(); }, DURATION);
-  }
-  function stop(){ if(timer) clearInterval(timer); }
-
-  // көрініске шыққанда ғана жұмыс істесін
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e => { e.isIntersecting ? start() : stop(); });
-  }, { threshold: 0.25 });
-  io.observe(wrap);
-
-  // hover — пауза
-  const hero = document.querySelector('.hero');
-  if(hero){
-    hero.addEventListener('mouseenter', ()=>{ hover = true; });
-    hero.addEventListener('mouseleave', ()=>{ hover = false; });
-  }
-
-  // свайп (мобайл)
-  let startX = 0;
-  hero?.addEventListener('touchstart', (e)=>{ startX = e.touches[0].clientX; }, {passive:true});
-  hero?.addEventListener('touchend', (e)=>{
-    const dx = e.changedTouches[0].clientX - startX;
-    if (Math.abs(dx) > 45) { dx < 0 ? next() : goTo(i-1); }
-  }, {passive:true});
-
-  // алғашқы бірнеше суретті алдын ала "жылытып" қою
-  slides.slice(0,2).forEach(img => { if(img.decoding) img.decoding = 'async'; });
-
-  // қолмен ауыстыруға қажет болса, сыртқа қайтаруға болады:
-  return { next, goTo, stop, start };
-}
-
-
       // Init
       async function init() {
-        setupHeroBgSlider();
-        setupMobileMenu();
+        initMobileMenu();
         setStaticLinks();
         setupTestimonials();
         setupFAQ();
@@ -3271,7 +2749,6 @@ function setupHeroBgSlider(){
         await loadModulesWithCounts();
         handleRouting();
         loadPublicComments();
-        setupOfflineSlider();
       }
 
       async function checkAuth() {

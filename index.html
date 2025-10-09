@@ -250,48 +250,9 @@
       font-size: 12px;
     }
 
-  
 
-    /* Mobile menu - LEFT SIDEBAR (единственный) */
-/* Mobile menu — левый сайдбар (единственный вариант) */
-/* сайдбар — на реальную высоту окна */
-#mobileMenu{
-  position: fixed;
-  top: 0;
-  left: -300px;
-  width: 300px;
-  height: 100dvh;                /* вместо 100vh — правильно на iOS */
-  background: #fff;
-  border-right: 1px solid var(--line);
-  box-shadow: var(--sh-2);
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  overscroll-behavior: contain;  /* внутри меню скролл не «прокидывается» в фон */
-  z-index: 10010;
-  transition: left .3s ease;
-}
-#mobileMenu.show{ left: 0; }
 
-.menu-backdrop{
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.35);
-  backdrop-filter: blur(2px);
-  display: none;
-  z-index: 10000;
-}
-.menu-backdrop.show{ display:block; }
 
-/* вместо просто overflow:hidden — полноценная блокировка */
-body.menu-open{
-  position: fixed;
-  width: 100%;
-  /* top выставим из JS как отрицательный scrollY: var(--lock-top) */
-  top: var(--lock-top, 0);
-  overflow: hidden;              /* на всякий */
-  touch-action: none;            /* не даём «толкать» фон на тачах */
-}
     /* Hero */
     .hero {
       background: var(--grad-hero);
@@ -1515,9 +1476,12 @@ header .right{ display:flex; align-items:center; gap:8px; }
 
 /* Мобиль: тек керегін қалдыру */
 @media (max-width: 860px){
-  .nav-links{ display:none; }
   .burger{ display:grid; }
   .navbar{ min-height:56px; }
+  .sebepp {
+    display: none;
+  }
+  .nav-links a{ font-size: 10px; gap: 3px;}
 }
 
 /* Фокус */
@@ -1565,18 +1529,7 @@ header .right{ display:flex; align-items:center; gap:8px; }
 #mobileMenu a:last-child{ border-bottom:none; }
 #mobileMenu a:hover{ background:#F9FAFB; color:var(--brand); }
 
-.menu-backdrop{ 
-  z-index: 999; 
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,.35);
-  backdrop-filter: blur(2px);
-  display: none;
-}
-.menu-backdrop.show{ display: block; }
+
 
 .body-lock{
   position: fixed; left:0; right:0; width:100%;
@@ -1813,6 +1766,79 @@ header .right{ display:flex; align-items:center; gap:8px; }
     height: 160px;
   }
 }
+
+
+
+/* ===== Mobile menu — единый вариант (ЛЕВЫЙ САЙДБАР) ===== */
+#mobileMenu{
+  position: fixed;
+  top: 0;
+  left: -300px;
+  width: 300px;
+  height: 100%;                 /* корректно на iOS */
+  background: #fff;
+  border-right: 1px solid var(--line);
+  box-shadow: var(--sh-2);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  z-index: 10010;
+  transition: left .3s ease;
+  padding-top: 70px;
+}
+#mobileMenu.show{ left: 0; display: flex; top: 0;} 
+
+
+/* Верхнее выпадающее бургер меню */
+.burger {
+  display: none;
+  background: none;
+  border: none;
+  color: #222;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* Мобильный вид */
+@media (max-width: 860px) {
+  .nav-links { display: none; }
+  .burger { display: block; }
+
+  .dropdown-menu {
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 5px 15px rgba(0,0,0,.1);
+    display: none;
+    flex-direction: column;
+    z-index: 1000;
+    animation: slideDown .25s ease;
+  }
+
+  .dropdown-menu.show { display: flex; }
+
+  .dropdown-menu a {
+    padding: 14px 18px;
+    border-top: 1px solid #f2f2f2;
+    color: #333;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .dropdown-menu a:hover {
+    background: #f8f8f8;
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
   </style>
 </head>
 <body>
@@ -1821,9 +1847,9 @@ header .right{ display:flex; align-items:center; gap:8px; }
     <div id="mainPage" class="page active">
       <header>
         <div class="container navbar">
-          <a href="#" class="logo" aria-label="Басты бет">
+          <a href="#" id="logo_sebep" class="logo" aria-label="Басты бет">
             <img alt="logo" src="logo.png">
-            "Себепті нүкте сауықтыру" орталығы
+            <p class="sebepp">"Себепті нүкте сауықтыру" орталығы</p> 
           </a>
           <nav class="nav">
             <ul class="nav-links" id="topNavLinks">
@@ -1832,12 +1858,25 @@ header .right{ display:flex; align-items:center; gap:8px; }
               <li><a href="#pricing">Төлем</a></li>
               <li><a href="#faq">Сұрақ-жауап</a></li>
             </ul>
-            <button class="burger" id="burger"
+          
+            <button class="burger" id="burger" aria-label="Мәзір">
+              <i class="fa-solid fa-bars"></i>
+            </button>
+          </nav>
+          
+          <!-- выпадающее меню сверху -->
+          <div class="dropdown-menu" id="dropdownMenu">
+            <a href="#modules">Курстар</a>
+            <a href="#offline">Оффлайн курс</a>
+            <a href="#pricing">Төлем</a>
+            <a href="#faq">Сұрақ-жауап</a>
+          </div>
+            <!-- <button class="burger" id="burger"
                     aria-label="Мәзір"
                     aria-controls="mobileMenu"
                     aria-expanded="false">
               <i class="fa-solid fa-bars"></i>
-            </button>
+            </button> -->
           </nav>
           <div class="right">
             <div id="userInfo" class="user-info" style="display:none;">
@@ -1849,8 +1888,8 @@ header .right{ display:flex; align-items:center; gap:8px; }
         </div>
       </header>
 
-      <nav id="mobileMenu" aria-label="Мобиль мәзір"></nav>
-      <div class="menu-backdrop" id="menuBackdrop"></div>
+      <!-- <nav id="mobileMenu" aria-label="Мобиль мәзір"></nav>
+      <div class="menu-backdrop" id="menuBackdrop"></div> -->
 
       <section class="hero hero-has-slider" id="home" aria-label="Басты бөлім">
         <!-- BG slider -->
@@ -2974,15 +3013,12 @@ header .right{ display:flex; align-items:center; gap:8px; }
   const dim   = DOM.menuBackdrop;
   if(!menu || !btn || !dim) return;
 
-  // наполнить
+  // наполняем меню ссылками из верхней навигации
   menu.innerHTML = '';
   links.forEach(a => {
     const link = document.createElement('a');
     link.href = a.getAttribute('href') || '#';
-    link.textContent = a.textContent;
-    link.style.padding = '16px 20px';
-    link.style.borderBottom = '1px solid var(--line)';
-    link.style.fontWeight = '700';
+    link.textContent = a.textContent || '';
     link.addEventListener('click', (e) => {
       e.preventDefault();
       closeMenu();
@@ -2993,9 +3029,11 @@ header .right{ display:flex; align-items:center; gap:8px; }
     menu.appendChild(link);
   });
 
+  // a11y
   btn.setAttribute('aria-controls','mobileMenu');
   btn.setAttribute('aria-expanded','false');
 
+  // события
   btn.addEventListener('click', () => menu.classList.contains('show') ? closeMenu() : openMenu());
   dim.addEventListener('click', closeMenu);
   document.addEventListener('keydown', e => { if(e.key==='Escape' && menu.classList.contains('show')) closeMenu(); });
@@ -3004,7 +3042,6 @@ header .right{ display:flex; align-items:center; gap:8px; }
   let savedScrollY = 0;
 
   function openMenu(){
-    // фиксируем текущий скролл и «прибиваем» body
     savedScrollY = window.scrollY || document.documentElement.scrollTop || 0;
     document.documentElement.style.setProperty('--lock-top', `-${savedScrollY}px`);
     document.body.classList.add('menu-open');
@@ -3013,7 +3050,6 @@ header .right{ display:flex; align-items:center; gap:8px; }
     dim.classList.add('show');
     btn.setAttribute('aria-expanded','true');
 
-    // фокус
     (menu.querySelector('a')||menu).focus?.({preventScroll:true});
   }
 
@@ -3022,10 +3058,8 @@ header .right{ display:flex; align-items:center; gap:8px; }
     dim.classList.remove('show');
     btn.setAttribute('aria-expanded','false');
 
-    // возвращаем нормальный flow
     document.body.classList.remove('menu-open');
     document.documentElement.style.removeProperty('--lock-top');
-    // возвращаемся на тот же скролл
     window.scrollTo(0, savedScrollY);
 
     btn.focus?.({preventScroll:true});
@@ -3261,7 +3295,6 @@ function setupHeroBgSlider(){
       // Init
       async function init() {
         setupHeroBgSlider();
-        setupMobileMenu();
         setStaticLinks();
         setupTestimonials();
         setupFAQ();
@@ -3290,6 +3323,24 @@ function setupHeroBgSlider(){
 
       init();
     });
+
+
+    // ===== Верхний бургер-меню =====
+const burger = document.getElementById('burger');
+const dropdown = document.getElementById('dropdownMenu');
+
+if (burger && dropdown) {
+  burger.addEventListener('click', () => {
+    dropdown.classList.toggle('show');
+  });
+
+  // Закрытие при клике вне меню
+  document.addEventListener('click', (e) => {
+    if (!burger.contains(e.target) && !dropdown.contains(e.target)) {
+      dropdown.classList.remove('show');
+    }
+  });
+}
   </script>
 </body>
 </html>

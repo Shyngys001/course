@@ -1800,6 +1800,10 @@ header .right{ display:flex; align-items:center; gap:8px; }
   cursor: pointer;
 }
 
+.dropdown-menu a {
+    display: none;
+  }
+
 /* Мобильный вид */
 @media (max-width: 860px) {
   .nav-links { display: none; }
@@ -1827,6 +1831,7 @@ header .right{ display:flex; align-items:center; gap:8px; }
     color: #333;
     font-weight: 600;
     text-decoration: none;
+    display: block;
   }
 
   .dropdown-menu a:hover {

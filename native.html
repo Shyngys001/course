@@ -1,0 +1,2217 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>原始点 академиясы — Денсаулыққа арналған онлайн курстар</title>
+  <meta name="description" content="原始点 академиясы: қауіпсіз табиғи әдістерді үйреніп, денсаулықты жақсартыңыз. Онлайн курстар, Kaspi арқылы төлеу, қолдау WhatsApp-та.">
+  <meta name="theme-color" content="#0B192E">
+  <meta name="color-scheme" content="light dark">
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    /* ===== CSS Variables ===== */
+    :root {
+      --brand: #008000;
+      --brand-dark: #006600;
+      --brand-light: #E8F5E8;
+      --accent: #0984E3;
+      --success: #00B894;
+      --warning: #FDCB6E;
+      --error: #FF6B6B;
+      
+      --bg-primary: #FFFFFF;
+      --bg-secondary: #F8F9FA;
+      --bg-card: #FFFFFF;
+      --bg-overlay: rgba(0, 0, 0, 0.5);
+      
+      --text-primary: #2D3436;
+      --text-secondary: #636E72;
+      --text-muted: #B2BEC3;
+      
+      --border: #DFE6E9;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.12);
+      
+      --radius: 12px;
+      --radius-lg: 16px;
+      
+      --spacing: 16px;
+      --spacing-lg: 24px;
+      --spacing-xl: 32px;
+      
+      --header-height: 64px;
+      --tabbar-height: 72px;
+      --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+      
+      --transition: all 0.3s ease;
+    }
+
+    /* Dark theme */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-primary: #0B192E;
+        --bg-secondary: #15243E;
+        --bg-card: #1E2A44;
+        --bg-overlay: rgba(0, 0, 0, 0.7);
+        
+        --text-primary: #F8F9FA;
+        --text-secondary: #ADB5BD;
+        --text-muted: #6C757D;
+        
+        --border: #2D3748;
+        --shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.35);
+        
+        --brand: #00B894;
+        --brand-dark: #00A885;
+      }
+    }
+
+    /* Theme overrides */
+    .theme-dark {
+      --bg-primary: #0B192E !important;
+      --bg-secondary: #15243E !important;
+      --bg-card: #1E2A44 !important;
+      --bg-overlay: rgba(0, 0, 0, 0.7) !important;
+      
+      --text-primary: #F8F9FA !important;
+      --text-secondary: #ADB5BD !important;
+      --text-muted: #6C757D !important;
+      
+      --border: #2D3748 !important;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.35) !important;
+      
+      --brand: #00B894 !important;
+      --brand-dark: #00A885 !important;
+    }
+
+    .theme-light {
+      --bg-primary: #FFFFFF !important;
+      --bg-secondary: #F8F9FA !important;
+      --bg-card: #FFFFFF !important;
+      --bg-overlay: rgba(0, 0, 0, 0.5) !important;
+      
+      --text-primary: #2D3436 !important;
+      --text-secondary: #636E72 !important;
+      --text-muted: #B2BEC3 !important;
+      
+      --border: #DFE6E9 !important;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+      --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.12) !important;
+      
+      --brand: #008000 !important;
+      --brand-dark: #006600 !important;
+    }
+
+    /* ===== Reset & Base ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.5;
+      font-size: 16px;
+      overflow-x: hidden;
+      transition: var(--transition);
+    }
+
+    /* ===== App Structure ===== */
+    .app {
+      min-height: 100vh;
+      position: relative;
+    }
+
+    .page {
+      display: none;
+      min-height: calc(100vh - var(--tabbar-height) - var(--safe-area-bottom));
+      padding-bottom: calc(var(--tabbar-height) + var(--safe-area-bottom));
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--spacing);
+    }
+
+    /* ===== Header ===== */
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      height: var(--header-height);
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      padding: 0 var(--spacing);
+    }
+
+    .header-title {
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-title i {
+      color: var(--brand);
+    }
+
+    .back-button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 8px 12px;
+      border-radius: var(--radius);
+      background: var(--bg-secondary);
+    }
+
+    .back-button:hover {
+      background: var(--bg-primary);
+    }
+
+    /* ===== Tab Bar ===== */
+    .tab-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      height: calc(var(--tabbar-height) + var(--safe-area-bottom));
+      padding-bottom: var(--safe-area-bottom);
+      display: flex;
+    }
+
+    .tab-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 500;
+      min-height: 44px;
+      padding: 8px 4px;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .tab-item i {
+      font-size: 20px;
+      margin-bottom: 2px;
+      transition: var(--transition);
+    }
+
+    .tab-item.active {
+      color: var(--brand);
+    }
+
+    .tab-item.active i {
+      color: var(--brand);
+      transform: translateY(-2px);
+    }
+
+    .tab-item.active::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 24px;
+      height: 3px;
+      background: var(--brand);
+      border-radius: 2px;
+    }
+
+    /* ===== Common Components ===== */
+    .section {
+      padding: var(--spacing-xl) 0;
+    }
+
+    .section-title {
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .section-title h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .section-title p {
+      color: var(--text-secondary);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 24px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--brand);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--brand-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-secondary);
+    }
+
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      border: 1px solid var(--border);
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+    }
+
+    /* ===== Hero ===== */
+    .hero {
+      padding: var(--spacing-xl) 0;
+      background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 300px;
+      height: 300px;
+      background: var(--brand-light);
+      border-radius: 50%;
+      opacity: 0.3;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 200px;
+      height: 200px;
+      background: var(--brand-light);
+      border-radius: 50%;
+      opacity: 0.2;
+    }
+
+    .hero-content {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      background: var(--brand-light);
+      color: var(--brand);
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: var(--spacing);
+    }
+
+    .hero h1 {
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: var(--spacing);
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--text-secondary);
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: var(--spacing);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ===== Courses Grid (from your site) ===== */
+    .academy-modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+
+    .academy-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      position: relative;
+      border: none;
+    }
+
+    .academy-card:hover {
+      transform: translateY(-12px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .academy-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+    }
+
+    .academy-card-image {
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background: #f8fafc;
+    }
+
+    .module-bg {
+      background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      height: 220px;
+      position: relative;
+    }
+
+    .module-label {
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-align: center;
+      padding: 0 15px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .academy-card:hover .academy-card-image img {
+      transform: scale(1.08);
+    }
+
+    .academy-card-content {
+      padding: 28px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .academy-card-content h3 {
+      color: var(--brand-dark);
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      position: relative;
+      display: inline-block;
+    }
+
+    .academy-card-content h3::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: var(--brand);
+      border-radius: 2px;
+      transition: width 0.5s ease;
+    }
+
+    .academy-card:hover .academy-card-content h3::after {
+      width: 80px;
+    }
+
+    .academy-card-content p {
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      flex-grow: 1;
+      line-height: 1.7;
+      font-size: 1.05rem;
+    }
+
+    .lesson-bg {
+      background: linear-gradient(135deg, var(--brand-light), var(--brand));
+    }
+
+    .lesson-number {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--brand);
+      color: #fff;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 2rem;
+      box-shadow: var(--shadow);
+      z-index: 2;
+    }
+
+    /* ===== Lessons ===== */
+    .lesson-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing);
+      border: 1px solid var(--border);
+      margin-bottom: var(--spacing);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .lesson-card:hover {
+      background: var(--bg-secondary);
+      transform: translateY(-4px);
+    }
+
+    .lesson-header {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--spacing);
+      margin-bottom: var(--spacing);
+    }
+
+    .lesson-number-sm {
+      width: 40px;
+      height: 40px;
+      background: var(--brand);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .lesson-info {
+      flex: 1;
+    }
+
+    .lesson-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .lesson-duration {
+      font-size: 14px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .lesson-description {
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* ===== Video Player ===== */
+    .video-player-page {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg-primary);
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .video-header {
+      padding: var(--spacing);
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .video-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--spacing);
+    }
+
+    .video-iframe {
+      width: 100%;
+      max-width: 800px;
+      aspect-ratio: 16/9;
+      border: none;
+      border-radius: var(--radius);
+      background: black;
+    }
+
+    .comments-section {
+      padding: var(--spacing);
+      max-width: 800px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .comment-form {
+      margin-bottom: var(--spacing);
+    }
+
+    .comment-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-primary);
+      font-family: inherit;
+      margin-bottom: var(--spacing);
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .comments-list {
+      display: grid;
+      gap: var(--spacing);
+    }
+
+    .comment-card {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      padding: var(--spacing);
+      border-left: 3px solid var(--brand);
+    }
+
+    .comment-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .comment-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--brand);
+    }
+
+    .comment-author {
+      font-weight: 600;
+    }
+
+    .comment-date {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .comment-text {
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ===== FAQ ===== */
+    .faq-accordion {
+      display: grid;
+      gap: var(--spacing);
+    }
+
+    .faq-item {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .faq-question {
+      padding: var(--spacing);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .faq-question i {
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.active .faq-question i {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      padding: 0 var(--spacing);
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .faq-item.active .faq-answer {
+      padding: 0 var(--spacing) var(--spacing);
+      max-height: 500px;
+    }
+
+    /* ===== Profile ===== */
+    .profile-header {
+      text-align: center;
+      padding: var(--spacing-xl) 0;
+      background: linear-gradient(135deg, var(--brand) 0%, var(--accent) 100%);
+      color: white;
+      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    }
+
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 32px;
+    }
+
+    .profile-name {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .profile-email {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .profile-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--spacing);
+      margin: var(--spacing-xl) 0;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--brand);
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ===== Modal ===== */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg-overlay);
+      backdrop-filter: blur(8px);
+      z-index: 3000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--spacing);
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+
+    .modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-xl);
+      width: 100%;
+      max-width: 400px;
+      transform: translateY(20px);
+      transition: var(--transition);
+    }
+
+    .modal.active .modal-content {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      margin-bottom: var(--spacing-lg);
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: var(--spacing);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 14px 16px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-primary);
+      font-family: inherit;
+    }
+
+    /* ===== Loading ===== */
+    .loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--spacing-xl);
+      color: var(--text-secondary);
+      grid-column: 1 / -1;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border);
+      border-top-color: var(--brand);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: var(--spacing);
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .error-message {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--error);
+      grid-column: 1 / -1;
+    }
+
+    .error-message i {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      color: var(--error);
+    }
+
+    /* ===== News ===== */
+    .news-grid {
+      display: grid;
+      gap: var(--spacing);
+    }
+
+    .news-card {
+      display: flex;
+      gap: var(--spacing);
+      padding: var(--spacing);
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .news-card:hover {
+      background: var(--bg-secondary);
+    }
+
+    .news-image {
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius);
+      background: var(--bg-secondary);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 24px;
+    }
+
+    .news-content {
+      flex: 1;
+    }
+
+    .news-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .news-date {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .news-excerpt {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ===== Utility ===== */
+    .text-center {
+      text-align: center;
+    }
+    
+    .mb {
+      margin-bottom: var(--spacing);
+    }
+    
+    .mt {
+      margin-top: var(--spacing);
+    }
+
+    .fade-in {
+      animation: fadeIn 0.7s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 28px;
+      }
+      
+      .hero p {
+        font-size: 16px;
+      }
+      
+      .section {
+        padding: var(--spacing-lg) 0;
+      }
+      
+      .section-title h2 {
+        font-size: 20px;
+      }
+      
+      .hero-actions {
+        flex-direction: column;
+      }
+      
+      .btn {
+        width: 100%;
+      }
+      
+      .academy-modules-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .tab-bar {
+        display: none;
+      }
+      
+      .page {
+        padding-bottom: 0;
+      }
+      
+      .academy-modules-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .academy-modules-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Main Page -->
+    <div id="mainPage" class="page active">
+      <header class="app-header">
+        <div class="header-content">
+          <div class="header-title">
+            <i class="fas fa-heartbeat"></i>
+            <span>原始点 академиясы</span>
+          </div>
+          <div>
+            <button class="btn btn-secondary" onclick="showLoginModal()">
+              <i class="fas fa-sign-in-alt"></i> Кіру
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div class="container">
+            <div class="hero-content">
+              <span class="hero-badge">Себебін тапсаң-шипасы табылады</span>
+              <h1>«Себепті нүкте сауықтыру»<br>орталығы</h1>
+              <p>«Жылуың бар өсесің, өнесің, жылуың жоқ өшесің өлесің»</p>
+              <div class="hero-actions">
+                <a href="#modules" class="btn btn-primary">
+                  <i class="fas fa-book-open"></i>Курстарды көру
+                </a>
+                <a href="#author" class="btn btn-secondary">
+                  <i class="fas fa-user-md"></i>Автор жайлы
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="modules" class="section">
+          <div class="container">
+            <div class="section-title">
+              <h2>Онлайн курстар</h2>
+              <p>Өз жылдамдығыңызмен үйретіңіз. Үйде-ақ меңгеріңіз</p>
+            </div>
+            <div class="academy-modules-grid" id="coursesContainer">
+              <div class="loading">
+                <div class="spinner"></div>
+                <p>Курстар жүктелуде...</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="author" class="section">
+          <div class="container">
+            <div class="section-title">
+              <h2>Автор туралы</h2>
+              <p>Тұрсынгүл Әсемхан - 10+ жыл тәжірибесі бар маман</p>
+            </div>
+            <div class="card">
+              <div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+                <div style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--brand), var(--brand-dark)); display: flex; align-items: center; justify-content: center; color: white; font-size: 48px;">
+                  <i class="fas fa-user-md"></i>
+                </div>
+                <div style="flex: 1;">
+                  <h3 style="font-size: 24px; margin-bottom: 8px;">Тұрсынгүл Әсемхан</h3>
+                  <p style="color: var(--text-secondary); margin-bottom: 16px;">
+                    原始点 (Иуан шы дянь) әдісінің 10 жыл тәжірибесі бар медицина маманы. 
+                    Жань Жау Кханьның тікелей шәкірті, Себепті нүкте әдісінің негізін қалаушы.
+                  </p>
+                  <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <span style="display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; background: var(--bg-secondary); border-radius: 20px; font-size: 14px;">
+                      <i class="fas fa-stethoscope" style="color: var(--brand);"></i>10+ жыл тәжірибе
+                    </span>
+                    <span style="display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; background: var(--bg-secondary); border-radius: 20px; font-size: 14px;">
+                      <i class="fas fa-heart-pulse" style="color: var(--brand);"></i>Дәстүрлі ем
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="container">
+            <div class="section-title">
+              <h2>Жиі қойылатын сұрақтар</h2>
+              <p>Сіздің барлық сұрақтарыңызға жауап</p>
+            </div>
+            <div class="faq-accordion">
+              <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                  <span>Қалай кірем?</span>
+                  <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                  <p>Жоғарыдағы «Кіру» батырмасын басып, нөмір мен құпиясөзді енгізесіз.</p>
+                </div>
+              </div>
+              <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                  <span>Төлемнен кейін қолжетімділік?</span>
+                  <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                  <p>Kaspi чегін WhatsApp арқылы жібересіз — менеджер қолжетімділікті қосады.</p>
+                </div>
+              </div>
+              <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                  <span>Видео ашылмаса?</span>
+                  <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                  <p>Интернет пен браузер кэшін тексеріңіз немесе бізге жазыңыз.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- FAQ Page -->
+    <div id="faqPage" class="page">
+      <header class="app-header">
+        <div class="header-content">
+          <a href="#" class="back-button" onclick="showPage('mainPage')">
+            <i class="fas fa-arrow-left"></i>
+            Артқа
+          </a>
+          <div class="header-title">
+            <i class="fas fa-question-circle"></i>
+            <span>Сұрақ-жауап</span>
+          </div>
+          <div></div>
+        </div>
+      </header>
+
+      <main>
+        <section class="section">
+          <div class="container">
+            <div class="section-title">
+              <h2>Жиі қойылатын сұрақтар</h2>
+              <p>Сіздің барлық сұрақтарыңызға жауап</p>
+            </div>
+            <div class="faq-accordion">
+              <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                  <span>Қалай кірем?</span>
+                  <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                  <p>Жоғарыдағы «Кіру» батырмасын басып, нөмір мен құпиясөзді енгізесіз.</p>
+                </div>
+              </div>
+              <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                  <span>Төлемнен кейін қолжетімділік?</span>
+                  <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                  <p>Kaspi чегін WhatsApp арқылы жібересіз — менеджер қолжетімділікті қосады.</p>
+                </div>
+              </div>
+              <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                  <span>Видео ашылмаса?</span>
+                  <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                  <p>Интернет пен браузер кэшін тексеріңіз немесе бізге жазыңыз.</p>
+                </div>
+              </div>
+              <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                  <span>Курсты қалай сатып аламын?</span>
+                  <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                  <p>Курсты таңдап, Kaspi арқылы төлеңіз. Төлемнен кейін чекті менеджерге жіберіңіз.</p>
+                </div>
+              </div>
+              <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                  <span>Қанша уақытқа қолжетімді?</span>
+                  <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                  <p>Курсқа төлегеннен кейін 1 жыл бойы шектеусіз қолжетімділік аласыз.</p>
+                </div>
+              </div>
+              <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                  <span>Қауіпсіз бе?</span>
+                  <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                  <p>Иә, барлық тәсілдер қауіпсіз және табиғи. Бірақ әрқашан сақтықпен жасаңыз.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Profile Page -->
+    <div id="profilePage" class="page">
+      <header class="app-header">
+        <div class="header-content">
+          <a href="#" class="back-button" onclick="showPage('mainPage')">
+            <i class="fas fa-arrow-left"></i>
+            Артқа
+          </a>
+          <div class="header-title">
+            <i class="fas fa-user"></i>
+            <span>Профиль</span>
+          </div>
+          <div></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="profile-header">
+          <div class="profile-avatar">
+            <i class="fas fa-user-circle"></i>
+          </div>
+          <div class="profile-name" id="userName">Қонақ</div>
+          <div class="profile-email" id="userEmail">Кіру керек</div>
+        </div>
+
+        <section class="section">
+          <div class="container">
+            <div class="profile-stats">
+              <div class="stat-item">
+                <div class="stat-value" id="statCourses">0</div>
+                <div class="stat-label">Курс</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value" id="statLessons">0</div>
+                <div class="stat-label">Сабақ</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value" id="statDays">0</div>
+                <div class="stat-label">Күн</div>
+              </div>
+            </div>
+
+            <div class="mb">
+              <h3 class="mb">Менің курстарым</h3>
+              <div class="card mb" id="myCourses">
+                <p style="color: var(--text-secondary); text-align: center; padding: 20px;">Әзірше курс сатып алмадыңыз</p>
+              </div>
+              <button class="btn btn-primary" onclick="showPage('mainPage')">
+                <i class="fas fa-shopping-cart"></i>Курстарды көру
+              </button>
+            </div>
+
+            <div class="mb">
+              <h3 class="mb">Параметрлер</h3>
+              <div class="card">
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                  <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <span>Тема</span>
+                    <select class="form-control" style="width: auto; padding: 8px 12px;" id="themeSelect" onchange="changeTheme(this.value)">
+                      <option value="auto">Автоматты</option>
+                      <option value="dark">Қараңғы</option>
+                      <option value="light">Ақ</option>
+                    </select>
+                  </div>
+                  <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <span>Тіл</span>
+                    <select class="form-control" style="width: auto; padding: 8px 12px;" id="languageSelect">
+                      <option value="kk">Қазақша</option>
+                      <option value="ru">Орысша</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <button class="btn btn-secondary" id="logoutBtn" style="display: none; width: 100%;" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>Шығу
+              </button>
+              <button class="btn btn-primary" id="loginBtn" style="width: 100%;" onclick="showLoginModal()">
+                <i class="fas fa-sign-in-alt"></i>Кіру
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Lessons Page -->
+    <div id="lessonsPage" class="page">
+      <header class="app-header">
+        <div class="header-content">
+          <a href="#" class="back-button" onclick="showPage('mainPage')">
+            <i class="fas fa-arrow-left"></i>
+            Артқа
+          </a>
+          <div class="header-title" id="lessonPageTitle">Сабақтар</div>
+          <div></div>
+        </div>
+      </header>
+
+      <main>
+        <section class="section">
+          <div class="container">
+            <div class="section-title">
+              <h2 id="moduleTitle">Модуль сабақтары</h2>
+              <p id="moduleDescription">Оқу үшін сабақты таңдаңыз</p>
+            </div>
+            <div class="academy-modules-grid" id="lessonsContainer">
+              <div class="loading">
+                <div class="spinner"></div>
+                <p>Сабақтар жүктелуде...</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Tab Bar -->
+    <nav class="tab-bar">
+      <a href="#" class="tab-item active" onclick="showPage('mainPage')">
+        <i class="fas fa-book"></i>
+        <span>Курстар</span>
+      </a>
+      <a href="#" class="tab-item" onclick="showPage('faqPage')">
+        <i class="fas fa-question-circle"></i>
+        <span>FAQ</span>
+      </a>
+      <a href="#" class="tab-item" onclick="showPage('profilePage')">
+        <i class="fas fa-user"></i>
+        <span>Профиль</span>
+      </a>
+    </nav>
+
+    <!-- Video Player -->
+    <div id="videoPlayerPage" class="video-player-page" style="display: none;">
+      <div class="video-header">
+        <button class="btn btn-secondary" onclick="closeVideo()">
+          <i class="fas fa-times"></i> Жабу
+        </button>
+        <span id="videoTitle">Бейнесабақ</span>
+        <div></div>
+      </div>
+      <div class="video-content">
+        <iframe id="videoPlayer" class="video-iframe" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="comments-section">
+        <h3 class="mb">Пікірлер</h3>
+        <div class="comment-form">
+          <textarea class="comment-input" id="commentInput" placeholder="Пікіріңізді жазыңыз..."></textarea>
+          <button class="btn btn-primary" onclick="addComment()">
+            <i class="fas fa-paper-plane"></i>Жіберу
+          </button>
+        </div>
+        <div class="comments-list" id="commentsList">
+          <!-- Комментарии будут загружаться здесь -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Аккаунтқа кіру</h3>
+          <p>Курстарға қол жеткізу үшін кіріңіз</p>
+        </div>
+        <form onsubmit="event.preventDefault(); login()">
+          <div class="form-group">
+            <label>Телефон нөмірі</label>
+            <input type="tel" class="form-control" id="phoneInput" placeholder="+7 XXX XXX XX XX" required>
+          </div>
+          <div class="form-group">
+            <label>Құпиясөз</label>
+            <input type="password" class="form-control" id="passwordInput" placeholder="Құпиясөз" required>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%;">
+            <i class="fas fa-sign-in-alt"></i>Кіру
+          </button>
+        </form>
+        <div style="text-align: center; margin-top: 20px;">
+          <p style="color: var(--text-secondary); margin-bottom: 12px;">Немесе әлеуметтік желі арқылы</p>
+          <div style="display: flex; gap: 12px; justify-content: center;">
+            <a href="https://wa.me/77479894879" target="_blank" class="btn btn-secondary">
+              <i class="fab fa-whatsapp"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // URLs (как в вашем сайте)
+    const SESS_URL = 'https://script.google.com/macros/s/AKfycbwp61ZemVXyhVy3s2CBDYnfWBZaVhmsGiqzG9U4i4KGCoNykLNZrHwQRBny6iaAJusZ/exec';
+    const CONFIG = {
+      spreadsheetId: '1fBxicZo7HkKXpoUVRtZvc628oG7rxLeSgcIgmruTd5Y',
+      sheets: { modules:'Модули', lessons:'Видеоуроки', users:'Юзеры', comments:'comment' }
+    };
+    const COMMENT_URL = 'https://script.google.com/macros/s/AKfycbwiWkQUZHiw9TcQNcXsQxwHBK-Qi6nzFrXQwEEe_NO-SxjNLNwp2e841WzvoxCrGWny/exec';
+
+    // State management
+    const state = {
+      currentUser: null,
+      currentModule: null,
+      currentVideo: null,
+      modules: [],
+      lessonsAll: [],
+      comments: {},
+      currentPage: 'mainPage',
+      lessonsFetchedAt: 0
+    };
+
+    let sessionTimer = null;
+
+    // DOM elements
+    const DOM = {
+      pages: document.querySelectorAll('.page'),
+      tabItems: document.querySelectorAll('.tab-item'),
+      loginModal: document.getElementById('loginModal'),
+      coursesContainer: document.getElementById('coursesContainer'),
+      lessonsContainer: document.getElementById('lessonsContainer'),
+      lessonPageTitle: document.getElementById('lessonPageTitle'),
+      moduleTitle: document.getElementById('moduleTitle'),
+      moduleDescription: document.getElementById('moduleDescription'),
+      videoPlayerPage: document.getElementById('videoPlayerPage'),
+      videoPlayer: document.getElementById('videoPlayer'),
+      videoTitle: document.getElementById('videoTitle'),
+      commentInput: document.getElementById('commentInput'),
+      commentsList: document.getElementById('commentsList'),
+      userName: document.getElementById('userName'),
+      userEmail: document.getElementById('userEmail'),
+      logoutBtn: document.getElementById('logoutBtn'),
+      loginBtn: document.getElementById('loginBtn'),
+      statCourses: document.getElementById('statCourses'),
+      statLessons: document.getElementById('statLessons'),
+      statDays: document.getElementById('statDays'),
+      myCourses: document.getElementById('myCourses'),
+      themeSelect: document.getElementById('themeSelect'),
+      languageSelect: document.getElementById('languageSelect')
+    };
+
+    // Initialize app
+    document.addEventListener('DOMContentLoaded', () => {
+      initApp();
+    });
+
+    function initApp() {
+      // Load theme
+      loadTheme();
+      
+      // Load modules
+      loadModulesWithCounts();
+      
+      // Check auth
+      checkAuth();
+      
+      // Setup FAQ
+      setupFAQ();
+      
+      // Setup smooth scrolling
+      setupSmoothScroll();
+      
+      // Set current year
+      setCurrentYear();
+      
+      // Setup event listeners
+      setupEventListeners();
+    }
+
+    // Page navigation
+    function showPage(pageId) {
+      // Update state
+      state.currentPage = pageId;
+      
+      // Hide all pages
+      DOM.pages.forEach(page => {
+        page.classList.remove('active');
+      });
+      
+      // Show target page
+      const targetPage = document.getElementById(pageId);
+      if (targetPage) {
+        targetPage.classList.add('active');
+      }
+      
+      // Update tab bar
+      updateTabBar(pageId);
+      
+      // Scroll to top
+      window.scrollTo(0, 0);
+      
+      // Handle page-specific logic
+      handlePageShow(pageId);
+    }
+
+    function updateTabBar(pageId) {
+      // Map page to tab
+      const pageToTab = {
+        'mainPage': 0,
+        'faqPage': 1,
+        'profilePage': 2
+      };
+      
+      const tabIndex = pageToTab[pageId];
+      if (tabIndex !== undefined) {
+        DOM.tabItems.forEach((tab, index) => {
+          tab.classList.toggle('active', index === tabIndex);
+        });
+      }
+    }
+
+    function handlePageShow(pageId) {
+      switch(pageId) {
+        case 'profilePage':
+          updateProfilePage();
+          break;
+        case 'lessonsPage':
+          if (state.currentModule) {
+            loadLessons(state.currentModule.id);
+          }
+          break;
+      }
+    }
+
+    // Theme functions
+    function loadTheme() {
+      const savedTheme = localStorage.getItem('theme') || 'auto';
+      DOM.themeSelect.value = savedTheme;
+      applyTheme(savedTheme);
+    }
+
+    function changeTheme(theme) {
+      localStorage.setItem('theme', theme);
+      applyTheme(theme);
+    }
+
+    function applyTheme(theme) {
+      document.body.classList.remove('theme-light', 'theme-dark');
+      
+      if (theme === 'light' || (theme === 'auto' && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+        document.body.classList.add('theme-light');
+      } else if (theme === 'dark' || (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.body.classList.add('theme-dark');
+      }
+    }
+
+    // Sheets data functions
+    async function fetchSheetData(sheet) {
+      const url = `https://docs.google.com/spreadsheets/d/${CONFIG.spreadsheetId}/gviz/tq?sheet=${encodeURIComponent(sheet)}&tqx=out:json`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(res.status);
+      const text = await res.text();
+      const json = JSON.parse(text.slice(text.indexOf('{'), text.lastIndexOf('}') + 1));
+      return json.table.rows.map(r => {
+        const obj = {};
+        r.c.forEach((cell, i) => {
+          const key = json.table.cols[i].label.trim();
+          obj[key] = cell && cell.v != null ? String(cell.v).trim() : '';
+        });
+        return obj;
+      });
+    }
+
+    async function loadModulesWithCounts() {
+      try {
+        const [modules, lessons] = await Promise.all([
+          fetchSheetData(CONFIG.sheets.modules),
+          fetchSheetData(CONFIG.sheets.lessons)
+        ]);
+
+        state.modules = modules;
+        state.lessonsAll = lessons;
+        state.lessonsFetchedAt = Date.now();
+
+        const counts = lessons.reduce((a, l) => {
+          const m = String(l.module_id);
+          a[m] = (a[m] || 0) + 1;
+          return a;
+        }, {});
+
+        renderModules(modules, counts);
+      } catch (err) {
+        console.error('Модульдерді жүктеу қатесі:', err);
+        DOM.coursesContainer.innerHTML = `
+          <div class="error-message">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>Модульдерді жүктеу мүмкін емес</h3>
+            <p>Кейінірек қайталап көріңіз</p>
+          </div>`;
+      }
+    }
+
+    function renderModules(modules, lessonCounts) {
+      DOM.coursesContainer.innerHTML = '';
+      DOM.coursesContainer.className = 'academy-modules-grid';
+      
+      modules.forEach((mod, i) => {
+        const count = lessonCounts[String(mod.id)] || 0;
+        const isPurchased = state.currentUser?.purchasedCourses?.includes(parseInt(mod.id)) || false;
+        
+        const card = document.createElement('div');
+        card.className = 'academy-card fade-in';
+        card.style.animationDelay = `${i * 0.1}s`;
+        card.innerHTML = `
+          <div class="academy-card-image module-bg">
+            <div class="module-label">${mod.name}</div>
+          </div>
+          <div class="academy-card-content">
+            <h3>${mod.name}</h3>
+            <p>${mod.description}</p>
+            <p style="margin-top:8px; color:var(--brand); font-weight:600;">Сабақ саны: ${count}</p>
+            <button class="btn ${isPurchased ? 'btn-primary' : 'btn-secondary'} view-lessons" 
+                    data-module-id="${mod.id}" 
+                    data-module-name="${encodeURIComponent(mod.name)}"
+                    data-module-description="${encodeURIComponent(mod.description)}">
+              <i class="fas ${isPurchased ? 'fa-book-reader' : 'fa-lock'}"></i> 
+              ${isPurchased ? 'Сабақтарды қарау' : mod.price ? `${mod.price} ₸` : 'Курсты алу'}
+            </button>
+          </div>`;
+        DOM.coursesContainer.appendChild(card);
+      });
+
+      document.querySelectorAll('.view-lessons').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const moduleId = btn.dataset.moduleId;
+          const moduleName = decodeURIComponent(btn.dataset.moduleName);
+          const moduleDescription = decodeURIComponent(btn.dataset.moduleDescription);
+          
+          state.currentModule = {
+            id: moduleId,
+            name: moduleName,
+            description: moduleDescription
+          };
+
+          // Check if user needs to login or purchase
+          const isPurchased = state.currentUser?.purchasedCourses?.includes(parseInt(moduleId)) || false;
+          
+          if (!isPurchased && !state.currentUser) {
+            showLoginModal();
+            return;
+          }
+          
+          if (!isPurchased) {
+            if (confirm(`"${moduleName}" курсын сатып алу керек. Төлем жасағыңыз келе ме?`)) {
+              // Здесь можно добавить ссылку на Kaspi Pay
+              window.open('https://pay.kaspi.kz/pay', '_blank');
+              return;
+            }
+            return;
+          }
+          
+          // Update lesson page
+          DOM.lessonPageTitle.textContent = moduleName;
+          DOM.moduleTitle.textContent = `${moduleName} модулінің сабақтары`;
+          DOM.moduleDescription.textContent = moduleDescription;
+          
+          // Show lessons page
+          showPage('lessonsPage');
+        });
+      });
+    }
+
+    async function loadLessons(moduleId) {
+      DOM.lessonsContainer.innerHTML = '<div class="loading"><div class="spinner"></div><p>Сабақтар жүктелуде...</p></div>';
+      DOM.lessonsContainer.className = 'academy-modules-grid';
+
+      const needRefresh = !Array.isArray(state.lessonsAll) ||
+        (Date.now() - state.lessonsFetchedAt > 2 * 60 * 1000);
+      
+      if (needRefresh) {
+        try {
+          const fresh = await fetchSheetData(CONFIG.sheets.lessons);
+          state.lessonsAll = fresh;
+          state.lessonsFetchedAt = Date.now();
+          const subset = fresh.filter(x => String(x.module_id) === String(moduleId));
+          renderLessons(subset);
+        } catch (e) {
+          console.error('Сабақтарды жүктеу қатесі:', e);
+          if (!Array.isArray(state.lessonsAll)) {
+            DOM.lessonsContainer.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-triangle"></i><h3>Сабақтарды жүктеу мүмкін емес</h3></div>';
+          }
+        }
+      } else {
+        const subset = state.lessonsAll.filter(x => String(x.module_id) === String(moduleId));
+        renderLessons(subset);
+      }
+    }
+
+    function renderLessons(lessons) {
+      if (!lessons.length) {
+        DOM.lessonsContainer.innerHTML = `
+          <div class="error-message">
+            <i class="fas fa-video"></i>
+            <h3>Сабақтар табылмады</h3>
+            <p>Әзірше осы модульге сабақ жоқ</p>
+          </div>`;
+        return;
+      }
+      
+      DOM.lessonsContainer.innerHTML = '';
+      lessons.forEach((l, i) => {
+        const card = document.createElement('div');
+        card.className = 'academy-card fade-in';
+        card.style.animationDelay = `${i * 0.1}s`;
+        card.innerHTML = `
+          <div class="academy-card-image lesson-bg">
+            <div class="lesson-number">${i + 1}</div>
+          </div>
+          <div class="academy-card-content">
+            <h3>${l.name}</h3>
+            <p>${l.description}</p>
+            <div style="display:flex; gap:12px; margin-top:20px;">
+              <button class="btn btn-primary play-video" 
+                      data-lesson-id="${l.id}" 
+                      data-video-url="${l.video_url || ''}"
+                      data-lesson-title="${encodeURIComponent(l.name)}">
+                <i class="fas fa-play-circle"></i> Қарау
+              </button>
+              ${l.pdf_url ? `<a href="${l.pdf_url}" class="btn btn-ghost" target="_blank"><i class="fas fa-file-pdf"></i> Презентация</a>` : ''}
+            </div>
+          </div>`;
+        DOM.lessonsContainer.appendChild(card);
+      });
+      
+      document.querySelectorAll('.play-video').forEach(btn => {
+        btn.addEventListener('click', () => playVideo(btn));
+      });
+    }
+
+    // Video player functions
+    function extractGoogleDriveId(url) {
+      if (!url) return null;
+      const patterns = [
+        /\/d\/([A-Za-z0-9_-]+)/,
+        /\/file\/d\/([A-Za-z0-9_-]+)/,
+        /id=([A-Za-z0-9_-]+)/,
+        /([A-Za-z0-9_-]{25,})/
+      ];
+      for (const pattern of patterns) {
+        const match = url.match(pattern);
+        if (match && match[1]) return match[1];
+      }
+      return null;
+    }
+
+    function playVideo(button) {
+      const videoUrl = button.dataset.videoUrl;
+      const lessonTitle = decodeURIComponent(button.dataset.lessonTitle);
+      const driveId = extractGoogleDriveId(videoUrl);
+      
+      if (!driveId) {
+        showNotification('Бейне табылмады', 'error');
+        return;
+      }
+      
+      state.currentVideo = { id: driveId, title: lessonTitle };
+      
+      // Update video player
+      DOM.videoTitle.textContent = lessonTitle;
+      DOM.videoPlayer.src = `https://drive.google.com/file/d/${driveId}/preview`;
+      
+      // Show video player
+      DOM.videoPlayerPage.style.display = 'flex';
+      
+      // Load comments
+      loadComments(driveId);
+    }
+
+    function closeVideo() {
+      // Stop video
+      DOM.videoPlayer.src = '';
+      
+      // Hide video player
+      DOM.videoPlayerPage.style.display = 'none';
+      
+      // Clear comment input
+      if (DOM.commentInput) {
+        DOM.commentInput.value = '';
+      }
+    }
+
+    // Comments functions
+    async function loadComments(videoId) {
+      DOM.commentsList.innerHTML = '<div class="loading"><div class="spinner"></div><p>Пікірлер жүктелуде...</p></div>';
+      
+      try {
+        const all = await fetchSheetData(CONFIG.sheets.comments);
+        const comments = all.filter(c => String(c.video_id) === String(videoId));
+        
+        DOM.commentsList.innerHTML = comments.length ? 
+          comments.map(comment => `
+            <div class="comment-card">
+              <div class="comment-header">
+                <div class="comment-avatar">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div>
+                  <div class="comment-author">${comment.user || 'Қолданушы'}</div>
+                  <div class="comment-date">${comment.date || ''}</div>
+                </div>
+              </div>
+              <div class="comment-text">${comment.comment || ''}</div>
+            </div>
+          `).join('') : 
+          '<div class="comment-card"><p style="color: var(--text-muted); text-align: center;">Әзірше пікір жоқ</p></div>';
+      } catch (error) {
+        console.error('Пікірлерді жүктеу қатесі:', error);
+        DOM.commentsList.innerHTML = '<div class="comment-card"><p style="color: var(--error); text-align: center;">Пікірлерді жүктеу мүмкін емес</p></div>';
+      }
+    }
+
+    async function addComment() {
+      if (!state.currentVideo || !DOM.commentInput) return;
+      
+      const text = DOM.commentInput.value.trim();
+      if (!text) return;
+      
+      if (!state.currentUser) {
+        showNotification('Пікір қалдыру үшін кіріңіз', 'error');
+        showLoginModal();
+        return;
+      }
+      
+      try {
+        const url = COMMENT_URL + `?action=add&video_id=${encodeURIComponent(state.currentVideo.id)}&user=${encodeURIComponent(state.currentUser.name)}&comment=${encodeURIComponent(text)}`;
+        const response = await fetch(url);
+        const result = await response.json();
+        
+        if (result.status === 'success') {
+          showNotification('Пікіріңіз қосылды!', 'success');
+          DOM.commentInput.value = '';
+          loadComments(state.currentVideo.id);
+        } else {
+          showNotification('Пікір қосу қатесі', 'error');
+        }
+      } catch (error) {
+        console.error('Пікір қосу қатесі:', error);
+        showNotification('Пікір қосу мүмкін емес', 'error');
+      }
+    }
+
+    // Auth functions
+    async function checkAuth() {
+      const user = localStorage.getItem('eduplatform_user');
+      if (user) {
+        try {
+          state.currentUser = JSON.parse(user);
+          await verifySession();
+        } catch (error) {
+          console.error('Аутентификация қатесі:', error);
+          forceLogout();
+        }
+      }
+      updateUserUI();
+    }
+
+    async function login() {
+      const phone = document.getElementById('phoneInput').value;
+      const password = document.getElementById('passwordInput').value;
+      
+      if (!phone || !password) {
+        showNotification('Барлық өрістерді толтырыңыз', 'error');
+        return;
+      }
+      
+      try {
+        const url = `${SESS_URL}?action=login&login=${encodeURIComponent(phone)}&password=${encodeURIComponent(password)}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        
+        if (data.ok) {
+          state.currentUser = { 
+            name: data.name || phone, 
+            login: phone, 
+            token: data.token,
+            purchasedCourses: data.purchasedCourses || []
+          };
+          
+          localStorage.setItem('eduplatform_user', JSON.stringify(state.currentUser));
+          updateUserUI();
+          hideLoginModal();
+          showNotification('Сәтті кірдіңіз!', 'success');
+          startHeartbeat();
+          
+          // Refresh modules to show purchased status
+          loadModulesWithCounts();
+        } else {
+          showNotification('Қате логин немесе құпиясөз', 'error');
+        }
+      } catch (error) {
+        console.error('Кіру қатесі:', error);
+        showNotification('Сервер қолжетімсіз', 'error');
+      }
+    }
+
+    async function verifySession() {
+      if (!state.currentUser) return false;
+      
+      try {
+        const res = await fetch(
+          `${SESS_URL}?action=verify&login=${encodeURIComponent(state.currentUser.login)}&token=${encodeURIComponent(state.currentUser.token)}`,
+          { cache: 'no-store' }
+        );
+        const data = await res.json();
+        return !!data.ok;
+      } catch {
+        return null;
+      }
+    }
+
+    function startHeartbeat() {
+      if (sessionTimer) clearInterval(sessionTimer);
+      
+      sessionTimer = setInterval(async () => {
+        if (!state.currentUser) return;
+        
+        try {
+          const ok = await verifySession();
+          if (!ok) {
+            forceLogout('Сессия аяқталды');
+          }
+        } catch {
+          // Ignore heartbeat errors
+        }
+      }, 30000);
+    }
+
+    function forceLogout(message) {
+      if (state.currentUser) {
+        fetch(`${SESS_URL}?action=logout&login=${encodeURIComponent(state.currentUser.login)}&token=${encodeURIComponent(state.currentUser.token)}`)
+          .catch(() => {});
+      }
+      
+      localStorage.removeItem('eduplatform_user');
+      state.currentUser = null;
+      
+      if (sessionTimer) {
+        clearInterval(sessionTimer);
+        sessionTimer = null;
+      }
+      
+      updateUserUI();
+      
+      if (message) {
+        showNotification(message, 'info');
+      }
+      
+      // Refresh modules to show lock status
+      loadModulesWithCounts();
+    }
+
+    function logout() {
+      forceLogout('Сіз жүйеден шықтыңыз');
+    }
+
+    function updateUserUI() {
+      const isLoggedIn = !!state.currentUser;
+      
+      if (DOM.userName) {
+        DOM.userName.textContent = isLoggedIn ? state.currentUser.name : 'Қонақ';
+      }
+      
+      if (DOM.userEmail) {
+        DOM.userEmail.textContent = isLoggedIn ? state.currentUser.login : 'Кіру керек';
+      }
+      
+      if (DOM.logoutBtn) {
+        DOM.logoutBtn.style.display = isLoggedIn ? 'block' : 'none';
+      }
+      
+      if (DOM.loginBtn) {
+        DOM.loginBtn.style.display = isLoggedIn ? 'none' : 'block';
+      }
+      
+      // Update stats if logged in
+      if (isLoggedIn) {
+        const purchasedCount = state.currentUser.purchasedCourses?.length || 0;
+        DOM.statCourses.textContent = purchasedCount;
+        DOM.statLessons.textContent = state.lessonsAll.filter(l => 
+          state.currentUser.purchasedCourses?.includes(parseInt(l.module_id))
+        ).length;
+        DOM.statDays.textContent = '1'; // Можно добавить реальный расчет
+        
+        updateMyCourses();
+      } else {
+        DOM.statCourses.textContent = '0';
+        DOM.statLessons.textContent = '0';
+        DOM.statDays.textContent = '0';
+        DOM.myCourses.innerHTML = '<p style="color: var(--text-secondary); text-align: center; padding: 20px;">Әзірше курс сатып алмадыңыз</p>';
+      }
+    }
+
+    function updateMyCourses() {
+      if (!state.currentUser || !state.currentUser.purchasedCourses) return;
+      
+      const purchasedModules = state.modules.filter(m => 
+        state.currentUser.purchasedCourses.includes(parseInt(m.id))
+      );
+      
+      if (purchasedModules.length === 0) {
+        DOM.myCourses.innerHTML = '<p style="color: var(--text-secondary); text-align: center; padding: 20px;">Әзірше курс сатып алмадыңыз</p>';
+        return;
+      }
+      
+      DOM.myCourses.innerHTML = purchasedModules.map(module => `
+        <div style="padding: 12px; border-bottom: 1px solid var(--border);">
+          <h4 style="margin-bottom: 4px;">${module.name}</h4>
+          <p style="font-size: 14px; color: var(--text-muted);">${module.description}</p>
+          <button class="btn btn-primary" style="margin-top: 8px; font-size: 14px; padding: 8px 16px;"
+                  onclick="openModule(${module.id})">
+            <i class="fas fa-book-reader"></i> Жалғастыру
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function updateProfilePage() {
+      updateUserUI();
+    }
+
+    // Modal functions
+    function showLoginModal() {
+      DOM.loginModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function hideLoginModal() {
+      DOM.loginModal.classList.remove('active');
+      document.body.style.overflow = '';
+      document.getElementById('phoneInput').value = '';
+      document.getElementById('passwordInput').value = '';
+    }
+
+    // FAQ functions
+    function setupFAQ() {
+      document.querySelectorAll('.faq-item').forEach(item => {
+        item.addEventListener('click', function() {
+          this.classList.toggle('active');
+        });
+      });
+    }
+
+    function toggleFaq(element) {
+      element.classList.toggle('active');
+    }
+
+    // Smooth scroll
+    function setupSmoothScroll() {
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (href === '#' || !href.startsWith('#')) return;
+          
+          e.preventDefault();
+          const targetElement = document.querySelector(href);
+          
+          if (targetElement && state.currentPage === 'mainPage') {
+            const headerHeight = document.querySelector('.app-header').offsetHeight;
+            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+            
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+            
+            // Update URL hash
+            history.pushState(null, '', href);
+          }
+        });
+      });
+    }
+
+    // Notifications
+    function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'success' ? 'var(--success)' : type === 'error' ? 'var(--error)' : 'var(--accent)'};
+        color: white;
+        padding: 12px 24px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-lg);
+        z-index: 9999;
+        transform: translateX(120%);
+        transition: transform 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      `;
+      
+      notification.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+        <span>${message}</span>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+      }, 10);
+      
+      setTimeout(() => {
+        notification.style.transform = 'translateX(120%)';
+        setTimeout(() => notification.remove(), 300);
+      }, 3000);
+    }
+
+    // Utility
+    function setCurrentYear() {
+      const yearElements = document.querySelectorAll('.current-year');
+      yearElements.forEach(el => {
+        el.textContent = new Date().getFullYear();
+      });
+    }
+
+    function setupEventListeners() {
+      // Close modal when clicking outside
+      DOM.loginModal.addEventListener('click', (e) => {
+        if (e.target === DOM.loginModal) {
+          hideLoginModal();
+        }
+      });
+
+      // Close modal with Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && DOM.loginModal.classList.contains('active')) {
+          hideLoginModal();
+        }
+      });
+
+      // Theme change listener
+      const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      darkModeMediaQuery.addEventListener('change', (e) => {
+        if (localStorage.getItem('theme') === 'auto') {
+          applyTheme('auto');
+        }
+      });
+
+      // Language change
+      if (DOM.languageSelect) {
+        DOM.languageSelect.addEventListener('change', function() {
+          showNotification('Тіл өзгерді: ' + this.options[this.selectedIndex].text, 'info');
+        });
+      }
+    }
+
+    // Open module function (for profile page)
+    function openModule(moduleId) {
+      const module = state.modules.find(m => m.id === moduleId);
+      if (!module) return;
+      
+      state.currentModule = {
+        id: module.id,
+        name: module.name,
+        description: module.description
+      };
+      
+      // Update lesson page
+      DOM.lessonPageTitle.textContent = module.name;
+      DOM.moduleTitle.textContent = `${module.name} модулінің сабақтары`;
+      DOM.moduleDescription.textContent = module.description;
+      
+      // Show lessons page
+      showPage('lessonsPage');
+    }
+  </script>
+</body>
+</html>

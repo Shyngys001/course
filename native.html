@@ -1269,6 +1269,70 @@
 .news-title{ font-weight:800; margin-bottom:6px; }
 .news-date{ color: var(--text-muted); font-size:12px; margin-bottom:10px; }
 .news-text{ color: var(--text-secondary); line-height:1.6; }
+
+/* ===== Segmented Tabs (Ақылы / Бонус) — BIG + CENTER ===== */
+.segment-tabs{
+  display:flex;
+  justify-content:center;      /* ✅ центр */
+  align-items:center;
+  gap:14px;
+  margin:16px 0 22px;
+  width:100%;
+}
+
+.segment-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+
+  /* ✅ үлкейту */
+  padding:14px 22px;
+  min-height:48px;
+  min-width:140px;
+
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:var(--bg-card);
+  color:var(--text-secondary);
+  font-weight:800;
+  font-size:16px;
+
+  cursor:pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+
+.segment-btn i{
+  font-size:16px;
+  opacity:.9;
+}
+
+.segment-btn:hover{
+  transform: translateY(-1px);
+}
+
+.segment-btn.active{
+  background: rgba(0,128,0,.14);
+  border-color: rgba(0,128,0,.45);
+  color: var(--brand);
+  box-shadow: 0 6px 18px rgba(0,128,0,.16);
+}
+
+.segment-btn.active i{ opacity:1; }
+
+/* ✅ мобайлда толық енімен, екеуі тең */
+@media (max-width: 480px){
+  .segment-tabs{
+    gap:10px;
+    padding: 0 6px;
+  }
+  .segment-btn{
+    flex:1;                   /* ✅ 2 батырма тең */
+    min-width: 0;
+    padding:14px 16px;
+  }
+}
   </style>
 </head>
 <body>
@@ -1490,7 +1554,7 @@
                       <option value="dark">Қара</option>
                     </select>
                   </div>
-                  <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <div style="display: none; align-items: center; justify-content: space-between;">
                     <span>Тіл</span>
                     <select class="form-control" style="width: auto; padding: 8px 12px;" id="languageSelect">
                       <option value="kk">Қазақша</option>

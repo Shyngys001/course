@@ -447,6 +447,27 @@
       background: #f8fafc;
     }
 
+    /* Картинка как фон для карточки */
+.academy-card-image.is-image {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Лёгкий затемняющий градиент поверх картинки (красиво читается текст) */
+.academy-card-image.is-image::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.35));
+}
+
+/* Чтобы контент внутри был поверх */
+.academy-card-image > * {
+  position: relative;
+  z-index: 1;
+}
+
     .module-bg {
       background: linear-gradient(135deg, var(--brand), var(--brand-dark));
       display: flex;
@@ -701,6 +722,9 @@
     .comments-list {
       display: grid;
       gap: var(--spacing);
+      max-height: 400px;
+      overflow-y: auto;
+      padding: 10px;
     }
 
     .comment-card {
@@ -1136,6 +1160,15 @@
       .footer-links {
         flex-direction: column;
         gap: 10px;
+      }
+      
+      .video-navigation {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .video-navigation .btn {
+        width: 100%;
       }
     }
 
@@ -1828,82 +1861,79 @@
     }
 
     function renderModules(modules, lessonCounts) {
-      DOM.coursesContainer.innerHTML = '';
-      DOM.coursesContainer.className = 'academy-modules-grid';
-      
-      modules.forEach((mod, i) => {
-        const count = lessonCounts[String(mod.id)] || 0;
-        
-        // ВАЖНО: Изменена логика проверки доступа
-        // Если пользователь залогинен и включен режим тестирования, даем доступ ко всем курсам
-        const isPurchased = state.currentUser && ALLOW_ALL_COURSES_FOR_LOGGED_IN 
-          ? true 
-          : (state.currentUser?.purchasedCourses?.includes(parseInt(mod.id)) || false);
-        
-        const card = document.createElement('div');
-        card.className = 'academy-card fade-in';
-        card.style.animationDelay = `${i * 0.1}s`;
-        card.innerHTML = `
-          <div class="academy-card-image module-bg">
-            <div class="module-label">${mod.name}</div>
-          </div>
-          <div class="academy-card-content">
-            <h3>${mod.name}</h3>
-            <p>${mod.description}</p>
-            <p style="margin-top:8px; color:var(--brand); font-weight:600;">Сабақ саны: ${count}</p>
-            <button class="btn ${isPurchased ? 'btn-primary' : 'btn-secondary'} view-lessons" 
-                    data-module-id="${mod.id}" 
-                    data-module-name="${encodeURIComponent(mod.name)}"
-                    data-module-description="${encodeURIComponent(mod.description)}">
-              <i class="fas ${isPurchased ? 'fa-book-reader' : 'fa-lock'}"></i> 
-              ${isPurchased ? 'Сабақтарды қарау' : (mod.price ? `${mod.price} ₸` : 'Курсты алу')}
-            </button>
-          </div>`;
-        DOM.coursesContainer.appendChild(card);
-      });
+  DOM.coursesContainer.innerHTML = '';
+  DOM.coursesContainer.className = 'academy-modules-grid';
 
-      // Add event listeners to module buttons
-      document.querySelectorAll('.view-lessons').forEach(btn => {
-        btn.addEventListener('click', async () => {
-          const moduleId = btn.dataset.moduleId;
-          const moduleName = decodeURIComponent(btn.dataset.moduleName);
-          const moduleDescription = decodeURIComponent(btn.dataset.moduleDescription);
-          
-          // Check if user is logged in
-          if (!state.currentUser) {
-            showNotification('Бұл модульді көру үшін кіріңіз', 'error');
-            showLoginModal();
-            return;
-          }
-          
-          // ВАЖНО: Изменена логика проверки доступа
-          // Если пользователь залогинен и включен режим тестирования, даем доступ ко всем курсам
-          const isPurchased = state.currentUser && ALLOW_ALL_COURSES_FOR_LOGGED_IN 
-            ? true 
-            : (state.currentUser?.purchasedCourses?.includes(parseInt(moduleId)) || false);
-          
-          if (!isPurchased) {
-            // Show payment options
-            showPaymentOptions(moduleId, moduleName, moduleDescription);
-            return;
-          }
-          
-          // User has access, show lessons
-          state.currentModule = {
-            id: moduleId,
-            name: moduleName,
-            description: moduleDescription
-          };
+  modules.forEach((mod, i) => {
+    const count = lessonCounts[String(mod.id)] || 0;
 
-          DOM.lessonPageTitle.textContent = moduleName;
-          DOM.moduleTitle.textContent = `${moduleName} модулінің сабақтары`;
-          DOM.moduleDescription.textContent = moduleDescription;
-          
-          showPage('lessonsPage');
-          saveState();
-        });
-      });
-    }
+    const isPurchased = state.currentUser && ALLOW_ALL_COURSES_FOR_LOGGED_IN
+      ? true
+      : (state.currentUser?.purchasedCourses?.includes(parseInt(mod.id)) || false);
+
+    // берём картинку из таблицы: image_url (или image)
+    const img = (mod.image_url || mod.image || '').trim();
+    const bgStyle = img ? `style="background-image:url('${img.replace(/'/g, "\\'")}');"` : '';
+
+    const card = document.createElement('div');
+    card.className = 'academy-card fade-in';
+    card.style.animationDelay = `${i * 0.1}s`;
+
+    card.innerHTML = `
+      <div class="academy-card-image module-bg ${img ? 'is-image' : ''}" ${bgStyle}>
+        <!-- если нет картинки, покажем аккуратный текст -->
+        ${img ? '' : `<div class="module-label">${mod.name}</div>`}
+      </div>
+
+      <div class="academy-card-content">
+        <h3>${mod.name}</h3>
+        <p>${mod.description}</p>
+        <p style="margin-top:8px; color:var(--brand); font-weight:600;">Сабақ саны: ${count}</p>
+
+        <button class="btn ${isPurchased ? 'btn-primary' : 'btn-secondary'} view-lessons"
+                data-module-id="${mod.id}"
+                data-module-name="${encodeURIComponent(mod.name)}"
+                data-module-description="${encodeURIComponent(mod.description)}">
+          <i class="fas ${isPurchased ? 'fa-book-reader' : 'fa-lock'}"></i>
+          ${isPurchased ? 'Сабақтарды қарау' : (mod.price ? `${mod.price} ₸` : 'Курсты алу')}
+        </button>
+      </div>
+    `;
+
+    DOM.coursesContainer.appendChild(card);
+  });
+
+  document.querySelectorAll('.view-lessons').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const moduleId = btn.dataset.moduleId;
+      const moduleName = decodeURIComponent(btn.dataset.moduleName);
+      const moduleDescription = decodeURIComponent(btn.dataset.moduleDescription);
+
+      if (!state.currentUser) {
+        showNotification('Бұл модульді көру үшін кіріңіз', 'error');
+        showLoginModal();
+        return;
+      }
+
+      const isPurchased = state.currentUser && ALLOW_ALL_COURSES_FOR_LOGGED_IN
+        ? true
+        : (state.currentUser?.purchasedCourses?.includes(parseInt(moduleId)) || false);
+
+      if (!isPurchased) {
+        showPaymentOptions(moduleId, moduleName, moduleDescription);
+        return;
+      }
+
+      state.currentModule = { id: moduleId, name: moduleName, description: moduleDescription };
+      DOM.lessonPageTitle.textContent = moduleName;
+      DOM.moduleTitle.textContent = `${moduleName} модулінің сабақтары`;
+      DOM.moduleDescription.textContent = moduleDescription;
+
+      showPage('lessonsPage');
+      saveState();
+    });
+  });
+}
 
     function loadModules() {
       loadModulesWithCounts();
@@ -1993,46 +2023,53 @@
     }
 
     function renderLessons(lessons) {
-      if (!lessons.length) {
-        DOM.lessonsContainer.innerHTML = `
-          <div class="error-message">
-            <i class="fas fa-video"></i>
-            <h3>Сабақтар табылмады</h3>
-            <p>Әзірше осы модульге сабақ жоқ</p>
-          </div>`;
-        return;
-      }
-      
-      DOM.lessonsContainer.innerHTML = '';
-      lessons.forEach((l, i) => {
-        const card = document.createElement('div');
-        card.className = 'academy-card fade-in';
-        card.style.animationDelay = `${i * 0.1}s`;
-        card.innerHTML = `
-          <div class="academy-card-image lesson-bg">
-            <div class="lesson-number">${i + 1}</div>
-          </div>
-          <div class="academy-card-content">
-            <h3>${l.name}</h3>
-            <p>${l.description}</p>
-            <div style="display:flex; gap:12px; margin-top:20px;">
-              <button class="btn btn-primary play-video" 
-                      data-lesson-id="${l.id}" 
-                      data-lesson-index="${i}"
-                      data-video-url="${l.video_url || ''}"
-                      data-lesson-title="${encodeURIComponent(l.name)}">
-                <i class="fas fa-play-circle"></i> Қарау
-              </button>
-              ${l.pdf_url ? `<a href="${l.pdf_url}" class="btn btn-secondary" target="_blank"><i class="fas fa-file-pdf"></i> Презентация</a>` : ''}
-            </div>
-          </div>`;
-        DOM.lessonsContainer.appendChild(card);
-      });
-      
-      document.querySelectorAll('.play-video').forEach(btn => {
-        btn.addEventListener('click', () => playVideo(btn));
-      });
-    }
+  if (!lessons.length) {
+    DOM.lessonsContainer.innerHTML = `
+      <div class="error-message">
+        <i class="fas fa-video"></i>
+        <h3>Сабақтар табылмады</h3>
+        <p>Әзірше осы модульге сабақ жоқ</p>
+      </div>`;
+    return;
+  }
+
+  DOM.lessonsContainer.innerHTML = '';
+  lessons.forEach((l, i) => {
+    const img = (l.image_url || l.cover || '').trim();
+    const bgStyle = img ? `style="background-image:url('${img.replace(/'/g, "\\'")}');"` : '';
+
+    const card = document.createElement('div');
+    card.className = 'academy-card fade-in';
+    card.style.animationDelay = `${i * 0.1}s`;
+
+    card.innerHTML = `
+      <div class="academy-card-image ${img ? 'is-image' : 'lesson-bg'}" ${bgStyle}>
+        ${img ? '' : `<div class="lesson-number">${i + 1}</div>`}
+      </div>
+
+      <div class="academy-card-content">
+        <h3>${l.name}</h3>
+        <p>${l.description}</p>
+        <div style="display:flex; gap:12px; margin-top:20px;">
+          <button class="btn btn-primary play-video"
+                  data-lesson-id="${l.id}"
+                  data-lesson-index="${i}"
+                  data-video-url="${l.video_url || ''}"
+                  data-lesson-title="${encodeURIComponent(l.name)}">
+            <i class="fas fa-play-circle"></i> Қарау
+          </button>
+          ${l.pdf_url ? `<a href="${l.pdf_url}" class="btn btn-secondary" target="_blank"><i class="fas fa-file-pdf"></i> Презентация</a>` : ''}
+        </div>
+      </div>
+    `;
+
+    DOM.lessonsContainer.appendChild(card);
+  });
+
+  document.querySelectorAll('.play-video').forEach(btn => {
+    btn.addEventListener('click', () => playVideo(btn));
+  });
+}
 
     // ===== VIDEO PLAYER FUNCTIONS =====
     function playVideo(button) {
@@ -2146,7 +2183,9 @@
       
       try {
         const all = await fetchSheetData(CONFIG.sheets.comments);
+        console.log('All comments:', all); // Debug
         const comments = all.filter(c => String(c.video_id) === String(videoId));
+        console.log('Filtered comments:', comments); // Debug
         
         if (comments.length === 0) {
           DOM.commentsList.innerHTML = '<div class="comment-card"><p style="color: var(--text-muted); text-align: center;">Әзірше пікір жоқ</p></div>';
@@ -2189,8 +2228,10 @@
       
       try {
         const url = COMMENT_URL + `?action=add&video_id=${encodeURIComponent(state.currentVideo.id)}&user=${encodeURIComponent(state.currentUser.name)}&comment=${encodeURIComponent(text)}`;
+        console.log('Sending comment to:', url); // Debug
         const response = await fetch(url);
         const result = await response.json();
+        console.log('Comment response:', result); // Debug
         
         if (result.status === 'success') {
           showNotification('Пікіріңіз қосылды!', 'success');

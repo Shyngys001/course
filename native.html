@@ -1391,6 +1391,116 @@
   font-weight:700;
 }
 .news-link-btn:hover{ transform: translateY(-1px); }
+
+/* ===== Auth Gate Modal (locked module) ===== */
+.authgate{
+  position: fixed;
+  inset: 0;
+  z-index: 4000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  visibility: hidden;
+  transition: .25s ease;
+}
+.authgate.active{ opacity: 1; visibility: visible; }
+
+.authgate-card{
+  width: 100%;
+  max-width: 520px;
+  border-radius: 22px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  transform: translateY(14px);
+  transition: .25s ease;
+}
+.authgate.active .authgate-card{ transform: translateY(0); }
+
+.authgate-top{
+  padding: 18px 18px 14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, rgba(0,128,0,.10), rgba(0,128,0,.02));
+}
+.authgate-brand{
+  display:flex; align-items:center; gap:10px;
+  font-weight: 900; letter-spacing:.2px;
+}
+.authgate-brand .ic{
+  width: 44px; height:44px; border-radius: 14px;
+  display:flex; align-items:center; justify-content:center;
+  background: rgba(0,128,0,.14);
+  color: var(--brand);
+  box-shadow: 0 8px 24px rgba(0,128,0,.14);
+}
+.authgate-close{
+  width: 40px; height:40px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.authgate-close:hover{ transform: translateY(-1px); }
+
+.authgate-body{ padding: 18px; }
+.authgate-title{ font-size: 20px; font-weight: 900; margin-bottom: 6px; }
+.authgate-sub{ color: var(--text-secondary); line-height:1.6; margin-bottom: 14px; }
+
+.authgate-chiprow{
+  display:flex; gap:10px; flex-wrap:wrap;
+  margin: 10px 0 14px;
+}
+.authgate-chip{
+  display:inline-flex; align-items:center; gap:8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  font-weight: 800;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.paybox{
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
+  border-radius: 16px;
+  padding: 14px;
+  margin: 12px 0 16px;
+}
+.payrow{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(0,0,0,.08);
+}
+.theme-dark .payrow{ border-bottom: 1px dashed rgba(255,255,255,.12); }
+.payrow:last-child{ border-bottom: 0; }
+.payrow b{ font-weight: 900; color: var(--text-primary); }
+.payrow span{ color: var(--text-secondary); font-weight: 700; }
+
+.authgate-actions{
+  display:flex;
+  gap:12px;
+  allow-wrap:wrap;
+}
+.authgate-actions .btn{ flex: 1; }
+@media(max-width:480px){
+  .authgate-actions{ flex-direction: column; }
+}
+
+
   </style>
 </head>
 <body>
@@ -1836,6 +1946,54 @@
       </div>
     </div>
   </div>
+
+  <!-- Auth Gate Modal -->
+<div class="authgate" id="authGateModal">
+  <div class="authgate-card" role="dialog" aria-modal="true">
+    <div class="authgate-top">
+      <div class="authgate-brand">
+        <div class="ic"><i class="fas fa-lock"></i></div>
+        <div>
+          <div style="font-size:14px;color:var(--text-secondary);font-weight:800;">ЕСКЕРТУ</div>
+          <div style="font-size:16px;color:var(--text-primary);font-weight:900;">Қолжетімділік шектеулі</div>
+        </div>
+      </div>
+      <button class="authgate-close" onclick="hideAuthGate()"><i class="fas fa-times"></i></button>
+    </div>
+
+    <div class="authgate-body">
+      <div class="authgate-title" id="authGateTitle">Ақылы модуль</div>
+      <div class="authgate-sub" id="authGateText">
+        Бұл бөлімді көру үшін аккаунтқа кіру керек. Егер курсты әлі сатып алмаған болсаңыз — төмендегі WhatsApp-қа чек жіберіңіз.
+      </div>
+
+      <div class="authgate-chiprow">
+        <div class="authgate-chip"><i class="fas fa-user-shield"></i> Тек тіркелген қолданушы</div>
+        <div class="authgate-chip"><i class="fas fa-eye"></i> Сақталған прогресс</div>
+      </div>
+
+      <div class="paybox">
+        <div class="payrow"><b>WhatsApp</b><span id="authGateWhatsapp">+7 747 989 4879</span></div>
+        <div class="payrow"><b>Kaspi номер</b><span id="authGateKaspiCard">4400 4302 56 17****</span></div>
+        <div class="payrow"><b>Kaspi</b><span id="authGateKaspiPhone">+7 *** *** ****</span></div>
+        <div class="payrow"><b>QIWI</b><span id="authGateQiwi">+7 *** *** ****</span></div>
+      </div>
+
+      <div class="authgate-actions">
+        <button class="btn btn-secondary" onclick="goToLoginFromGate()">
+          <i class="fas fa-sign-in-alt"></i> Кіру / Тіркелу
+        </button>
+        <a class="btn btn-primary" id="authGateWaLink" href="https://wa.me/77479894879" target="_blank" rel="noopener">
+          <i class="fab fa-whatsapp"></i> WhatsApp-қа жазу
+        </a>
+      </div>
+
+      <button class="btn btn-secondary btn-block" style="margin-top:12px;" onclick="hideAuthGate()">
+        <i class="fas fa-arrow-left"></i> Артқа
+      </button>
+    </div>
+  </div>
+</div>
 
   <script>
     // ===== CONFIGURATION =====
@@ -2379,8 +2537,11 @@ function openNewsDetail(newsObj){
 
       // ✅ Paid болса — логин міндетті
       if (isPaid && !state.currentUser) {
-        showNotification('Ақылы модуль. Кіру керек.', 'error');
-        showLoginModal();
+        showAuthGate({
+          title: 'Ақылы модуль',
+          text: 'Модульге кіру үшін алдымен аккаунтқа кіріңіз. Егер курсты сатып алмаған болсаңыз, төлем жасап, чекті WhatsApp-қа жіберіңіз — қолжетімділікті қосамыз.',
+          waText: `Сәлеметсіз бе! "${moduleName}" модуліне доступ керек. Чек жіберемін.`
+        });
         return;
       }
 
@@ -2400,6 +2561,44 @@ function openNewsDetail(newsObj){
     });
   });
 }
+
+
+function showAuthGate(opts = {}) {
+  const m = document.getElementById('authGateModal');
+  if (!m) return;
+
+  // мәтін
+  const title = document.getElementById('authGateTitle');
+  const text  = document.getElementById('authGateText');
+  if (title) title.textContent = opts.title || 'Ақылы модуль';
+  if (text)  text.textContent  = opts.text  || 'Бұл бөлімді көру үшін аккаунтқа кіру керек.';
+
+  // whatsapp link
+  const wa = opts.whatsapp || '77771589606';
+  const waLink = document.getElementById('authGateWaLink');
+  if (waLink) waLink.href = `https://wa.me/${wa}${opts.waText ? `?text=${encodeURIComponent(opts.waText)}` : ''}`;
+
+  m.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function hideAuthGate() {
+  const m = document.getElementById('authGateModal');
+  if (!m) return;
+  m.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function goToLoginFromGate(){
+  hideAuthGate();
+  showLoginModal();
+}
+
+// сыртынан басса жабу
+document.addEventListener('click', (e)=>{
+  const m = document.getElementById('authGateModal');
+  if (m && m.classList.contains('active') && e.target === m) hideAuthGate();
+});
 
 
 function getLocalNewsViews(newsId){
@@ -2495,16 +2694,12 @@ const isPurchased = state.currentUser && ALLOW_ALL_COURSES_FOR_LOGGED_IN
   ? true
   : (state.currentUser?.purchasedCourses?.includes(parseInt(moduleId)) || false);
 
-if (!state.currentUser) {
-  DOM.lessonsContainer.innerHTML = `
-    <div class="error-message" style="grid-column: 1 / -1;">
-      <i class="fas fa-lock" style="font-size: 3rem; margin-bottom: 20px; color: var(--error);"></i>
-      <h3>Ақылы модуль</h3>
-      <p style="margin-bottom: 20px;">Көру үшін аккаунтқа кіріңіз</p>
-      <button class="btn btn-primary" onclick="showLoginModal()">
-        <i class="fas fa-sign-in-alt"></i> Кіру
-      </button>
-    </div>`;
+  if (!state.currentUser) {
+  showAuthGate({
+    title: 'Ақылы модуль',
+    text: 'Сабақтарды көру үшін аккаунтқа кіру керек. Кірген соң модуль ашылады.',
+    waText: `Сәлеметсіз бе! "${state.currentModule?.name || ''}" модуліне доступ керек.`
+  });
   return;
 }
 

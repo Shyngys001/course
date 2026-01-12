@@ -858,14 +858,11 @@
       opacity: 0.9;
     }
 
-    .profile-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--spacing);
-      margin: var(--spacing-xl) 0;
-      padding: 0 var(--spacing);
-    }
-
+    .profile-stats{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr); /* бұрын 3 еді */
+  gap:16px;
+}
     .stat-item {
       text-align: center;
       padding: var(--spacing);
@@ -1258,6 +1255,32 @@
 .segment-btn.active i{ opacity:1; }
 
 /* ===== News list ===== */
+.news-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.news-views{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background: var(--bg-secondary);
+  color: var(--text-muted);
+  font-weight:800;
+  font-size:12px;
+  white-space:nowrap;
+}
+
+.news-views i{
+  font-size:12px;
+  opacity:.85;
+}
+
 .news-list{ display:grid; gap:14px; }
 .news-item{
   background: var(--bg-card);
@@ -1561,10 +1584,6 @@
               <div class="stat-item">
                 <div class="stat-value" id="statLessons">0</div>
                 <div class="stat-label">Сабақ</div>
-              </div>
-              <div class="stat-item">
-                <div class="stat-value" id="statDays">1</div>
-                <div class="stat-label">Күн</div>
               </div>
             </div>
 
@@ -1878,7 +1897,6 @@
       loginButtonHeader: document.getElementById('loginButtonHeader'),
       statCourses: document.getElementById('statCourses'),
       statLessons: document.getElementById('statLessons'),
-      statDays: document.getElementById('statDays'),
       myCourses: document.getElementById('myCourses'),
       themeSelect: document.getElementById('themeSelect'),
       languageSelect: document.getElementById('languageSelect')
@@ -2072,9 +2090,20 @@
             const text  = n.text || '';
             const date  = n.date || '';
 
+            // ✅ news id (Sheet-та id бағанын қойсаң жақсы)
+            const newsId = (n.id || '').trim() || String(idx);
+
+            // ✅ A) localStorage view
+            const views = getLocalNewsViews(newsId);
+
             return `
-              <div class="news-item" data-news-index="${idx}">
-                <div class="news-title">${title}</div>
+              <div class="news-item" data-news-index="${idx}" data-news-id="${newsId}">
+                <div class="news-top">
+                  <div class="news-title">${title}</div>
+                  <div class="news-views" id="newsViews_${newsId}">
+                    <i class="fas fa-eye"></i> <span>${views}</span>
+                  </div>
+                </div>
                 ${date ? `<div class="news-date">${date}</div>` : ``}
                 <div class="news-text news-preview">${text}</div>
               </div>
@@ -2114,6 +2143,64 @@
 }
 
 function openNewsDetail(newsObj){
+  function openNewsDetail(newsObj){
+  // ✅ newsId
+  const allNews = state.selectedNews ? [] : []; // (ештеңе істемейді, тиме)
+  const newsId = (newsObj.id || '').trim() || String(
+    (document.querySelector('.news-item[data-news-index]') ? '' : '')
+  );
+
+  // ✅ idx fallback дұрыс болу үшін:
+  // біз click кезінде newsId-ты data-news-id арқылы аламыз:
+  const clicked = event?.currentTarget;
+  const realId = clicked?.dataset?.newsId || (newsObj.id || '').trim() || '0';
+
+  // ✅ A) localStorage view++
+  const nextViews = bumpLocalNewsViews(realId);
+
+  // ✅ list-тағы pill санын да жаңартамыз
+  const pill = document.getElementById(`newsViews_${realId}`);
+  if (pill) {
+    const span = pill.querySelector('span');
+    if (span) span.textContent = String(nextViews);
+  }
+
+  // ---- қалған сенің кодың ----
+  state.selectedNews = newsObj;
+
+  const t = document.getElementById('newsDetailTitle');
+  const d = document.getElementById('newsDetailDate');
+  const tx = document.getElementById('newsDetailText');
+  const linksBox = document.getElementById('newsDetailLinks');
+
+  if (t) t.textContent = newsObj.title || 'Жаңалық';
+  if (d) d.textContent = newsObj.date || '';
+  if (tx) tx.textContent = newsObj.text || '';
+
+  const links = parseLinks(newsObj.link || newsObj.links || newsObj.url || '');
+
+  if (linksBox) {
+    if (!links.length) {
+      linksBox.style.display = 'none';
+      linksBox.innerHTML = '';
+    } else {
+      linksBox.style.display = 'block';
+      linksBox.innerHTML = `
+        <div class="news-links">
+          ${links.map(l => `
+            <a class="news-link-btn" href="${l.url}" target="_blank" rel="noopener">
+              <i class="fas fa-link"></i> ${l.title}
+            </a>
+          `).join('')}
+        </div>
+      `;
+    }
+  }
+
+  showPage('newsDetailPage');
+  saveState();
+}
+
   state.selectedNews = newsObj;
 
   const t = document.getElementById('newsDetailTitle');
@@ -2313,6 +2400,20 @@ function openNewsDetail(newsObj){
     });
   });
 }
+
+
+function getLocalNewsViews(newsId){
+  const key = `news_views_${newsId}`;
+  return parseInt(localStorage.getItem(key) || '0', 10);
+}
+
+function bumpLocalNewsViews(newsId){
+  const key = `news_views_${newsId}`;
+  const next = getLocalNewsViews(newsId) + 1;
+  localStorage.setItem(key, String(next));
+  return next;
+}
+
 
     function loadModules() {
       loadModulesWithCounts();
@@ -2841,13 +2942,12 @@ if (!isPurchased) {
         DOM.statLessons.textContent = state.lessonsAll.filter(l => 
           state.currentUser.purchasedCourses?.includes(parseInt(l.module_id))
         ).length;
-        DOM.statDays.textContent = '1';
+    
         
         updateMyCourses();
       } else {
         DOM.statCourses.textContent = '0';
         DOM.statLessons.textContent = '0';
-        DOM.statDays.textContent = '0';
         DOM.myCourses.innerHTML = '<p style="color: var(--text-secondary); text-align: center; padding: 20px;">Әзірше курс сатып алмадыңыз</p>';
       }
     }

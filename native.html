@@ -1227,6 +1227,48 @@
     .custom-modal.active .custom-modal-content {
       transform: translateY(0);
     }
+
+
+    /* ===== Segmented Tabs (Ақылы / Бонус) ===== */
+.segment-tabs{
+  display:flex;
+  gap:12px;
+  margin:12px 0 18px;
+  align-items:center;
+}
+.segment-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:var(--bg-card);
+  color:var(--text-secondary);
+  font-weight:700;
+  cursor:pointer;
+  transition: var(--transition);
+}
+.segment-btn i{ opacity:.85; }
+.segment-btn.active{
+  background: rgba(0,128,0,.12);
+  border-color: rgba(0,128,0,.35);
+  color: var(--brand);
+}
+.segment-btn.active i{ opacity:1; }
+
+/* ===== News list ===== */
+.news-list{ display:grid; gap:14px; }
+.news-item{
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+}
+.news-title{ font-weight:800; margin-bottom:6px; }
+.news-date{ color: var(--text-muted); font-size:12px; margin-bottom:10px; }
+.news-text{ color: var(--text-secondary); line-height:1.6; }
   </style>
 </head>
 <body>
@@ -1269,6 +1311,14 @@
               <h2>Онлайн курстар</h2>
               <p>Өз жылдамдығыңызбен үйретіңіз. Үйде-ақ меңгеріңіз</p>
             </div>
+            <div class="segment-tabs">
+                <button class="segment-btn active" id="tabPaid" onclick="setCoursesTab('paid')">
+                  <i class="fas fa-lock"></i> Ақылы
+                </button>
+                <button class="segment-btn" id="tabBonus" onclick="setCoursesTab('bonus')">
+                  <i class="fas fa-gift"></i> Бонус
+                </button>
+              </div>
             <div class="academy-modules-grid" id="coursesContainer">
               <div class="loading">
                 <div class="spinner"></div>
@@ -1495,11 +1545,51 @@
       </main>
     </div>
 
+
+    <!-- News Page -->
+<div id="newsPage" class="page">
+    <header class="app-header">
+      <div class="header-content">
+        <button class="back-button" onclick="showPage('mainPage')">
+          <i class="fas fa-arrow-left"></i>
+          Артқа
+        </button>
+        <div class="header-title">
+          <i class="fas fa-newspaper"></i>
+          <span>Жаңалықтар</span>
+        </div>
+        <div></div>
+      </div>
+    </header>
+  
+    <main>
+      <section class="section">
+        <div class="container">
+          <div class="section-title">
+            <h2>Жаңалықтар</h2>
+            <p>Жаңартулар мен хабарландырулар</p>
+          </div>
+  
+          <div id="newsContainer" class="news-list">
+            <div class="loading">
+              <div class="spinner"></div>
+              <p>Жаңалықтар жүктелуде...</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
     <!-- Tab Bar -->
     <nav class="tab-bar">
       <button class="tab-item active" onclick="showPage('mainPage')">
         <i class="fas fa-book"></i>
         <span>Курстар</span>
+      </button>
+      <button class="tab-item" onclick="showPage('newsPage')">
+        <i class="fas fa-newspaper"></i>
+        <span>Жаңалықтар</span>
       </button>
       <button class="tab-item" onclick="showPage('faqPage')">
         <i class="fas fa-question-circle"></i>
@@ -1594,7 +1684,7 @@
     const SESS_URL = 'https://script.google.com/macros/s/AKfycbwp61ZemVXyhVy3s2CBDYnfWBZaVhmsGiqzG9U4i4KGCoNykLNZrHwQRBny6iaAJusZ/exec';
     const CONFIG = {
       spreadsheetId: '1fBxicZo7HkKXpoUVRtZvc628oG7rxLeSgcIgmruTd5Y',
-      sheets: { modules:'Модули', lessons:'Видеоуроки', users:'Юзеры', comments:'comment' }
+      sheets: { modules:'Модули', lessons:'Видеоуроки', users:'Юзеры', comments:'comment', news:'Жаңалықтар' }
     };
     const COMMENT_URL = 'https://script.google.com/macros/s/AKfycbwiWkQUZHiw9TcQNcXsQxwHBK-Qi6nzFrXQwEEe_NO-SxjNLNwp2e841WzvoxCrGWny/exec';
 
@@ -1613,6 +1703,7 @@
       comments: {},
       currentPage: 'mainPage',
       lessonsFetchedAt: 0,
+      coursesTab: 'paid',
       postLoginAction: null
     };
 
@@ -1695,6 +1786,28 @@
       }
     }
 
+    function setCoursesTab(tab){
+    state.coursesTab = tab;
+
+    // кнопки
+    const paidBtn = document.getElementById('tabPaid');
+    const bonusBtn = document.getElementById('tabBonus');
+    if (paidBtn && bonusBtn){
+        paidBtn.classList.toggle('active', tab === 'paid');
+        bonusBtn.classList.toggle('active', tab === 'bonus');
+    }
+
+    // перерисовать модули
+    const counts = (state.lessonsAll || []).reduce((a, l) => {
+        const m = String(l.module_id);
+        a[m] = (a[m] || 0) + 1;
+        return a;
+    }, {});
+    renderModules(state.modules || [], counts);
+    }
+
+
+
     // ===== STATE PERSISTENCE =====
     function saveState() {
       const stateToSave = {
@@ -1764,8 +1877,9 @@
       // Map page to tab
       const pageToTab = {
         'mainPage': 0,
-        'faqPage': 1,
-        'profilePage': 2
+        'newsPage': 1,
+        'faqPage': 2,
+        'profilePage': 3
       };
       
       const tabIndex = pageToTab[pageId];
@@ -1781,6 +1895,9 @@
         case 'profilePage':
           updateProfilePage();
           break;
+          case 'newsPage':
+            loadNews();
+            break;
         case 'lessonsPage':
           if (state.currentModule) {
             loadLessons(state.currentModule.id);
@@ -1788,6 +1905,47 @@
           break;
       }
     }
+
+
+    async function loadNews(){
+        const box = document.getElementById('newsContainer');
+        if (!box) return;
+
+        box.innerHTML = '<div class="loading"><div class="spinner"></div><p>Жаңалықтар жүктелуде...</p></div>';
+
+        try{
+            let news = await fetchSheetData(CONFIG.sheets.news);
+
+            // ✅ тек актив жаңалықтар
+            news = (news || []).filter(n => String(n.is_active || '1').trim() !== '0');
+
+            // ✅ жаңа → ескі (date болса)
+            news.sort((a,b) => String(b.date||'').localeCompare(String(a.date||'')));
+
+            if (!news.length){
+            box.innerHTML = `<div class="news-item"><div class="news-text" style="text-align:center;color:var(--text-muted);">Әзірше жаңалық жоқ</div></div>`;
+            return;
+            }
+
+            box.innerHTML = news.map(n => {
+            const title = n.title || 'Жаңалық';
+            const text  = n.text || '';
+            const date  = n.date || '';
+            return `
+                <div class="news-item">
+                <div class="news-title">${title}</div>
+                ${date ? `<div class="news-date">${date}</div>` : ``}
+                <div class="news-text">${text}</div>
+                </div>
+            `;
+            }).join('');
+
+        }catch(e){
+            console.error(e);
+            box.innerHTML = `<div class="error-message"><i class="fas fa-exclamation-triangle"></i><h3>Жаңалықтарды жүктеу мүмкін емес</h3></div>`;
+        }
+    }
+
 
     // ===== THEME FUNCTIONS =====
     function changeTheme(theme) {
@@ -1864,16 +2022,30 @@
   DOM.coursesContainer.innerHTML = '';
   DOM.coursesContainer.className = 'academy-modules-grid';
 
-  modules.forEach((mod, i) => {
+  // ✅ paid = is_active=1, bonus = is_active=0
+  const filtered = (modules || []).filter(m => {
+    const a = String(m.is_active ?? '').trim(); // "1" or "0"
+    if (state.coursesTab === 'paid') return a === '1';
+    if (state.coursesTab === 'bonus') return a === '0';
+    return true;
+  });
+
+  if (!filtered.length) {
+    DOM.coursesContainer.innerHTML = `
+      <div class="error-message" style="grid-column:1/-1;">
+        <i class="fas fa-inbox"></i>
+        <h3>Әзірше курс жоқ</h3>
+        <p>${state.coursesTab === 'paid' ? 'Ақылы курстар кейін қосылады' : 'Бонус курстар кейін қосылады'}</p>
+      </div>`;
+    return;
+  }
+
+  filtered.forEach((mod, i) => {
     const count = lessonCounts[String(mod.id)] || 0;
-
-    const isPurchased = state.currentUser && ALLOW_ALL_COURSES_FOR_LOGGED_IN
-      ? true
-      : (state.currentUser?.purchasedCourses?.includes(parseInt(mod.id)) || false);
-
-    // берём картинку из таблицы: image_url (или image)
+    const isPaid = String(mod.is_active ?? '').trim() === '1'; // paid => login керек
     const img = (mod.image_url || mod.image || '').trim();
-    const bgStyle = img ? `style="background-image:url('${img.replace(/'/g, "\\'")}');"` : '';
+    const safeImg = img ? img.replace(/'/g, "\\'") : '';
+    const bgStyle = img ? `style="background-image:url('${safeImg}');"` : '';
 
     const card = document.createElement('div');
     card.className = 'academy-card fade-in';
@@ -1881,21 +2053,24 @@
 
     card.innerHTML = `
       <div class="academy-card-image module-bg ${img ? 'is-image' : ''}" ${bgStyle}>
-        <!-- если нет картинки, покажем аккуратный текст -->
-        ${img ? '' : `<div class="module-label">${mod.name}</div>`}
+        ${img ? '' : `<div class="module-label">${mod.name || ''}</div>`}
       </div>
 
       <div class="academy-card-content">
-        <h3>${mod.name}</h3>
-        <p>${mod.description}</p>
-        <p style="margin-top:8px; color:var(--brand); font-weight:600;">Сабақ саны: ${count}</p>
+        <h3>${mod.name || ''}</h3>
+        <p>${mod.description || ''}</p>
 
-        <button class="btn ${isPurchased ? 'btn-primary' : 'btn-secondary'} view-lessons"
-                data-module-id="${mod.id}"
-                data-module-name="${encodeURIComponent(mod.name)}"
-                data-module-description="${encodeURIComponent(mod.description)}">
-          <i class="fas ${isPurchased ? 'fa-book-reader' : 'fa-lock'}"></i>
-          ${isPurchased ? 'Сабақтарды қарау' : (mod.price ? `${mod.price} ₸` : 'Курсты алу')}
+        <p style="margin-top:8px; color:var(--brand); font-weight:600;">
+          Сабақ саны: ${count}
+        </p>
+
+        <button class="btn ${isPaid ? 'btn-primary' : 'btn-secondary'} view-lessons"
+          data-module-id="${mod.id}"
+          data-is-paid="${isPaid ? '1' : '0'}"
+          data-module-name="${encodeURIComponent(mod.name || '')}"
+          data-module-description="${encodeURIComponent(mod.description || '')}">
+          <i class="fas ${isPaid ? 'fa-lock' : 'fa-gift'}"></i>
+          ${isPaid ? (mod.price ? `${mod.price} ₸` : 'Курсты көру (кіру керек)') : 'Бонус сабақтарды көру'}
         </button>
       </div>
     `;
@@ -1904,27 +2079,26 @@
   });
 
   document.querySelectorAll('.view-lessons').forEach(btn => {
-    btn.addEventListener('click', async () => {
+    btn.addEventListener('click', () => {
       const moduleId = btn.dataset.moduleId;
-      const moduleName = decodeURIComponent(btn.dataset.moduleName);
-      const moduleDescription = decodeURIComponent(btn.dataset.moduleDescription);
+      const isPaid = btn.dataset.isPaid === '1';
+      const moduleName = decodeURIComponent(btn.dataset.moduleName || '');
+      const moduleDescription = decodeURIComponent(btn.dataset.moduleDescription || '');
 
-      if (!state.currentUser) {
-        showNotification('Бұл модульді көру үшін кіріңіз', 'error');
+      // ✅ Paid болса — логин міндетті
+      if (isPaid && !state.currentUser) {
+        showNotification('Ақылы модуль. Кіру керек.', 'error');
         showLoginModal();
         return;
       }
 
-      const isPurchased = state.currentUser && ALLOW_ALL_COURSES_FOR_LOGGED_IN
-        ? true
-        : (state.currentUser?.purchasedCourses?.includes(parseInt(moduleId)) || false);
+      state.currentModule = {
+        id: moduleId,
+        name: moduleName,
+        description: moduleDescription,
+        isPaid
+      };
 
-      if (!isPurchased) {
-        showPaymentOptions(moduleId, moduleName, moduleDescription);
-        return;
-      }
-
-      state.currentModule = { id: moduleId, name: moduleName, description: moduleDescription };
       DOM.lessonPageTitle.textContent = moduleName;
       DOM.moduleTitle.textContent = `${moduleName} модулінің сабақтары`;
       DOM.moduleDescription.textContent = moduleDescription;
@@ -1982,22 +2156,66 @@
 
       // ВАЖНО: Изменена логика проверки доступа
       // Если пользователь залогинен и включен режим тестирования, даем доступ ко всем курсам
-      const isPurchased = state.currentUser && ALLOW_ALL_COURSES_FOR_LOGGED_IN 
-        ? true 
-        : (state.currentUser?.purchasedCourses?.includes(parseInt(moduleId)) || false);
-      
-      if (!isPurchased) {
-        DOM.lessonsContainer.innerHTML = `
-          <div class="error-message" style="grid-column: 1 / -1;">
-            <i class="fas fa-lock" style="font-size: 3rem; margin-bottom: 20px; color: var(--error);"></i>
-            <h3>Бұл модульге қолжетім жоқ</h3>
-            <p style="margin-bottom: 20px;">Бұл модульді көру үшін курсты сатып алуыңыз керек</p>
-            <button class="btn btn-primary" onclick="showPaymentOptions('${moduleId}', '${state.currentModule?.name || ''}', '${state.currentModule?.description || ''}')">
-              <i class="fas fa-shopping-cart"></i> Курсты сатып алу
-            </button>
-          </div>`;
-        return;
-      }
+      // ✅ Module type: paid/bonus (bonus = is_active 0 => login жоқ)
+const isPaidModule = !!(state.currentModule && state.currentModule.isPaid);
+
+// ✅ BONUS болса — бәріне рұқсат (логинсіз де)
+if (!isPaidModule) {
+  // fresh cache check
+  const needRefresh = !Array.isArray(state.lessonsAll) ||
+    (Date.now() - state.lessonsFetchedAt > 2 * 60 * 1000);
+
+  try {
+    if (needRefresh) {
+      const fresh = await fetchSheetData(CONFIG.sheets.lessons);
+      state.lessonsAll = fresh;
+      state.lessonsFetchedAt = Date.now();
+    }
+
+    const subset = state.lessonsAll.filter(x => String(x.module_id) === String(moduleId));
+    state.currentModuleLessons = subset;
+    renderLessons(subset);
+    return;
+  } catch (e) {
+    console.error('Сабақтарды жүктеу қатесі:', e);
+    DOM.lessonsContainer.innerHTML =
+      '<div class="error-message"><i class="fas fa-exclamation-triangle"></i><h3>Сабақтарды жүктеу мүмкін емес</h3></div>';
+    return;
+  }
+}
+
+// ✅ PAID болса — логин + сатып алу керек
+const isPurchased = state.currentUser && ALLOW_ALL_COURSES_FOR_LOGGED_IN
+  ? true
+  : (state.currentUser?.purchasedCourses?.includes(parseInt(moduleId)) || false);
+
+if (!state.currentUser) {
+  DOM.lessonsContainer.innerHTML = `
+    <div class="error-message" style="grid-column: 1 / -1;">
+      <i class="fas fa-lock" style="font-size: 3rem; margin-bottom: 20px; color: var(--error);"></i>
+      <h3>Ақылы модуль</h3>
+      <p style="margin-bottom: 20px;">Көру үшін аккаунтқа кіріңіз</p>
+      <button class="btn btn-primary" onclick="showLoginModal()">
+        <i class="fas fa-sign-in-alt"></i> Кіру
+      </button>
+    </div>`;
+  return;
+}
+
+if (!isPurchased) {
+  DOM.lessonsContainer.innerHTML = `
+    <div class="error-message" style="grid-column: 1 / -1;">
+      <i class="fas fa-lock" style="font-size: 3rem; margin-bottom: 20px; color: var(--error);"></i>
+      <h3>Бұл модульге қолжетім жоқ</h3>
+      <p style="margin-bottom: 20px;">Бұл модульді көру үшін курсты сатып алуыңыз керек</p>
+      <button class="btn btn-primary" onclick="showPaymentOptions('${moduleId}', '${state.currentModule?.name || ''}', '${state.currentModule?.description || ''}')">
+        <i class="fas fa-shopping-cart"></i> Курсты сатып алу
+      </button>
+    </div>`;
+  return;
+}
+
+// ✅ Access OK → сабақты жүктеу (төмендегі сенің кодың қала береді)
 
       // User has access, load lessons
       const needRefresh = !Array.isArray(state.lessonsAll) ||
@@ -2465,7 +2683,8 @@
       state.currentModule = {
         id: module.id,
         name: module.name,
-        description: module.description
+        description: module.description,
+        isPaid: String(module.is_active ?? '').trim() === '1'
       };
 
       DOM.lessonPageTitle.textContent = module.name;
@@ -2605,6 +2824,7 @@
 
     // ===== GLOBAL FUNCTIONS =====
     window.showPage = showPage;
+    window.setCoursesTab = setCoursesTab;
     window.showLoginModal = showLoginModal;
     window.toggleFaq = toggleFaq;
     window.closeVideo = closeVideo;

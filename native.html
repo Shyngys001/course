@@ -838,7 +838,7 @@
       width: 80px;
       height: 80px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgb(255, 255, 255);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1333,6 +1333,41 @@
     padding:14px 16px;
   }
 }
+
+
+.news-item{
+  cursor: pointer;
+  transition: var(--transition);
+}
+.news-item:hover{
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+.news-preview{
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.news-links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:14px;
+}
+.news-link-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  text-decoration:none;
+  font-weight:700;
+}
+.news-link-btn:hover{ transform: translateY(-1px); }
   </style>
 </head>
 <body>
@@ -1510,7 +1545,7 @@
       <main>
         <div class="profile-header">
           <div class="profile-avatar" id="profileAvatar">
-            <i class="fas fa-user-circle"></i>
+            <img src="logo.png" style="width: 100%;" alt="">
           </div>
           <div class="profile-name" id="userName">Қонақ</div>
           <div class="profile-email" id="userEmail">Кіру керек</div>
@@ -1645,6 +1680,46 @@
     </main>
   </div>
 
+  <!-- News Detail Page -->
+<div id="newsDetailPage" class="page">
+  <header class="app-header">
+    <div class="header-content">
+      <button class="back-button" onclick="showPage('newsPage')">
+        <i class="fas fa-arrow-left"></i>
+        Артқа
+      </button>
+      <div class="header-title">
+        <i class="fas fa-newspaper"></i>
+        <span>Жаңалық</span>
+      </div>
+      <div></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <div class="card" style="border-radius: var(--radius-xl);">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+            <span style="display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border-radius:999px; background: rgba(0,128,0,.12); color: var(--brand); font-weight:800; font-size:12px;">
+              <i class="fas fa-bell"></i> Хабарландыру
+            </span>
+            <span id="newsDetailDate" style="color: var(--text-muted); font-size:12px;"></span>
+          </div>
+
+          <h2 id="newsDetailTitle" style="font-size:26px; line-height:1.2; margin-bottom:12px;"></h2>
+
+          <div id="newsDetailText" style="color: var(--text-secondary); line-height:1.75; font-size:16px; white-space:pre-line;"></div>
+
+          <div id="newsDetailLinks" style="margin-top:18px; display:none;"></div>
+        </div>
+
+        <div style="height: 24px;"></div>
+      </div>
+    </section>
+  </main>
+</div>
+
     <!-- Tab Bar -->
     <nav class="tab-bar">
       <button class="tab-item active" onclick="showPage('mainPage')">
@@ -1768,7 +1843,8 @@
       currentPage: 'mainPage',
       lessonsFetchedAt: 0,
       coursesTab: 'paid',
-      postLoginAction: null
+      postLoginAction: null,
+      selectedNews: null,
     };
 
     let sessionTimer = null;
@@ -1991,24 +2067,89 @@
             return;
             }
 
-            box.innerHTML = news.map(n => {
+            box.innerHTML = news.map((n, idx) => {
             const title = n.title || 'Жаңалық';
             const text  = n.text || '';
             const date  = n.date || '';
+
             return `
-                <div class="news-item">
+              <div class="news-item" data-news-index="${idx}">
                 <div class="news-title">${title}</div>
                 ${date ? `<div class="news-date">${date}</div>` : ``}
-                <div class="news-text">${text}</div>
-                </div>
+                <div class="news-text news-preview">${text}</div>
+              </div>
             `;
-            }).join('');
+          }).join('');
+
+          // click handlers
+          box.querySelectorAll('.news-item').forEach(el => {
+            el.addEventListener('click', () => {
+              const i = parseInt(el.dataset.newsIndex, 10);
+              openNewsDetail(news[i]);
+            });
+          });
 
         }catch(e){
             console.error(e);
             box.innerHTML = `<div class="error-message"><i class="fas fa-exclamation-triangle"></i><h3>Жаңалықтарды жүктеу мүмкін емес</h3></div>`;
         }
     }
+
+
+    function parseLinks(value){
+  // Google Sheet-та link бағанын былай сақтауға болады:
+  // 1) бір ғана ссылка: https://....
+  // 2) бірнешеу: "Kaspi|https://... , WhatsApp|https://..., Site|https://..."
+  // 3) жол-жолымен де болады
+  if (!value) return [];
+  const raw = String(value).trim();
+  if (!raw) return [];
+
+  const parts = raw.split(/\n|,/).map(s => s.trim()).filter(Boolean);
+
+  return parts.map(p => {
+    const [title, url] = p.includes('|') ? p.split('|').map(x => x.trim()) : [null, p];
+    return { title: title || 'Сілтеме', url };
+  }).filter(x => /^https?:\/\//i.test(x.url));
+}
+
+function openNewsDetail(newsObj){
+  state.selectedNews = newsObj;
+
+  const t = document.getElementById('newsDetailTitle');
+  const d = document.getElementById('newsDetailDate');
+  const tx = document.getElementById('newsDetailText');
+  const linksBox = document.getElementById('newsDetailLinks');
+
+  if (t) t.textContent = newsObj.title || 'Жаңалық';
+  if (d) d.textContent = newsObj.date || '';
+  if (tx) tx.textContent = newsObj.text || '';
+
+  // Links (optional): sheet-та "link" немесе "links" бағаны болса
+  const links = parseLinks(newsObj.link || newsObj.links || newsObj.url || '');
+
+  if (linksBox) {
+    if (!links.length) {
+      linksBox.style.display = 'none';
+      linksBox.innerHTML = '';
+    } else {
+      linksBox.style.display = 'block';
+      linksBox.innerHTML = `
+        <div class="news-links">
+          ${links.map(l => `
+            <a class="news-link-btn" href="${l.url}" target="_blank" rel="noopener">
+              <i class="fas fa-link"></i> ${l.title}
+            </a>
+          `).join('')}
+        </div>
+      `;
+    }
+  }
+
+  showPage('newsDetailPage');
+  saveState();
+}
+
 
 
     // ===== THEME FUNCTIONS =====

@@ -5,15 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>原始点 академиясы — Денсаулыққа арналған онлайн курстар</title>
   <meta name="description" content="原始点 академиясы: қауіпсіз табиғи әдістерді үйреніп, денсаулықты жақсартыңыз. Онлайн курстар, Kaspi арқылы төлеу, қолдау WhatsApp-та.">
-  <meta name="theme-color" content="#0B192E">
-  <meta name="color-scheme" content="light dark">
-
-  <!-- Fonts & Icons -->
+  <meta name="theme-color" content="#008000">
+  <meta name="color-scheme" content="light only">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-
+  
   <style>
     /* ===== CSS Variables ===== */
     :root {
@@ -37,11 +35,14 @@
       --border: #DFE6E9;
       --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
       --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.12);
+      --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.05);
       
       --radius: 12px;
       --radius-lg: 16px;
+      --radius-xl: 20px;
       
       --spacing: 16px;
+      --spacing-sm: 12px;
       --spacing-lg: 24px;
       --spacing-xl: 32px;
       
@@ -50,64 +51,6 @@
       --safe-area-bottom: env(safe-area-inset-bottom, 0px);
       
       --transition: all 0.3s ease;
-    }
-
-    /* Dark theme */
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg-primary: #0B192E;
-        --bg-secondary: #15243E;
-        --bg-card: #1E2A44;
-        --bg-overlay: rgba(0, 0, 0, 0.7);
-        
-        --text-primary: #F8F9FA;
-        --text-secondary: #ADB5BD;
-        --text-muted: #6C757D;
-        
-        --border: #2D3748;
-        --shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-        --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.35);
-        
-        --brand: #00B894;
-        --brand-dark: #00A885;
-      }
-    }
-
-    /* Theme overrides */
-    .theme-dark {
-      --bg-primary: #0B192E !important;
-      --bg-secondary: #15243E !important;
-      --bg-card: #1E2A44 !important;
-      --bg-overlay: rgba(0, 0, 0, 0.7) !important;
-      
-      --text-primary: #F8F9FA !important;
-      --text-secondary: #ADB5BD !important;
-      --text-muted: #6C757D !important;
-      
-      --border: #2D3748 !important;
-      --shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
-      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.35) !important;
-      
-      --brand: #00B894 !important;
-      --brand-dark: #00A885 !important;
-    }
-
-    .theme-light {
-      --bg-primary: #FFFFFF !important;
-      --bg-secondary: #F8F9FA !important;
-      --bg-card: #FFFFFF !important;
-      --bg-overlay: rgba(0, 0, 0, 0.5) !important;
-      
-      --text-primary: #2D3436 !important;
-      --text-secondary: #636E72 !important;
-      --text-muted: #B2BEC3 !important;
-      
-      --border: #DFE6E9 !important;
-      --shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
-      --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.12) !important;
-      
-      --brand: #008000 !important;
-      --brand-dark: #006600 !important;
     }
 
     /* ===== Reset & Base ===== */
@@ -130,6 +73,7 @@
       font-size: 16px;
       overflow-x: hidden;
       transition: var(--transition);
+      padding-bottom: var(--tabbar-height);
     }
 
     /* ===== App Structure ===== */
@@ -140,12 +84,18 @@
 
     .page {
       display: none;
-      min-height: calc(100vh - var(--tabbar-height) - var(--safe-area-bottom));
-      padding-bottom: calc(var(--tabbar-height) + var(--safe-area-bottom));
+      min-height: 100vh;
+      padding-bottom: calc(var(--tabbar-height) + var(--safe-area-bottom) + 20px);
     }
 
     .page.active {
       display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .container {
@@ -160,10 +110,11 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: var(--bg-card);
+      background: var(--bg-primary);
       border-bottom: 1px solid var(--border);
       backdrop-filter: blur(10px);
       height: var(--header-height);
+      box-shadow: var(--shadow-sm);
     }
 
     .header-content {
@@ -180,6 +131,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      color: var(--brand);
     }
 
     .header-title i {
@@ -196,6 +148,10 @@
       padding: 8px 12px;
       border-radius: var(--radius);
       background: var(--bg-secondary);
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 14px;
     }
 
     .back-button:hover {
@@ -209,11 +165,12 @@
       left: 0;
       right: 0;
       z-index: 1000;
-      background: var(--bg-card);
+      background: var(--bg-primary);
       border-top: 1px solid var(--border);
       height: calc(var(--tabbar-height) + var(--safe-area-bottom));
       padding-bottom: var(--safe-area-bottom);
       display: flex;
+      box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.08);
     }
 
     .tab-item {
@@ -231,6 +188,9 @@
       padding: 8px 4px;
       position: relative;
       transition: var(--transition);
+      background: none;
+      border: none;
+      cursor: pointer;
     }
 
     .tab-item i {
@@ -273,10 +233,12 @@
       font-size: 24px;
       font-weight: 700;
       margin-bottom: 8px;
+      color: var(--text-primary);
     }
 
     .section-title p {
       color: var(--text-secondary);
+      font-size: 15px;
     }
 
     .btn {
@@ -291,26 +253,35 @@
       cursor: pointer;
       transition: var(--transition);
       text-decoration: none;
+      font-family: inherit;
+      font-size: 15px;
     }
 
     .btn-primary {
       background: var(--brand);
       color: white;
+      box-shadow: 0 4px 12px rgba(0, 128, 0, 0.25);
     }
 
     .btn-primary:hover {
       background: var(--brand-dark);
       transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 128, 0, 0.3);
     }
 
     .btn-secondary {
-      background: var(--bg-card);
+      background: var(--bg-primary);
       color: var(--text-primary);
       border: 1px solid var(--border);
     }
 
     .btn-secondary:hover {
       background: var(--bg-secondary);
+      transform: translateY(-2px);
+    }
+
+    .btn-block {
+      width: 100%;
     }
 
     .card {
@@ -333,6 +304,7 @@
       background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
       position: relative;
       overflow: hidden;
+      border-bottom: 1px solid var(--border);
     }
 
     .hero::before {
@@ -369,13 +341,14 @@
 
     .hero-badge {
       display: inline-block;
-      padding: 6px 12px;
+      padding: 6px 16px;
       background: var(--brand-light);
       color: var(--brand);
       border-radius: 20px;
       font-size: 14px;
       font-weight: 600;
       margin-bottom: var(--spacing);
+      border: 1px solid rgba(0, 128, 0, 0.1);
     }
 
     .hero h1 {
@@ -383,12 +356,20 @@
       font-weight: 800;
       line-height: 1.2;
       margin-bottom: var(--spacing);
+      color: var(--text-primary);
+    }
+
+    .hero h1 span {
+      color: var(--brand);
     }
 
     .hero p {
       font-size: 18px;
       color: var(--text-secondary);
       margin-bottom: var(--spacing-xl);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .hero-actions {
@@ -398,7 +379,7 @@
       flex-wrap: wrap;
     }
 
-    /* ===== Courses Grid (from your site) ===== */
+    /* ===== Courses Grid ===== */
     .academy-modules-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -406,9 +387,16 @@
       margin-bottom: 60px;
     }
 
+    @media (max-width: 768px) {
+      .academy-modules-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+    }
+
     .academy-card {
       background: var(--bg-card);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius-xl);
       overflow: hidden;
       box-shadow: var(--shadow);
       transition: var(--transition);
@@ -420,7 +408,7 @@
     }
 
     .academy-card:hover {
-      transform: translateY(-12px);
+      transform: translateY(-8px);
       box-shadow: var(--shadow-lg);
     }
 
@@ -430,12 +418,12 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 5px;
+      height: 4px;
       background: linear-gradient(135deg, var(--brand), var(--brand-dark));
     }
 
     .academy-card-image {
-      height: 220px;
+      height: 180px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -450,12 +438,12 @@
       align-items: center;
       justify-content: center;
       color: #fff;
-      height: 220px;
+      height: 180px;
       position: relative;
     }
 
     .module-label {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       font-weight: 700;
       text-align: center;
       padding: 0 15px;
@@ -467,7 +455,7 @@
     }
 
     .academy-card-content {
-      padding: 28px;
+      padding: 24px;
       flex-grow: 1;
       display: flex;
       flex-direction: column;
@@ -475,8 +463,8 @@
 
     .academy-card-content h3 {
       color: var(--brand-dark);
-      margin-bottom: 20px;
-      font-size: 1.4rem;
+      margin-bottom: 16px;
+      font-size: 1.3rem;
       font-weight: 700;
       position: relative;
       display: inline-block;
@@ -485,9 +473,9 @@
     .academy-card-content h3::after {
       content: '';
       position: absolute;
-      bottom: -10px;
+      bottom: -8px;
       left: 0;
-      width: 50px;
+      width: 40px;
       height: 3px;
       background: var(--brand);
       border-radius: 2px;
@@ -495,15 +483,15 @@
     }
 
     .academy-card:hover .academy-card-content h3::after {
-      width: 80px;
+      width: 60px;
     }
 
     .academy-card-content p {
       color: var(--text-secondary);
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       flex-grow: 1;
-      line-height: 1.7;
-      font-size: 1.05rem;
+      line-height: 1.6;
+      font-size: 0.95rem;
     }
 
     .lesson-bg {
@@ -517,14 +505,14 @@
       transform: translate(-50%, -50%);
       background: var(--brand);
       color: #fff;
-      width: 90px;
-      height: 90px;
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 800;
-      font-size: 2rem;
+      font-size: 1.5rem;
       box-shadow: var(--shadow);
       z-index: 2;
     }
@@ -576,6 +564,7 @@
       font-size: 18px;
       font-weight: 700;
       margin-bottom: 4px;
+      color: var(--text-primary);
     }
 
     .lesson-duration {
@@ -607,11 +596,12 @@
 
     .video-header {
       padding: var(--spacing);
-      background: var(--bg-card);
+      background: var(--bg-primary);
       border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-between;
+      box-shadow: var(--shadow-sm);
     }
 
     .video-content {
@@ -629,6 +619,7 @@
       border: none;
       border-radius: var(--radius);
       background: black;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
     }
 
     .comments-section {
@@ -644,7 +635,7 @@
 
     .comment-input {
       width: 100%;
-      padding: 12px 16px;
+      padding: 14px 16px;
       background: var(--bg-primary);
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -653,6 +644,13 @@
       margin-bottom: var(--spacing);
       resize: vertical;
       min-height: 80px;
+      font-size: 15px;
+    }
+
+    .comment-input:focus {
+      outline: none;
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(0, 128, 0, 0.1);
     }
 
     .comments-list {
@@ -665,29 +663,32 @@
       border-radius: var(--radius);
       padding: var(--spacing);
       border-left: 3px solid var(--brand);
+      box-shadow: var(--shadow-sm);
     }
 
     .comment-header {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
+      gap: 10px;
+      margin-bottom: 10px;
     }
 
     .comment-avatar {
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      background: var(--bg-secondary);
+      background: linear-gradient(135deg, var(--brand), var(--brand-dark));
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
-      color: var(--brand);
+      font-size: 16px;
+      color: white;
+      font-weight: 600;
     }
 
     .comment-author {
       font-weight: 600;
+      color: var(--text-primary);
     }
 
     .comment-date {
@@ -698,6 +699,7 @@
     .comment-text {
       color: var(--text-secondary);
       line-height: 1.5;
+      font-size: 15px;
     }
 
     /* ===== FAQ ===== */
@@ -711,6 +713,7 @@
       border-radius: var(--radius);
       border: 1px solid var(--border);
       overflow: hidden;
+      box-shadow: var(--shadow-sm);
     }
 
     .faq-question {
@@ -720,14 +723,22 @@
       justify-content: space-between;
       cursor: pointer;
       font-weight: 600;
+      color: var(--text-primary);
+      transition: var(--transition);
+    }
+
+    .faq-question:hover {
+      background: var(--bg-secondary);
     }
 
     .faq-question i {
       transition: transform 0.3s ease;
+      color: var(--text-muted);
     }
 
     .faq-item.active .faq-question i {
-      transform: rotate(45deg);
+      transform: rotate(180deg);
+      color: var(--brand);
     }
 
     .faq-answer {
@@ -748,9 +759,10 @@
     .profile-header {
       text-align: center;
       padding: var(--spacing-xl) 0;
-      background: linear-gradient(135deg, var(--brand) 0%, var(--accent) 100%);
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
       color: white;
-      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+      border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+      margin-bottom: var(--spacing-xl);
     }
 
     .profile-avatar {
@@ -763,6 +775,7 @@
       justify-content: center;
       margin: 0 auto 16px;
       font-size: 32px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
     }
 
     .profile-name {
@@ -781,10 +794,16 @@
       grid-template-columns: repeat(3, 1fr);
       gap: var(--spacing);
       margin: var(--spacing-xl) 0;
+      padding: 0 var(--spacing);
     }
 
     .stat-item {
       text-align: center;
+      padding: var(--spacing);
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
     }
 
     .stat-value {
@@ -799,6 +818,7 @@
       color: var(--text-secondary);
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      font-weight: 600;
     }
 
     /* ===== Modal ===== */
@@ -827,12 +847,14 @@
 
     .modal-content {
       background: var(--bg-card);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius-xl);
       padding: var(--spacing-xl);
       width: 100%;
       max-width: 400px;
       transform: translateY(20px);
       transition: var(--transition);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
     }
 
     .modal.active .modal-content {
@@ -844,8 +866,28 @@
       text-align: center;
     }
 
+    .modal-header h3 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .modal-header p {
+      color: var(--text-secondary);
+      font-size: 15px;
+    }
+
     .form-group {
       margin-bottom: var(--spacing);
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 14px;
     }
 
     .form-control {
@@ -856,9 +898,17 @@
       border-radius: var(--radius);
       color: var(--text-primary);
       font-family: inherit;
+      font-size: 15px;
+      transition: var(--transition);
     }
 
-    /* ===== Loading ===== */
+    .form-control:focus {
+      outline: none;
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(0, 128, 0, 0.1);
+    }
+
+    /* ===== Loading & Error ===== */
     .loading {
       display: flex;
       flex-direction: column;
@@ -867,6 +917,7 @@
       padding: var(--spacing-xl);
       color: var(--text-secondary);
       grid-column: 1 / -1;
+      text-align: center;
     }
 
     .spinner {
@@ -890,68 +941,20 @@
       padding: 60px 20px;
       color: var(--error);
       grid-column: 1 / -1;
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
     }
 
     .error-message i {
-      font-size: 3.5rem;
+      font-size: 3rem;
       margin-bottom: 20px;
       color: var(--error);
     }
 
-    /* ===== News ===== */
-    .news-grid {
-      display: grid;
-      gap: var(--spacing);
-    }
-
-    .news-card {
-      display: flex;
-      gap: var(--spacing);
-      padding: var(--spacing);
-      background: var(--bg-card);
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .news-card:hover {
-      background: var(--bg-secondary);
-    }
-
-    .news-image {
-      width: 80px;
-      height: 80px;
-      border-radius: var(--radius);
-      background: var(--bg-secondary);
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text-muted);
-      font-size: 24px;
-    }
-
-    .news-content {
-      flex: 1;
-    }
-
-    .news-title {
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .news-date {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-    }
-
-    .news-excerpt {
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.5;
+    .error-message h3 {
+      margin-bottom: 10px;
+      color: var(--text-primary);
     }
 
     /* ===== Utility ===== */
@@ -972,15 +975,37 @@
       opacity: 0;
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    /* ===== Notification ===== */
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 16px 24px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      z-index: 9999;
+      transform: translateX(120%);
+      transition: transform 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      max-width: 400px;
+      font-weight: 600;
+    }
+
+    .notification-success {
+      background: var(--success);
+      color: white;
+    }
+
+    .notification-error {
+      background: var(--error);
+      color: white;
+    }
+
+    .notification-info {
+      background: var(--accent);
+      color: white;
     }
 
     /* ===== Responsive ===== */
@@ -998,7 +1023,7 @@
       }
       
       .section-title h2 {
-        font-size: 20px;
+        font-size: 22px;
       }
       
       .hero-actions {
@@ -1013,15 +1038,19 @@
         grid-template-columns: 1fr;
         gap: 16px;
       }
+
+      .profile-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .video-iframe {
+        border-radius: var(--radius);
+      }
     }
 
     @media (min-width: 769px) {
       .tab-bar {
-        display: none;
-      }
-      
-      .page {
-        padding-bottom: 0;
+        display: flex;
       }
       
       .academy-modules-grid {
@@ -1033,6 +1062,46 @@
       .academy-modules-grid {
         grid-template-columns: repeat(3, 1fr);
       }
+    }
+
+    /* ===== Custom Modal ===== */
+    .custom-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg-overlay);
+      backdrop-filter: blur(8px);
+      z-index: 3001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--spacing);
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+
+    .custom-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .custom-modal-content {
+      background: var(--bg-card);
+      border-radius: var(--radius-xl);
+      padding: var(--spacing-xl);
+      width: 100%;
+      max-width: 500px;
+      transform: translateY(20px);
+      transition: var(--transition);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+    }
+
+    .custom-modal.active .custom-modal-content {
+      transform: translateY(0);
     }
   </style>
 </head>
@@ -1047,7 +1116,7 @@
             <span>原始点 академиясы</span>
           </div>
           <div>
-            <button class="btn btn-secondary" onclick="showLoginModal()">
+            <button class="btn btn-secondary" onclick="showLoginModal()" id="loginButtonHeader">
               <i class="fas fa-sign-in-alt"></i> Кіру
             </button>
           </div>
@@ -1059,15 +1128,12 @@
           <div class="container">
             <div class="hero-content">
               <span class="hero-badge">Себебін тапсаң-шипасы табылады</span>
-              <h1>«Себепті нүкте сауықтыру»<br>орталығы</h1>
+              <h1>«Себепті нүкте сауықтыру»<br><span>орталығы</span></h1>
               <p>«Жылуың бар өсесің, өнесің, жылуың жоқ өшесің өлесің»</p>
               <div class="hero-actions">
-                <a href="#modules" class="btn btn-primary">
-                  <i class="fas fa-book-open"></i>Курстарды көру
-                </a>
-                <a href="#author" class="btn btn-secondary">
-                  <i class="fas fa-user-md"></i>Автор жайлы
-                </a>
+                <button class="btn btn-primary" onclick="loadModules()">
+                  <i class="fas fa-book-open"></i> Курстарды көру
+                </button>
               </div>
             </div>
           </div>
@@ -1077,81 +1143,12 @@
           <div class="container">
             <div class="section-title">
               <h2>Онлайн курстар</h2>
-              <p>Өз жылдамдығыңызмен үйретіңіз. Үйде-ақ меңгеріңіз</p>
+              <p>Өз жылдамдығыңызбен үйретіңіз. Үйде-ақ меңгеріңіз</p>
             </div>
             <div class="academy-modules-grid" id="coursesContainer">
               <div class="loading">
                 <div class="spinner"></div>
                 <p>Курстар жүктелуде...</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="author" class="section">
-          <div class="container">
-            <div class="section-title">
-              <h2>Автор туралы</h2>
-              <p>Тұрсынгүл Әсемхан - 10+ жыл тәжірибесі бар маман</p>
-            </div>
-            <div class="card">
-              <div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
-                <div style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--brand), var(--brand-dark)); display: flex; align-items: center; justify-content: center; color: white; font-size: 48px;">
-                  <i class="fas fa-user-md"></i>
-                </div>
-                <div style="flex: 1;">
-                  <h3 style="font-size: 24px; margin-bottom: 8px;">Тұрсынгүл Әсемхан</h3>
-                  <p style="color: var(--text-secondary); margin-bottom: 16px;">
-                    原始点 (Иуан шы дянь) әдісінің 10 жыл тәжірибесі бар медицина маманы. 
-                    Жань Жау Кханьның тікелей шәкірті, Себепті нүкте әдісінің негізін қалаушы.
-                  </p>
-                  <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                    <span style="display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; background: var(--bg-secondary); border-radius: 20px; font-size: 14px;">
-                      <i class="fas fa-stethoscope" style="color: var(--brand);"></i>10+ жыл тәжірибе
-                    </span>
-                    <span style="display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; background: var(--bg-secondary); border-radius: 20px; font-size: 14px;">
-                      <i class="fas fa-heart-pulse" style="color: var(--brand);"></i>Дәстүрлі ем
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="container">
-            <div class="section-title">
-              <h2>Жиі қойылатын сұрақтар</h2>
-              <p>Сіздің барлық сұрақтарыңызға жауап</p>
-            </div>
-            <div class="faq-accordion">
-              <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="faq-question">
-                  <span>Қалай кірем?</span>
-                  <i class="fas fa-plus"></i>
-                </div>
-                <div class="faq-answer">
-                  <p>Жоғарыдағы «Кіру» батырмасын басып, нөмір мен құпиясөзді енгізесіз.</p>
-                </div>
-              </div>
-              <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="faq-question">
-                  <span>Төлемнен кейін қолжетімділік?</span>
-                  <i class="fas fa-plus"></i>
-                </div>
-                <div class="faq-answer">
-                  <p>Kaspi чегін WhatsApp арқылы жібересіз — менеджер қолжетімділікті қосады.</p>
-                </div>
-              </div>
-              <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="faq-question">
-                  <span>Видео ашылмаса?</span>
-                  <i class="fas fa-plus"></i>
-                </div>
-                <div class="faq-answer">
-                  <p>Интернет пен браузер кэшін тексеріңіз немесе бізге жазыңыз.</p>
-                </div>
               </div>
             </div>
           </div>
@@ -1163,10 +1160,10 @@
     <div id="faqPage" class="page">
       <header class="app-header">
         <div class="header-content">
-          <a href="#" class="back-button" onclick="showPage('mainPage')">
+          <button class="back-button" onclick="showPage('mainPage')">
             <i class="fas fa-arrow-left"></i>
             Артқа
-          </a>
+          </button>
           <div class="header-title">
             <i class="fas fa-question-circle"></i>
             <span>Сұрақ-жауап</span>
@@ -1186,7 +1183,7 @@
               <div class="faq-item" onclick="toggleFaq(this)">
                 <div class="faq-question">
                   <span>Қалай кірем?</span>
-                  <i class="fas fa-plus"></i>
+                  <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="faq-answer">
                   <p>Жоғарыдағы «Кіру» батырмасын басып, нөмір мен құпиясөзді енгізесіз.</p>
@@ -1195,16 +1192,16 @@
               <div class="faq-item" onclick="toggleFaq(this)">
                 <div class="faq-question">
                   <span>Төлемнен кейін қолжетімділік?</span>
-                  <i class="fas fa-plus"></i>
+                  <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="faq-answer">
-                  <p>Kaspi чегін WhatsApp арқылы жібересіз — менеджер қолжетімділікті қосады.</p>
+                  <p>Kaspi чегін WhatsApp арқылы жібересіз — менеджер қолжетімділікті бірден қосады.</p>
                 </div>
               </div>
               <div class="faq-item" onclick="toggleFaq(this)">
                 <div class="faq-question">
                   <span>Видео ашылмаса?</span>
-                  <i class="fas fa-plus"></i>
+                  <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="faq-answer">
                   <p>Интернет пен браузер кэшін тексеріңіз немесе бізге жазыңыз.</p>
@@ -1213,7 +1210,7 @@
               <div class="faq-item" onclick="toggleFaq(this)">
                 <div class="faq-question">
                   <span>Курсты қалай сатып аламын?</span>
-                  <i class="fas fa-plus"></i>
+                  <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="faq-answer">
                   <p>Курсты таңдап, Kaspi арқылы төлеңіз. Төлемнен кейін чекті менеджерге жіберіңіз.</p>
@@ -1222,7 +1219,7 @@
               <div class="faq-item" onclick="toggleFaq(this)">
                 <div class="faq-question">
                   <span>Қанша уақытқа қолжетімді?</span>
-                  <i class="fas fa-plus"></i>
+                  <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="faq-answer">
                   <p>Курсқа төлегеннен кейін 1 жыл бойы шектеусіз қолжетімділік аласыз.</p>
@@ -1231,7 +1228,7 @@
               <div class="faq-item" onclick="toggleFaq(this)">
                 <div class="faq-question">
                   <span>Қауіпсіз бе?</span>
-                  <i class="fas fa-plus"></i>
+                  <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="faq-answer">
                   <p>Иә, барлық тәсілдер қауіпсіз және табиғи. Бірақ әрқашан сақтықпен жасаңыз.</p>
@@ -1247,10 +1244,10 @@
     <div id="profilePage" class="page">
       <header class="app-header">
         <div class="header-content">
-          <a href="#" class="back-button" onclick="showPage('mainPage')">
+          <button class="back-button" onclick="showPage('mainPage')">
             <i class="fas fa-arrow-left"></i>
             Артқа
-          </a>
+          </button>
           <div class="header-title">
             <i class="fas fa-user"></i>
             <span>Профиль</span>
@@ -1261,7 +1258,7 @@
 
       <main>
         <div class="profile-header">
-          <div class="profile-avatar">
+          <div class="profile-avatar" id="profileAvatar">
             <i class="fas fa-user-circle"></i>
           </div>
           <div class="profile-name" id="userName">Қонақ</div>
@@ -1280,7 +1277,7 @@
                 <div class="stat-label">Сабақ</div>
               </div>
               <div class="stat-item">
-                <div class="stat-value" id="statDays">0</div>
+                <div class="stat-value" id="statDays">1</div>
                 <div class="stat-label">Күн</div>
               </div>
             </div>
@@ -1291,7 +1288,7 @@
                 <p style="color: var(--text-secondary); text-align: center; padding: 20px;">Әзірше курс сатып алмадыңыз</p>
               </div>
               <button class="btn btn-primary" onclick="showPage('mainPage')">
-                <i class="fas fa-shopping-cart"></i>Курстарды көру
+                <i class="fas fa-shopping-cart"></i> Курстарды көру
               </button>
             </div>
 
@@ -1302,9 +1299,8 @@
                   <div style="display: flex; align-items: center; justify-content: space-between;">
                     <span>Тема</span>
                     <select class="form-control" style="width: auto; padding: 8px 12px;" id="themeSelect" onchange="changeTheme(this.value)">
-                      <option value="auto">Автоматты</option>
-                      <option value="dark">Қараңғы</option>
                       <option value="light">Ақ</option>
+                      <option value="dark">Қара</option>
                     </select>
                   </div>
                   <div style="display: flex; align-items: center; justify-content: space-between;">
@@ -1320,10 +1316,10 @@
 
             <div>
               <button class="btn btn-secondary" id="logoutBtn" style="display: none; width: 100%;" onclick="logout()">
-                <i class="fas fa-sign-out-alt"></i>Шығу
+                <i class="fas fa-sign-out-alt"></i> Шығу
               </button>
               <button class="btn btn-primary" id="loginBtn" style="width: 100%;" onclick="showLoginModal()">
-                <i class="fas fa-sign-in-alt"></i>Кіру
+                <i class="fas fa-sign-in-alt"></i> Кіру
               </button>
             </div>
           </div>
@@ -1335,10 +1331,10 @@
     <div id="lessonsPage" class="page">
       <header class="app-header">
         <div class="header-content">
-          <a href="#" class="back-button" onclick="showPage('mainPage')">
+          <button class="back-button" onclick="showPage('mainPage')">
             <i class="fas fa-arrow-left"></i>
             Артқа
-          </a>
+          </button>
           <div class="header-title" id="lessonPageTitle">Сабақтар</div>
           <div></div>
         </div>
@@ -1364,18 +1360,18 @@
 
     <!-- Tab Bar -->
     <nav class="tab-bar">
-      <a href="#" class="tab-item active" onclick="showPage('mainPage')">
+      <button class="tab-item active" onclick="showPage('mainPage')">
         <i class="fas fa-book"></i>
         <span>Курстар</span>
-      </a>
-      <a href="#" class="tab-item" onclick="showPage('faqPage')">
+      </button>
+      <button class="tab-item" onclick="showPage('faqPage')">
         <i class="fas fa-question-circle"></i>
         <span>FAQ</span>
-      </a>
-      <a href="#" class="tab-item" onclick="showPage('profilePage')">
+      </button>
+      <button class="tab-item" onclick="showPage('profilePage')">
         <i class="fas fa-user"></i>
         <span>Профиль</span>
-      </a>
+      </button>
     </nav>
 
     <!-- Video Player -->
@@ -1394,12 +1390,12 @@
         <h3 class="mb">Пікірлер</h3>
         <div class="comment-form">
           <textarea class="comment-input" id="commentInput" placeholder="Пікіріңізді жазыңыз..."></textarea>
-          <button class="btn btn-primary" onclick="addComment()">
-            <i class="fas fa-paper-plane"></i>Жіберу
+          <button class="btn btn-primary btn-block" onclick="addComment()">
+            <i class="fas fa-paper-plane"></i> Жіберу
           </button>
         </div>
         <div class="comments-list" id="commentsList">
-          <!-- Комментарии будут загружаться здесь -->
+          <!-- Comments will load here -->
         </div>
       </div>
     </div>
@@ -1413,15 +1409,15 @@
         </div>
         <form onsubmit="event.preventDefault(); login()">
           <div class="form-group">
-            <label>Телефон нөмірі</label>
+            <label for="phoneInput">Телефон нөмірі</label>
             <input type="tel" class="form-control" id="phoneInput" placeholder="+7 XXX XXX XX XX" required>
           </div>
           <div class="form-group">
-            <label>Құпиясөз</label>
+            <label for="passwordInput">Құпиясөз</label>
             <input type="password" class="form-control" id="passwordInput" placeholder="Құпиясөз" required>
           </div>
-          <button type="submit" class="btn btn-primary" style="width: 100%;">
-            <i class="fas fa-sign-in-alt"></i>Кіру
+          <button type="submit" class="btn btn-primary btn-block">
+            <i class="fas fa-sign-in-alt"></i> Кіру
           </button>
         </form>
         <div style="text-align: center; margin-top: 20px;">
@@ -1434,10 +1430,17 @@
         </div>
       </div>
     </div>
+
+    <!-- Custom Modal (for payment etc) -->
+    <div class="custom-modal" id="customModal">
+      <div class="custom-modal-content" id="customModalContent">
+        <!-- Dynamic content -->
+      </div>
+    </div>
   </div>
 
   <script>
-    // URLs (как в вашем сайте)
+    // ===== CONFIGURATION =====
     const SESS_URL = 'https://script.google.com/macros/s/AKfycbwp61ZemVXyhVy3s2CBDYnfWBZaVhmsGiqzG9U4i4KGCoNykLNZrHwQRBny6iaAJusZ/exec';
     const CONFIG = {
       spreadsheetId: '1fBxicZo7HkKXpoUVRtZvc628oG7rxLeSgcIgmruTd5Y',
@@ -1445,7 +1448,7 @@
     };
     const COMMENT_URL = 'https://script.google.com/macros/s/AKfycbwiWkQUZHiw9TcQNcXsQxwHBK-Qi6nzFrXQwEEe_NO-SxjNLNwp2e841WzvoxCrGWny/exec';
 
-    // State management
+    // ===== STATE MANAGEMENT =====
     const state = {
       currentUser: null,
       currentModule: null,
@@ -1454,16 +1457,19 @@
       lessonsAll: [],
       comments: {},
       currentPage: 'mainPage',
-      lessonsFetchedAt: 0
+      lessonsFetchedAt: 0,
+      postLoginAction: null
     };
 
     let sessionTimer = null;
 
-    // DOM elements
+    // ===== DOM ELEMENTS =====
     const DOM = {
       pages: document.querySelectorAll('.page'),
       tabItems: document.querySelectorAll('.tab-item'),
       loginModal: document.getElementById('loginModal'),
+      customModal: document.getElementById('customModal'),
+      customModalContent: document.getElementById('customModalContent'),
       coursesContainer: document.getElementById('coursesContainer'),
       lessonsContainer: document.getElementById('lessonsContainer'),
       lessonPageTitle: document.getElementById('lessonPageTitle'),
@@ -1476,8 +1482,10 @@
       commentsList: document.getElementById('commentsList'),
       userName: document.getElementById('userName'),
       userEmail: document.getElementById('userEmail'),
+      profileAvatar: document.getElementById('profileAvatar'),
       logoutBtn: document.getElementById('logoutBtn'),
       loginBtn: document.getElementById('loginBtn'),
+      loginButtonHeader: document.getElementById('loginButtonHeader'),
       statCourses: document.getElementById('statCourses'),
       statLessons: document.getElementById('statLessons'),
       statDays: document.getElementById('statDays'),
@@ -1486,14 +1494,20 @@
       languageSelect: document.getElementById('languageSelect')
     };
 
-    // Initialize app
+    // ===== INITIALIZATION =====
     document.addEventListener('DOMContentLoaded', () => {
       initApp();
     });
 
     function initApp() {
-      // Load theme
-      loadTheme();
+      // Set theme from localStorage or default
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      changeTheme(savedTheme);
+      DOM.themeSelect.value = savedTheme;
+      
+      // Set language from localStorage or default
+      const savedLang = localStorage.getItem('language') || 'kk';
+      DOM.languageSelect.value = savedLang;
       
       // Load modules
       loadModulesWithCounts();
@@ -1501,20 +1515,17 @@
       // Check auth
       checkAuth();
       
-      // Setup FAQ
-      setupFAQ();
-      
-      // Setup smooth scrolling
-      setupSmoothScroll();
-      
-      // Set current year
-      setCurrentYear();
-      
       // Setup event listeners
       setupEventListeners();
+      
+      // Setup language change listener
+      DOM.languageSelect.addEventListener('change', function() {
+        localStorage.setItem('language', this.value);
+        showNotification('Тіл өзгерді: ' + this.options[this.selectedIndex].text, 'info');
+      });
     }
 
-    // Page navigation
+    // ===== PAGE NAVIGATION =====
     function showPage(pageId) {
       // Update state
       state.currentPage = pageId;
@@ -1569,29 +1580,44 @@
       }
     }
 
-    // Theme functions
-    function loadTheme() {
-      const savedTheme = localStorage.getItem('theme') || 'auto';
-      DOM.themeSelect.value = savedTheme;
-      applyTheme(savedTheme);
-    }
-
+    // ===== THEME FUNCTIONS =====
     function changeTheme(theme) {
-      localStorage.setItem('theme', theme);
-      applyTheme(theme);
-    }
-
-    function applyTheme(theme) {
-      document.body.classList.remove('theme-light', 'theme-dark');
-      
-      if (theme === 'light' || (theme === 'auto' && window.matchMedia('(prefers-color-scheme: light)').matches)) {
-        document.body.classList.add('theme-light');
-      } else if (theme === 'dark' || (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      if (theme === 'dark') {
         document.body.classList.add('theme-dark');
+        document.documentElement.style.setProperty('--bg-primary', '#1a1a1a');
+        document.documentElement.style.setProperty('--bg-secondary', '#2d2d2d');
+        document.documentElement.style.setProperty('--bg-card', '#2d2d2d');
+        document.documentElement.style.setProperty('--text-primary', '#ffffff');
+        document.documentElement.style.setProperty('--text-secondary', '#b3b3b3');
+        document.documentElement.style.setProperty('--border', '#404040');
+      } else {
+        document.body.classList.remove('theme-dark');
+        document.documentElement.style.setProperty('--bg-primary', '#FFFFFF');
+        document.documentElement.style.setProperty('--bg-secondary', '#F8F9FA');
+        document.documentElement.style.setProperty('--bg-card', '#FFFFFF');
+        document.documentElement.style.setProperty('--text-primary', '#2D3436');
+        document.documentElement.style.setProperty('--text-secondary', '#636E72');
+        document.documentElement.style.setProperty('--border', '#DFE6E9');
       }
+      localStorage.setItem('theme', theme);
     }
 
-    // Sheets data functions
+    // ===== GOOGLE SHEETS FUNCTIONS =====
+    function extractGoogleDriveId(url) {
+      if (!url) return null;
+      const patterns = [
+        /\/d\/([A-Za-z0-9_-]+)/,
+        /\/file\/d\/([A-Za-z0-9_-]+)/,
+        /id=([A-Za-z0-9_-]+)/,
+        /([A-Za-z0-9_-]{25,})/
+      ];
+      for (const pattern of patterns) {
+        const match = url.match(pattern);
+        if (match && match[1]) return match[1];
+      }
+      return null;
+    }
+
     async function fetchSheetData(sheet) {
       const url = `https://docs.google.com/spreadsheets/d/${CONFIG.spreadsheetId}/gviz/tq?sheet=${encodeURIComponent(sheet)}&tqx=out:json`;
       const res = await fetch(url);
@@ -1661,56 +1687,113 @@
                     data-module-name="${encodeURIComponent(mod.name)}"
                     data-module-description="${encodeURIComponent(mod.description)}">
               <i class="fas ${isPurchased ? 'fa-book-reader' : 'fa-lock'}"></i> 
-              ${isPurchased ? 'Сабақтарды қарау' : mod.price ? `${mod.price} ₸` : 'Курсты алу'}
+              ${isPurchased ? 'Сабақтарды қарау' : (mod.price ? `${mod.price} ₸` : 'Курсты алу')}
             </button>
           </div>`;
         DOM.coursesContainer.appendChild(card);
       });
 
+      // Add event listeners to module buttons
       document.querySelectorAll('.view-lessons').forEach(btn => {
         btn.addEventListener('click', async () => {
           const moduleId = btn.dataset.moduleId;
           const moduleName = decodeURIComponent(btn.dataset.moduleName);
           const moduleDescription = decodeURIComponent(btn.dataset.moduleDescription);
           
+          // Check if user is logged in
+          if (!state.currentUser) {
+            showNotification('Бұл модульді көру үшін кіріңіз', 'error');
+            showLoginModal();
+            return;
+          }
+          
+          // Check if module is purchased
+          const isPurchased = state.currentUser?.purchasedCourses?.includes(parseInt(moduleId)) || false;
+          
+          if (!isPurchased) {
+            // Show payment options
+            showPaymentOptions(moduleId, moduleName, moduleDescription);
+            return;
+          }
+          
+          // User has access, show lessons
           state.currentModule = {
             id: moduleId,
             name: moduleName,
             description: moduleDescription
           };
 
-          // Check if user needs to login or purchase
-          const isPurchased = state.currentUser?.purchasedCourses?.includes(parseInt(moduleId)) || false;
-          
-          if (!isPurchased && !state.currentUser) {
-            showLoginModal();
-            return;
-          }
-          
-          if (!isPurchased) {
-            if (confirm(`"${moduleName}" курсын сатып алу керек. Төлем жасағыңыз келе ме?`)) {
-              // Здесь можно добавить ссылку на Kaspi Pay
-              window.open('https://pay.kaspi.kz/pay', '_blank');
-              return;
-            }
-            return;
-          }
-          
-          // Update lesson page
           DOM.lessonPageTitle.textContent = moduleName;
           DOM.moduleTitle.textContent = `${moduleName} модулінің сабақтары`;
           DOM.moduleDescription.textContent = moduleDescription;
           
-          // Show lessons page
           showPage('lessonsPage');
         });
       });
     }
 
+    function loadModules() {
+      loadModulesWithCounts();
+      showPage('mainPage');
+    }
+
+    // ===== PAYMENT FUNCTIONS =====
+    function showPaymentOptions(moduleId, moduleName, moduleDescription) {
+      const modalContent = `
+        <div class="modal-header">
+          <h3>Курсты сатып алу</h3>
+          <p>"${moduleName}" курсын сатып алыңыз</p>
+        </div>
+        <div style="margin-bottom: 20px;">
+          <p style="color: var(--text-secondary); margin-bottom: 15px;">Курсты сатып алу үшін:</p>
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <a href="https://pay.kaspi.kz/pay" class="btn btn-primary" target="_blank" style="text-align: center;">
+              <i class="fas fa-link"></i> Kaspi Pay арқылы төлеу
+            </a>
+            <a href="https://wa.me/77479894879?text=${encodeURIComponent(`Сәлеметсіз бе! "${moduleName}" курсын сатып алғым келеді.`)}" 
+               class="btn btn-secondary" target="_blank" style="text-align: center;">
+              <i class="fab fa-whatsapp"></i> Менеджерге жазу
+            </a>
+          </div>
+        </div>
+        <div style="background: var(--bg-secondary); padding: 15px; border-radius: var(--radius); margin-bottom: 20px;">
+          <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 10px;">Төлем нұсқаулығы:</p>
+          <ol style="color: var(--text-secondary); font-size: 14px; padding-left: 20px;">
+            <li>Kaspi Pay арқылы төлеңіз</li>
+            <li>Төлем чегін WhatsApp арқылы менеджерге жіберіңіз</li>
+            <li>Менеджер сізге қолжетімділікті қосады</li>
+          </ol>
+        </div>
+        <button class="btn btn-secondary btn-block" onclick="hideCustomModal()">
+          <i class="fas fa-times"></i> Жабу
+        </button>
+      `;
+      
+      showCustomModal(modalContent);
+    }
+
+    // ===== LESSONS FUNCTIONS =====
     async function loadLessons(moduleId) {
       DOM.lessonsContainer.innerHTML = '<div class="loading"><div class="spinner"></div><p>Сабақтар жүктелуде...</p></div>';
       DOM.lessonsContainer.className = 'academy-modules-grid';
 
+      // Check if user has access to this module
+      const isPurchased = state.currentUser?.purchasedCourses?.includes(parseInt(moduleId)) || false;
+      
+      if (!isPurchased) {
+        DOM.lessonsContainer.innerHTML = `
+          <div class="error-message" style="grid-column: 1 / -1;">
+            <i class="fas fa-lock" style="font-size: 3rem; margin-bottom: 20px; color: var(--error);"></i>
+            <h3>Бұл модульге қолжетім жоқ</h3>
+            <p style="margin-bottom: 20px;">Бұл модульді көру үшін курсты сатып алуыңыз керек</p>
+            <button class="btn btn-primary" onclick="showPaymentOptions('${moduleId}', '${state.currentModule?.name || ''}', '${state.currentModule?.description || ''}')">
+              <i class="fas fa-shopping-cart"></i> Курсты сатып алу
+            </button>
+          </div>`;
+        return;
+      }
+
+      // User has access, load lessons
       const needRefresh = !Array.isArray(state.lessonsAll) ||
         (Date.now() - state.lessonsFetchedAt > 2 * 60 * 1000);
       
@@ -1723,9 +1806,7 @@
           renderLessons(subset);
         } catch (e) {
           console.error('Сабақтарды жүктеу қатесі:', e);
-          if (!Array.isArray(state.lessonsAll)) {
-            DOM.lessonsContainer.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-triangle"></i><h3>Сабақтарды жүктеу мүмкін емес</h3></div>';
-          }
+          DOM.lessonsContainer.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-triangle"></i><h3>Сабақтарды жүктеу мүмкін емес</h3></div>';
         }
       } else {
         const subset = state.lessonsAll.filter(x => String(x.module_id) === String(moduleId));
@@ -1763,7 +1844,7 @@
                       data-lesson-title="${encodeURIComponent(l.name)}">
                 <i class="fas fa-play-circle"></i> Қарау
               </button>
-              ${l.pdf_url ? `<a href="${l.pdf_url}" class="btn btn-ghost" target="_blank"><i class="fas fa-file-pdf"></i> Презентация</a>` : ''}
+              ${l.pdf_url ? `<a href="${l.pdf_url}" class="btn btn-secondary" target="_blank"><i class="fas fa-file-pdf"></i> Презентация</a>` : ''}
             </div>
           </div>`;
         DOM.lessonsContainer.appendChild(card);
@@ -1774,22 +1855,7 @@
       });
     }
 
-    // Video player functions
-    function extractGoogleDriveId(url) {
-      if (!url) return null;
-      const patterns = [
-        /\/d\/([A-Za-z0-9_-]+)/,
-        /\/file\/d\/([A-Za-z0-9_-]+)/,
-        /id=([A-Za-z0-9_-]+)/,
-        /([A-Za-z0-9_-]{25,})/
-      ];
-      for (const pattern of patterns) {
-        const match = url.match(pattern);
-        if (match && match[1]) return match[1];
-      }
-      return null;
-    }
-
+    // ===== VIDEO PLAYER FUNCTIONS =====
     function playVideo(button) {
       const videoUrl = button.dataset.videoUrl;
       const lessonTitle = decodeURIComponent(button.dataset.lessonTitle);
@@ -1826,7 +1892,7 @@
       }
     }
 
-    // Comments functions
+    // ===== COMMENTS FUNCTIONS =====
     async function loadComments(videoId) {
       DOM.commentsList.innerHTML = '<div class="loading"><div class="spinner"></div><p>Пікірлер жүктелуде...</p></div>';
       
@@ -1839,7 +1905,7 @@
             <div class="comment-card">
               <div class="comment-header">
                 <div class="comment-avatar">
-                  <i class="fas fa-user"></i>
+                  ${comment.user ? comment.user.charAt(0).toUpperCase() : '?'}
                 </div>
                 <div>
                   <div class="comment-author">${comment.user || 'Қолданушы'}</div>
@@ -1860,7 +1926,10 @@
       if (!state.currentVideo || !DOM.commentInput) return;
       
       const text = DOM.commentInput.value.trim();
-      if (!text) return;
+      if (!text) {
+        showNotification('Пікірді енгізіңіз', 'error');
+        return;
+      }
       
       if (!state.currentUser) {
         showNotification('Пікір қалдыру үшін кіріңіз', 'error');
@@ -1886,19 +1955,27 @@
       }
     }
 
-    // Auth functions
+    // ===== AUTH FUNCTIONS =====
     async function checkAuth() {
       const user = localStorage.getItem('eduplatform_user');
       if (user) {
         try {
           state.currentUser = JSON.parse(user);
-          await verifySession();
+          // Verify session
+          const ok = await verifySession();
+          if (ok) {
+            updateUserUI();
+            startHeartbeat();
+            // Refresh modules to show purchased status
+            loadModulesWithCounts();
+          } else {
+            forceLogout('Сессия аяқталды');
+          }
         } catch (error) {
           console.error('Аутентификация қатесі:', error);
           forceLogout();
         }
       }
-      updateUserUI();
     }
 
     async function login() {
@@ -1931,6 +2008,12 @@
           
           // Refresh modules to show purchased status
           loadModulesWithCounts();
+          
+          // Execute post-login action if any
+          if (state.postLoginAction) {
+            state.postLoginAction();
+            state.postLoginAction = null;
+          }
         } else {
           showNotification('Қате логин немесе құпиясөз', 'error');
         }
@@ -1951,7 +2034,7 @@
         const data = await res.json();
         return !!data.ok;
       } catch {
-        return null;
+        return false;
       }
     }
 
@@ -2011,12 +2094,20 @@
         DOM.userEmail.textContent = isLoggedIn ? state.currentUser.login : 'Кіру керек';
       }
       
+      if (DOM.profileAvatar && isLoggedIn && state.currentUser.name) {
+        DOM.profileAvatar.innerHTML = state.currentUser.name.charAt(0).toUpperCase();
+      }
+      
       if (DOM.logoutBtn) {
         DOM.logoutBtn.style.display = isLoggedIn ? 'block' : 'none';
       }
       
       if (DOM.loginBtn) {
         DOM.loginBtn.style.display = isLoggedIn ? 'none' : 'block';
+      }
+      
+      if (DOM.loginButtonHeader) {
+        DOM.loginButtonHeader.style.display = isLoggedIn ? 'none' : 'inline-flex';
       }
       
       // Update stats if logged in
@@ -2026,7 +2117,7 @@
         DOM.statLessons.textContent = state.lessonsAll.filter(l => 
           state.currentUser.purchasedCourses?.includes(parseInt(l.module_id))
         ).length;
-        DOM.statDays.textContent = '1'; // Можно добавить реальный расчет
+        DOM.statDays.textContent = '1';
         
         updateMyCourses();
       } else {
@@ -2065,7 +2156,25 @@
       updateUserUI();
     }
 
-    // Modal functions
+    // Open module from profile
+    function openModule(moduleId) {
+      const module = state.modules.find(m => m.id == moduleId);
+      if (!module) return;
+
+      state.currentModule = {
+        id: module.id,
+        name: module.name,
+        description: module.description
+      };
+
+      DOM.lessonPageTitle.textContent = module.name;
+      DOM.moduleTitle.textContent = `${module.name} модулінің сабақтары`;
+      DOM.moduleDescription.textContent = module.description;
+
+      showPage('lessonsPage');
+    }
+
+    // ===== MODAL FUNCTIONS =====
     function showLoginModal() {
       DOM.loginModal.classList.add('active');
       document.body.style.overflow = 'hidden';
@@ -2078,65 +2187,26 @@
       document.getElementById('passwordInput').value = '';
     }
 
-    // FAQ functions
-    function setupFAQ() {
-      document.querySelectorAll('.faq-item').forEach(item => {
-        item.addEventListener('click', function() {
-          this.classList.toggle('active');
-        });
-      });
+    function showCustomModal(content) {
+      DOM.customModalContent.innerHTML = content;
+      DOM.customModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
     }
 
+    function hideCustomModal() {
+      DOM.customModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // ===== FAQ FUNCTIONS =====
     function toggleFaq(element) {
       element.classList.toggle('active');
     }
 
-    // Smooth scroll
-    function setupSmoothScroll() {
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-          const href = this.getAttribute('href');
-          if (href === '#' || !href.startsWith('#')) return;
-          
-          e.preventDefault();
-          const targetElement = document.querySelector(href);
-          
-          if (targetElement && state.currentPage === 'mainPage') {
-            const headerHeight = document.querySelector('.app-header').offsetHeight;
-            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-            
-            window.scrollTo({
-              top: targetPosition,
-              behavior: 'smooth'
-            });
-            
-            // Update URL hash
-            history.pushState(null, '', href);
-          }
-        });
-      });
-    }
-
-    // Notifications
+    // ===== NOTIFICATION FUNCTIONS =====
     function showNotification(message, type = 'info') {
       const notification = document.createElement('div');
-      notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: ${type === 'success' ? 'var(--success)' : type === 'error' ? 'var(--error)' : 'var(--accent)'};
-        color: white;
-        padding: 12px 24px;
-        border-radius: var(--radius);
-        box-shadow: var(--shadow-lg);
-        z-index: 9999;
-        transform: translateX(120%);
-        transition: transform 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      `;
-      
+      notification.className = `notification notification-${type}`;
       notification.innerHTML = `
         <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
         <span>${message}</span>
@@ -2154,14 +2224,7 @@
       }, 3000);
     }
 
-    // Utility
-    function setCurrentYear() {
-      const yearElements = document.querySelectorAll('.current-year');
-      yearElements.forEach(el => {
-        el.textContent = new Date().getFullYear();
-      });
-    }
-
+    // ===== EVENT LISTENERS SETUP =====
     function setupEventListeners() {
       // Close modal when clicking outside
       DOM.loginModal.addEventListener('click', (e) => {
@@ -2170,48 +2233,48 @@
         }
       });
 
+      DOM.customModal.addEventListener('click', (e) => {
+        if (e.target === DOM.customModal) {
+          hideCustomModal();
+        }
+      });
+
       // Close modal with Escape key
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && DOM.loginModal.classList.contains('active')) {
-          hideLoginModal();
+        if (e.key === 'Escape') {
+          if (DOM.loginModal.classList.contains('active')) {
+            hideLoginModal();
+          }
+          if (DOM.customModal.classList.contains('active')) {
+            hideCustomModal();
+          }
+          if (DOM.videoPlayerPage.style.display === 'flex') {
+            closeVideo();
+          }
         }
       });
 
-      // Theme change listener
-      const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-      darkModeMediaQuery.addEventListener('change', (e) => {
-        if (localStorage.getItem('theme') === 'auto') {
-          applyTheme('auto');
-        }
-      });
-
-      // Language change
-      if (DOM.languageSelect) {
-        DOM.languageSelect.addEventListener('change', function() {
-          showNotification('Тіл өзгерді: ' + this.options[this.selectedIndex].text, 'info');
+      // Enter key to submit comment
+      if (DOM.commentInput) {
+        DOM.commentInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' && e.ctrlKey) {
+            addComment();
+          }
         });
       }
     }
 
-    // Open module function (for profile page)
-    function openModule(moduleId) {
-      const module = state.modules.find(m => m.id === moduleId);
-      if (!module) return;
-      
-      state.currentModule = {
-        id: module.id,
-        name: module.name,
-        description: module.description
-      };
-      
-      // Update lesson page
-      DOM.lessonPageTitle.textContent = module.name;
-      DOM.moduleTitle.textContent = `${module.name} модулінің сабақтары`;
-      DOM.moduleDescription.textContent = module.description;
-      
-      // Show lessons page
-      showPage('lessonsPage');
-    }
+    // ===== GLOBAL FUNCTIONS =====
+    window.showPage = showPage;
+    window.showLoginModal = showLoginModal;
+    window.toggleFaq = toggleFaq;
+    window.closeVideo = closeVideo;
+    window.addComment = addComment;
+    window.logout = logout;
+    window.loadModules = loadModules;
+    window.openModule = openModule;
+    window.hideCustomModal = hideCustomModal;
+    window.changeTheme = changeTheme;
   </script>
 </body>
 </html>

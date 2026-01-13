@@ -3413,20 +3413,30 @@ if (!isPurchased) {
       }
       
       // Update stats if logged in
-      if (isLoggedIn) {
-        const purchasedCount = state.currentUser.purchasedCourses?.length || 0;
-        DOM.statCourses.textContent = purchasedCount;
-        DOM.statLessons.textContent = state.lessonsAll.filter(l => 
-          state.currentUser.purchasedCourses?.includes(parseInt(l.module_id))
-        ).length;
-    
-        
-        updateMyCourses();
-      } else {
-        DOM.statCourses.textContent = '0';
-        DOM.statLessons.textContent = '0';
-        DOM.myCourses.innerHTML = '<p style="color: var(--text-secondary); text-align: center; padding: 20px;">Әзірше курс сатып алмадыңыз</p>';
-      }
+      // Update stats if logged in
+if (isLoggedIn) {
+  const purchasedCount = state.currentUser.purchasedCourses?.length || 0;
+
+  if (DOM.statCourses) DOM.statCourses.textContent = String(purchasedCount);
+
+  if (DOM.statLessons) {
+    DOM.statLessons.textContent = String(
+      (state.lessonsAll || []).filter(l =>
+        state.currentUser.purchasedCourses?.includes(parseInt(l.module_id))
+      ).length
+    );
+  }
+
+  updateMyCourses();
+} else {
+  if (DOM.statCourses) DOM.statCourses.textContent = '0';
+  if (DOM.statLessons) DOM.statLessons.textContent = '0';
+
+  if (DOM.myCourses) {
+    DOM.myCourses.innerHTML =
+      '<p style="color: var(--text-secondary); text-align: center; padding: 20px;">Әзірше курс сатып алмадыңыз</p>';
+  }
+}
     }
 
     function updateMyCourses() {

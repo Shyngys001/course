@@ -1572,6 +1572,197 @@
   outline: 3px solid rgba(0,128,0,.18);
   outline-offset: 2px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ================================
+   PREMIUM iPhone COPPER SKIN
+   (қоя салсаң болды)
+================================ */
+
+/* 1) Brand palette (copper) */
+:root{
+  --brand: #C7772E;        /* copper main */
+  --brand-dark: #8E4F1D;   /* copper deep */
+  --brand-light: #FFF1E4;  /* warm light */
+  --accent: #E39A49;
+
+  --bg-primary:#FFFFFF;
+  --bg-secondary:#F6F7F8;
+  --bg-card:#FFFFFF;
+
+  --text-primary:#171717;
+  --text-secondary:#4A4A4A;
+  --text-muted:#8B8B8B;
+
+  --border: rgba(0,0,0,.08);
+
+  --shadow-sm: 0 8px 18px rgba(0,0,0,.06);
+  --shadow:    0 16px 34px rgba(0,0,0,.10);
+  --shadow-lg: 0 26px 60px rgba(0,0,0,.14);
+
+  --radius: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+
+  --transition: all .22s ease;
+}
+
+/* Dark mode copper */
+.theme-dark{
+  --bg-primary:#0C0B0A;
+  --bg-secondary:#151312;
+  --bg-card:#161413;
+
+  --text-primary:#FFFFFF;
+  --text-secondary:#CFCFCF;
+  --text-muted:#8A8A8A;
+
+  --border: rgba(255,255,255,.10);
+
+  --shadow-sm: 0 10px 22px rgba(0,0,0,.45);
+  --shadow:    0 18px 40px rgba(0,0,0,.55);
+  --shadow-lg: 0 28px 70px rgba(0,0,0,.65);
+}
+
+/* 2) App background (soft premium) */
+body{
+  background:
+    radial-gradient(1200px 700px at 20% -10%, rgba(199,119,46,.10), transparent 55%),
+    radial-gradient(900px 600px at 110% 30%, rgba(227,154,73,.12), transparent 55%),
+    linear-gradient(180deg, var(--bg-primary), var(--bg-secondary));
+}
+
+/* 3) Header — glass + thin border */
+.app-header{
+  background: color-mix(in srgb, var(--bg-primary) 82%, transparent);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 10px 25px rgba(0,0,0,.06);
+}
+.theme-dark .app-header{
+  background: rgba(12,11,10,.72);
+  box-shadow: 0 14px 35px rgba(0,0,0,.50);
+}
+.header-title{
+  color: var(--brand);
+}
+
+/* 4) Hero — copper glow */
+.hero{
+  background:
+    radial-gradient(900px 500px at 50% -30%, rgba(199,119,46,.22), transparent 60%),
+    linear-gradient(135deg, color-mix(in srgb, var(--bg-primary) 90%, #fff), var(--bg-secondary));
+  border-bottom: 1px solid var(--border);
+}
+.hero-badge{
+  background: color-mix(in srgb, var(--brand-light) 70%, white);
+  border: 1px solid rgba(199,119,46,.20);
+  color: var(--brand-dark);
+}
+
+/* 5) Cards — premium edges + glow on hover */
+.card, .academy-card, .faq-item, .lesson-card, .news-item{
+  border: 1px solid var(--border) !important;
+  box-shadow: var(--shadow-sm);
+}
+.academy-card{
+  background: color-mix(in srgb, var(--bg-card) 92%, transparent);
+}
+.academy-card:hover{
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+.academy-card::after{
+  background: linear-gradient(135deg, var(--brand), #E9B16A);
+}
+
+/* 6) Buttons — iPhone-like depth */
+.btn{
+  border-radius: 16px;
+  letter-spacing: .1px;
+}
+.btn-primary{
+  background: linear-gradient(180deg, #E9B16A, var(--brand));
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(199,119,46,.28);
+}
+.btn-primary:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(199,119,46,.34);
+}
+.btn-secondary{
+  background: color-mix(in srgb, var(--bg-card) 86%, transparent);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  box-shadow: 0 10px 22px rgba(0,0,0,.06);
+}
+.btn-secondary:hover{
+  background: color-mix(in srgb, var(--bg-secondary) 90%, transparent);
+  transform: translateY(-2px);
+}
+
+/* 7) Tab bar — premium glass */
+.tab-bar{
+  background: color-mix(in srgb, var(--bg-primary) 80%, transparent);
+  backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -18px 40px rgba(0,0,0,.10);
+}
+.tab-item.active{
+  color: var(--brand);
+}
+.tab-item.active::after{
+  background: linear-gradient(90deg, var(--brand), #E9B16A);
+}
+
+/* 8) Segmented tabs (Ақылы/Бонус) */
+.segment-btn{
+  background: color-mix(in srgb, var(--bg-card) 86%, transparent);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.segment-btn.active{
+  background: linear-gradient(180deg, rgba(233,177,106,.28), rgba(199,119,46,.14));
+  border-color: rgba(199,119,46,.40);
+  color: var(--brand-dark);
+}
+
+/* 9) Switch — copper */
+.switch input:checked + .slider{
+  background: rgba(199,119,46,.22);
+  border-color: rgba(199,119,46,.48);
+}
+.switch input:checked + .slider:before{
+  border-color: rgba(199,119,46,.35);
+}
+
+/* 10) Little polishing */
+.academy-card-content h3{
+  color: var(--text-primary);
+}
+.academy-card-content h3::after{
+  background: linear-gradient(90deg, var(--brand), #E9B16A);
+}
+.news-views{
+  background: color-mix(in srgb, var(--bg-secondary) 88%, transparent);
+}
+
+
+
+
+
+
   </style>
 </head>
 <body>

@@ -21,3 +21,142 @@ CTA на главный офф курс реклама
 
 
 модульдардың фотосы болса как бэкграунд 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===== Copper Glow Background ===== */
+:root{
+  --copper-1:#ffb26b;
+  --copper-2:#/* ✅ Профиль бетінің жасыл шапкасын DARK-та өзгерту */
+}
+
+/* ✅ LIGHT theme: secondary батырма көрінсін */
+.btn-secondary{
+  background: var(--bg-secondary);          /* ақ емес, ашық сұр */
+  border-color: rgba(0,0,0,.12);            /* border күштірек */
+  color: var(--text-primary);
+  box-shadow: 0 6px 16px rgba(0,0,0,.08);   /* аздап көтеру */
+}
+
+.btn-secondary:hover{
+  background: #eef1f3;
+  transform: translateY(-1px);
+}
+/* Тек модуль карточкасындағы secondary батырма */
+.academy-card-content .btn-secondary{
+  background: var(--bg-secondary);
+  border-color: rgba(0,0,0,.12);
+  box-shadow: 0 6px 16px rgba(0,0,0,.08);
+}
+.theme-dark .profile-header{
+  background:
+    radial-gradient(900px 500px at 20% 10%, rgba(255,178,107,.18), transparent 60%),
+    radial-gradient(700px 500px at 80% 20%, rgba(255,122,61,.14), transparent 55%),
+    linear-gradient(180deg, #0b0b0e 0%, #08080a 100%);
+  color: #fff;
+}
+
+/* ✅ Профиль аватардың арты да “premium” болсын */
+.theme-dark .profile-avatar{
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.10);
+}
+
+/* ✅ Профиль тексттері */
+.theme-dark .profile-email{ opacity: .85; }
+
+/* ✅ Dark-та header-дың қара болуы үшін (жоғарғы панель) */
+.theme-dark .app-header{
+  background: rgba(10,10,12,.85);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  --copper-3:#ff4d2e;
+  --copper-glow: rgba(255, 140, 64, .22);
+  --copper-line: rgba(255, 160, 90, .35);
+}
+
+/* Негізгі фон */
+body{
+  background:
+    radial-gradient(900px 500px at 20% 10%, rgba(255,178,107,.18), transparent 60%),
+    radial-gradient(700px 500px at 80% 20%, rgba(255,122,61,.14), transparent 55%),
+    radial-gradient(900px 700px at 60% 90%, rgba(255,77,46,.10), transparent 60%),
+    linear-gradient(180deg, #0b0b0e 0%, #0a0a0c 45%, #08080a 100%);
+}
+
+/* Жоғарыдағы hero-ны “металл” қылып береміз */
+.hero{
+  background:
+    radial-gradient(1200px 600px at 50% -10%, rgba(255,178,107,.18), transparent 55%),
+    linear-gradient(135deg, rgba(255,140,64,.10), rgba(0,0,0,0) 45%),
+    linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.0));
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+/* Акцент элементтер (badge, header title) әдемі көріну үшін */
+.hero-badge{
+  background: rgba(255,140,64,.12);
+  border-color: rgba(255,140,64,.22);
+  color: #ffd6b8;
+}
+
+.header-title{
+  color: #ffd6b8;
+}
+.header-title i{ color: #ffb26b; }
+
+
+.hero::before,
+.hero::after{
+  content:'';
+  position:absolute;
+  inset:-40%;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(255,178,107,.18), transparent 50%),
+    conic-gradient(from 210deg, transparent 0 35%, rgba(255,160,90,.18) 45%, transparent 55% 100%);
+  filter: blur(18px);
+  opacity: .55;
+  pointer-events:none;
+}
+
+.hero::after{
+  inset:-55%;
+  opacity:.35;
+  filter: blur(28px);
+}
+
+.card, .academy-card, .faq-item, .lesson-card, .news-item{
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  backdrop-filter: blur(10px);
+}
+
+.btn-primary{
+  background: linear-gradient(135deg, var(--copper-1), var(--copper-2), var(--copper-3));
+  box-shadow: 0 10px 24px rgba(255,122,61,.18);
+}
+.btn-primary:hover{
+  transform: translateY(-2px);
+}
+

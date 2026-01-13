@@ -1500,7 +1500,78 @@
   .authgate-actions{ flex-direction: column; }
 }
 
+/* ===== Theme Toggle Switch ===== */
+.theme-toggle{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
 
+.theme-label{
+  font-weight:800;
+  font-size:13px;
+  color: var(--text-secondary);
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  user-select:none;
+}
+
+.theme-label.active{
+  color: var(--text-primary);
+}
+
+.switch{
+  position:relative;
+  width:56px;
+  height:32px;
+  display:inline-block;
+}
+
+.switch input{
+  opacity:0;
+  width:0;
+  height:0;
+}
+
+.slider{
+  position:absolute;
+  inset:0;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius:999px;
+  transition: .25s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.slider:before{
+  content:"";
+  position:absolute;
+  height:26px;
+  width:26px;
+  left:3px;
+  top:50%;
+  transform: translateY(-50%);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius:50%;
+  transition: .25s ease;
+  box-shadow: 0 6px 14px rgba(0,0,0,.10);
+}
+
+.switch input:checked + .slider{
+  background: rgba(0,128,0,.18);
+  border-color: rgba(0,128,0,.45);
+}
+
+.switch input:checked + .slider:before{
+  transform: translate(24px, -50%);
+}
+
+.switch input:focus-visible + .slider{
+  outline: 3px solid rgba(0,128,0,.18);
+  outline-offset: 2px;
+}
   </style>
 </head>
 <body>
@@ -1686,7 +1757,7 @@
 
         <section class="section">
           <div class="container">
-            <div class="profile-stats">
+            <!-- <div class="profile-stats">
               <div class="stat-item">
                 <div class="stat-value" id="statCourses">0</div>
                 <div class="stat-label">Модуль</div>
@@ -1694,6 +1765,33 @@
               <div class="stat-item">
                 <div class="stat-value" id="statLessons">0</div>
                 <div class="stat-label">Сабақ</div>
+              </div>
+            </div> -->
+            <div class="mb">
+              <h3 class="mb">Параметрлер</h3>
+              <div class="card">
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                  <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <span>Тема</span>
+                    <div class="theme-toggle">
+                      <span class="theme-label" id="themeLabelLeft"><i class="fas fa-sun"></i> Ақ</span>
+                    
+                      <label class="switch" title="Тема ауыстыру">
+                        <input type="checkbox" id="themeToggle" aria-label="Тема ауыстыру">
+                        <span class="slider"></span>
+                      </label>
+                    
+                      <span class="theme-label" id="themeLabelRight"><i class="fas fa-moon"></i> Қара</span>
+                    </div>
+                  </div>
+                  <div style="display: none; align-items: center; justify-content: space-between;">
+                    <span>Тіл</span>
+                    <select class="form-control" style="width: auto; padding: 8px 12px;" id="languageSelect">
+                      <option value="kk">Қазақша</option>
+                      <option value="ru">Орысша</option>
+                    </select>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -1707,27 +1805,7 @@
               </button>
             </div>
 
-            <div class="mb">
-              <h3 class="mb">Параметрлер</h3>
-              <div class="card">
-                <div style="display: flex; flex-direction: column; gap: 16px;">
-                  <div style="display: flex; align-items: center; justify-content: space-between;">
-                    <span>Тема</span>
-                    <select class="form-control" style="width: auto; padding: 8px 12px;" id="themeSelect" onchange="changeTheme(this.value)">
-                      <option value="light">Ақ</option>
-                      <option value="dark">Қара</option>
-                    </select>
-                  </div>
-                  <div style="display: none; align-items: center; justify-content: space-between;">
-                    <span>Тіл</span>
-                    <select class="form-control" style="width: auto; padding: 8px 12px;" id="languageSelect">
-                      <option value="kk">Қазақша</option>
-                      <option value="ru">Орысша</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
+            
 
             <div>
               <button class="btn btn-secondary" id="logoutBtn" style="display: none; width: 100%;" onclick="logout()">
@@ -2072,7 +2150,16 @@
       // Set theme from localStorage or default
       const savedTheme = localStorage.getItem('theme') || 'light';
       changeTheme(savedTheme);
-      DOM.themeSelect.value = savedTheme;
+
+      const tg = document.getElementById('themeToggle');
+      if (tg) {
+        tg.checked = (savedTheme === 'dark');
+        tg.addEventListener('change', () => {
+          changeTheme(tg.checked ? 'dark' : 'light');
+          syncThemeLabels();
+        });
+      }
+      syncThemeLabels();
       
       // Set language from localStorage or default
       const savedLang = localStorage.getItem('language') || 'kk';
@@ -2399,13 +2486,27 @@ function openNewsDetail(newsObj){
 
     // ===== THEME FUNCTIONS =====
     function changeTheme(theme) {
-      if (theme === 'dark') {
-        document.body.classList.add('theme-dark');
-      } else {
-        document.body.classList.remove('theme-dark');
-      }
-      localStorage.setItem('theme', theme);
-    }
+  if (theme === 'dark') {
+    document.body.classList.add('theme-dark');
+  } else {
+    document.body.classList.remove('theme-dark');
+  }
+  localStorage.setItem('theme', theme);
+
+  // toggle sync
+  const tg = document.getElementById('themeToggle');
+  if (tg) tg.checked = (theme === 'dark');
+  syncThemeLabels();
+}
+
+function syncThemeLabels(){
+  const left = document.getElementById('themeLabelLeft');
+  const right = document.getElementById('themeLabelRight');
+  const isDark = document.body.classList.contains('theme-dark');
+
+  if (left) left.classList.toggle('active', !isDark);
+  if (right) right.classList.toggle('active', isDark);
+}
 
     // ===== GOOGLE SHEETS FUNCTIONS =====
     function extractGoogleDriveId(url) {

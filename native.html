@@ -2461,7 +2461,7 @@ body{
       </button>
       <button class="tab-item" onclick="showPage('faqPage')">
         <i class="fas fa-question-circle"></i>
-        <span>FAQ</span>
+        <span>Cұрақ-жауап</span>
       </button>
       <button class="tab-item" onclick="showPage('profilePage')">
         <i class="fas fa-user"></i>
@@ -3513,52 +3513,60 @@ if (!isPurchased) {
   // open by index (сенің state.currentModuleLessons қолданатын логикаға сай)
   document.querySelectorAll('.lesson-open').forEach(btn => {
     btn.addEventListener('click', () => {
-      const index = parseInt(btn.dataset.lessonIndex, 10);
-      playVideo(index);
-    });
+  const index = parseInt(btn.dataset.lessonIndex, 10);
+  playVideo(index);
+});
   });
 }
     // ===== VIDEO PLAYER FUNCTIONS =====
-    function playVideo(button) {
-      const lessonIndex = parseInt(button.dataset.lessonIndex);
-      const videoUrl = button.dataset.videoUrl;
-      const lessonTitle = decodeURIComponent(button.dataset.lessonTitle);
-      const driveId = extractGoogleDriveId(videoUrl);
-      
-      if (!driveId) {
-        showNotification('Бейне табылмады', 'error');
-        return;
-      }
-      
-      state.currentVideo = { 
-        id: driveId, 
-        title: lessonTitle,
-        index: lessonIndex 
-      };
-      
-      // Update video player
-      DOM.videoTitle.textContent = lessonTitle;
-      DOM.videoLessonTitle.textContent = lessonTitle;
-      DOM.videoPlayer.src = `https://drive.google.com/file/d/${driveId}/preview`;
-      
-      // Show/hide navigation buttons
-      if (state.currentModuleLessons.length > 1) {
-        DOM.videoNavigation.style.display = 'flex';
-        DOM.prevVideoBtn.style.display = lessonIndex > 0 ? 'block' : 'none';
-        DOM.nextVideoBtn.style.display = lessonIndex < state.currentModuleLessons.length - 1 ? 'block' : 'none';
-      } else {
-        DOM.videoNavigation.style.display = 'none';
-      }
-      
-      // Show video player
-      DOM.videoPlayerPage.style.display = 'flex';
-      
-      // Load comments
-      loadComments(driveId);
-      
-      // Save state
-      saveState();
-    }
+    function playVideo(index) {
+  const lessonIndex = Number(index);
+  const lesson = state.currentModuleLessons?.[lessonIndex];
+
+  if (!lesson) {
+    showNotification('Сабақ табылмады', 'error');
+    return;
+  }
+
+  const title = lesson.name || 'Бейнесабақ';
+
+  // Google Sheet-та видео бағаны әртүрлі атпен болуы мүмкін → fallback
+  const videoUrl =
+    lesson.video_url ||
+    lesson.videoUrl ||
+    lesson.video ||
+    lesson.url ||
+    '';
+
+  const driveId = extractGoogleDriveId(videoUrl);
+
+  if (!driveId) {
+    showNotification('Бейне сілтемесі қате немесе бос', 'error');
+    return;
+  }
+
+  state.currentVideo = {
+    id: driveId,
+    title,
+    index: lessonIndex
+  };
+
+  DOM.videoTitle.textContent = title;
+  DOM.videoLessonTitle.textContent = title;
+  DOM.videoPlayer.src = `https://drive.google.com/file/d/${driveId}/preview`;
+
+  if (state.currentModuleLessons.length > 1) {
+    DOM.videoNavigation.style.display = 'flex';
+    DOM.prevVideoBtn.style.display = lessonIndex > 0 ? 'block' : 'none';
+    DOM.nextVideoBtn.style.display = lessonIndex < state.currentModuleLessons.length - 1 ? 'block' : 'none';
+  } else {
+    DOM.videoNavigation.style.display = 'none';
+  }
+
+  DOM.videoPlayerPage.style.display = 'flex';
+  loadComments(driveId);
+  saveState();
+}
 
     function playVideoById(lessonId) {
       const lessonIndex = state.currentModuleLessons.findIndex(l => l.id === lessonId);

@@ -1767,7 +1767,298 @@ body{
  */
 
 
+/* ===== Modules list (row layout) ===== */
+.modules-list{
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
 
+.module-row{
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 14px;
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(0,0,0,0.35);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+  overflow: hidden;
+}
+
+.module-thumb{
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.06);
+  min-height: 110px;
+  background-size: cover;
+  background-position: center;
+}
+
+.module-thumb::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.10), rgba(0,0,0,0.45));
+}
+
+.module-info{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.module-title{
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin: 0;
+}
+
+.module-desc{
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.45;
+  max-width: 72ch;
+}
+
+.module-actions{
+  margin-top: 6px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.module-badge{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.92);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Responsive */
+@media (max-width: 720px){
+  .module-row{
+    grid-template-columns: 120px 1fr;
+    padding: 12px;
+  }
+  .module-title{ font-size: 16px; }
+  .module-desc{ font-size: 13px; }
+}
+
+@media (max-width: 480px){
+  .module-row{
+    grid-template-columns: 1fr;
+  }
+  .module-thumb{
+    min-height: 150px;
+  }
+}
+
+
+.module-thumb{
+  aspect-ratio: 16 / 9;
+  min-height: 120px;
+}
+
+.module-title, .module-desc{
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.module-title{
+  -webkit-line-clamp: 2;
+}
+
+.module-desc{
+  -webkit-line-clamp: 3;
+}
+
+
+/* ===== Plain list for modules ===== */
+.modules-plain-list{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* бір жол */
+.module-item{
+  display: grid;
+  grid-template-columns: 72px 1fr auto;
+  gap: 12px;
+  align-items: center;
+
+  padding: 12px 12px;
+  border-radius: 14px;
+
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.module-item:hover{
+  background: rgba(255,255,255,0.06);
+}
+
+.module-item-thumb{
+  width: 72px;
+  height: 54px;
+  border-radius: 10px;
+  overflow: hidden;
+
+  background: rgba(255,255,255,0.06);
+  background-size: cover;
+  background-position: center;
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+.module-item-main{
+  min-width: 0;
+}
+
+.module-item-title{
+  font-weight: 800;
+  font-size: 15px;
+  margin: 0 0 4px 0;
+  color: var(--text-primary);
+}
+
+.module-item-desc{
+  font-size: 13px;
+  margin: 0;
+  color: var(--text-secondary);
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.module-item-actions{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* батырма — қысқа */
+.btn-open{
+  padding: 10px 14px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+/* Mobile */
+@media (max-width: 520px){
+  .module-item{
+    grid-template-columns: 64px 1fr;
+    grid-template-areas:
+      "thumb main"
+      "thumb actions";
+    align-items: start;
+  }
+  .module-item-thumb{ grid-area: thumb; width:64px; height:56px; }
+  .module-item-main{ grid-area: main; }
+  .module-item-actions{ grid-area: actions; justify-content: flex-start; }
+}
+
+
+/* ===== Lessons plain list ===== */
+.lessons-plain-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.lesson-item{
+  display:grid;
+  grid-template-columns: 52px 1fr auto;
+  gap:12px;
+  align-items:center;
+
+  padding:12px 12px;
+  border-radius:14px;
+
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.lesson-item:hover{
+  background: rgba(255,255,255,0.06);
+}
+
+.lesson-num{
+  width:52px;
+  height:42px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-weight:800;
+  color: rgba(255,255,255,0.95);
+
+  background: linear-gradient(135deg, rgba(255,184,107,0.35), rgba(255,184,107,0.15));
+  border: 1px solid rgba(255,184,107,0.25);
+}
+
+.lesson-main{ min-width:0; }
+
+.lesson-title{
+  margin:0 0 4px 0;
+  font-weight:800;
+  font-size:15px;
+  color: var(--text-primary);
+}
+
+.lesson-desc{
+  margin:0;
+  font-size:13px;
+  color: var(--text-secondary);
+
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+
+.lesson-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.btn-watch{
+  padding:10px 14px;
+  border-radius:12px;
+  white-space:nowrap;
+}
+
+/* Mobile */
+@media (max-width:520px){
+  .lesson-item{
+    grid-template-columns: 52px 1fr;
+    grid-template-areas:
+      "num main"
+      "num actions";
+    align-items:start;
+  }
+  .lesson-num{ grid-area:num; }
+  .lesson-main{ grid-area:main; }
+  .lesson-actions{ grid-area:actions; justify-content:flex-start; }
+}
+
+.course-clickable{ cursor: pointer; }
+.course-clickable:active{ transform: scale(0.99); }
 
   </style>
 </head>
@@ -1815,8 +2106,8 @@ body{
                 <button class="segment-btn active" id="tabPaid" onclick="setCoursesTab('paid')">
                   <i class="fas fa-lock"></i> Ақылы
                 </button>
-                <button class="segment-btn" id="tabBonus" onclick="setCoursesTab('bonus')">
-                  <i class="fas fa-gift"></i> Бонус
+                <button class="segment-btn" id="tabBonus" onclick="setCoursesTab('free')">
+                  <i class="fas fa-gift"></i> Тегін
                 </button>
               </div>
             <div class="academy-modules-grid" id="coursesContainer">
@@ -2017,11 +2308,45 @@ body{
       </main>
     </div>
 
+
+    <!-- Course Modules Page -->
+<div id="courseModulesPage" class="page">
+  <header class="app-header">
+    <div class="header-content">
+      <button class="back-button" onclick="showPage('mainPage')">
+        <i class="fas fa-arrow-left"></i>
+        Артқа
+      </button>
+      <div class="header-title" id="courseModulesHeaderTitle">Модульдер</div>
+      <div></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <div class="section-title">
+          <h2 id="courseTitle">Курс модульдері</h2>
+          <p id="courseSubtitle">Модульді таңдаңыз</p>
+        </div>
+
+        <div id="modulesContainer" class="modules-plain-list">
+          <div class="loading">
+            <div class="spinner"></div>
+            <p>Модульдер жүктелуде...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+
     <!-- Lessons Page -->
     <div id="lessonsPage" class="page">
       <header class="app-header">
         <div class="header-content">
-          <button class="back-button" onclick="showPage('mainPage')">
+          <button class="back-button" onclick="goBackFromLessons()">
             <i class="fas fa-arrow-left"></i>
             Артқа
           </button>
@@ -2275,7 +2600,7 @@ body{
     const SESS_URL = 'https://script.google.com/macros/s/AKfycbwp61ZemVXyhVy3s2CBDYnfWBZaVhmsGiqzG9U4i4KGCoNykLNZrHwQRBny6iaAJusZ/exec';
     const CONFIG = {
       spreadsheetId: '1fBxicZo7HkKXpoUVRtZvc628oG7rxLeSgcIgmruTd5Y',
-      sheets: { modules:'Модули', lessons:'Видеоуроки', users:'Юзеры', comments:'comment', news:'Жаңалықтар' }
+      sheets: { courses: 'Курсы', modules:'Модули', lessons:'Видеоуроки', users:'Юзеры', comments:'comment', news:'Жаңалықтар' }
     };
     const COMMENT_URL = 'https://script.google.com/macros/s/AKfycbwiWkQUZHiw9TcQNcXsQxwHBK-Qi6nzFrXQwEEe_NO-SxjNLNwp2e841WzvoxCrGWny/exec';
 
@@ -2285,16 +2610,23 @@ body{
     // ===== STATE MANAGEMENT =====
     const state = {
       currentUser: null,
+
+      currentCourse: null,   // ✅ NEW
       currentModule: null,
+
       currentVideo: null,
       currentLessonIndex: 0,
       currentModuleLessons: [],
+
+      courses: [],           // ✅ NEW
       modules: [],
       lessonsAll: [],
+
       comments: {},
       currentPage: 'mainPage',
       lessonsFetchedAt: 0,
-      coursesTab: 'paid',
+
+      coursesTab: 'paid',    // paid/free болады
       postLoginAction: null,
       selectedNews: null,
     };
@@ -2332,80 +2664,76 @@ body{
       statLessons: document.getElementById('statLessons'),
       myCourses: document.getElementById('myCourses'),
       themeSelect: document.getElementById('themeSelect'),
-      languageSelect: document.getElementById('languageSelect')
+      languageSelect: document.getElementById('languageSelect'),
+      modulesContainer: document.getElementById('modulesContainer'),
+      courseTitle: document.getElementById('courseTitle'),
+      courseSubtitle: document.getElementById('courseSubtitle'),
+      courseModulesHeaderTitle: document.getElementById('courseModulesHeaderTitle'),
     };
 
     // ===== INITIALIZATION =====
     document.addEventListener('DOMContentLoaded', () => {
-      initApp();
-    });
+  initApp();
+});
 
-    function initApp() {
-      // Restore state from localStorage
-      restoreState();
-      
-      // Set theme from localStorage or default
-      const savedTheme = localStorage.getItem('theme') || 'light';
-      changeTheme(savedTheme);
+async function initApp() {
+  restoreState();        // тек appState алсын (page ашпай-ақ қойса да болады)
+  restoreCourseState();  // currentCourse оқиды
 
-      const tg = document.getElementById('themeToggle');
-      if (tg) {
-        tg.checked = (savedTheme === 'dark');
-        tg.addEventListener('change', () => {
-          changeTheme(tg.checked ? 'dark' : 'light');
-          syncThemeLabels();
-        });
-      }
-      syncThemeLabels();
-      
-      // Set language from localStorage or default
-      const savedLang = localStorage.getItem('language') || 'kk';
-      DOM.languageSelect.value = savedLang;
-      
-      // Load modules
-      loadModulesWithCounts();
-      
-      // Check auth
-      checkAuth();
-      
-      // Setup event listeners
-      setupEventListeners();
-      
-      // Setup language change listener
-      DOM.languageSelect.addEventListener('change', function() {
-        localStorage.setItem('language', this.value);
-        showNotification('Тіл өзгерді: ' + this.options[this.selectedIndex].text, 'info');
-      });
+  await loadCatalog();   // ✅ МІНДЕТТІ: courses/modules/lessons толсын
 
-      // Setup video navigation buttons
-      if (DOM.prevVideoBtn) {
-        DOM.prevVideoBtn.addEventListener('click', playPrevVideo);
-      }
-      if (DOM.nextVideoBtn) {
-        DOM.nextVideoBtn.addEventListener('click', playNextVideo);
-      }
-    }
+  // ✅ енді ғана қай бет ашылатынын шешеміз
+  const savedPage = localStorage.getItem('currentPage') || 'mainPage';
+
+  if (savedPage === 'courseModulesPage' && state.currentCourse?.id) {
+    showPage('courseModulesPage');
+  } else {
+    showPage('mainPage');
+  }
+
+  // қалғандары:
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  changeTheme(savedTheme);
+
+  const savedLang = localStorage.getItem('language') || 'kk';
+  if (DOM.languageSelect) DOM.languageSelect.value = savedLang;
+
+  checkAuth();
+  setupEventListeners();
+}
 
     function setCoursesTab(tab){
-    state.coursesTab = tab;
+  state.coursesTab = tab;
 
-    // кнопки
-    const paidBtn = document.getElementById('tabPaid');
-    const bonusBtn = document.getElementById('tabBonus');
-    if (paidBtn && bonusBtn){
-        paidBtn.classList.toggle('active', tab === 'paid');
-        bonusBtn.classList.toggle('active', tab === 'bonus');
-    }
+  const paidBtn = document.getElementById('tabPaid');
+  const bonusBtn = document.getElementById('tabBonus');
 
-    // перерисовать модули
-    const counts = (state.lessonsAll || []).reduce((a, l) => {
-        const m = String(l.module_id);
-        a[m] = (a[m] || 0) + 1;
-        return a;
-    }, {});
-    renderModules(state.modules || [], counts);
-    }
+  if (paidBtn && bonusBtn){
+    paidBtn.innerHTML = `<i class="fas fa-lock"></i> Ақылы`;
+    bonusBtn.innerHTML = `<i class="fas fa-gift"></i> Тегін`;
 
+    paidBtn.classList.toggle('active', tab === 'paid');
+    bonusBtn.classList.toggle('active', tab === 'free');
+  }
+
+  // қайта салу
+  const modulesByCourse = {};
+  state.modules.forEach(m => {
+    const cid = String(m.course_id);
+    modulesByCourse[cid] = (modulesByCourse[cid] || 0) + 1;
+  });
+
+  const lessonsByCourse = {};
+  state.lessonsAll.forEach(l => {
+    const mid = String(l.module_id);
+    const mod = state.modules.find(x => String(x.id) === mid);
+    if (!mod) return;
+    const cid = String(mod.course_id);
+    lessonsByCourse[cid] = (lessonsByCourse[cid] || 0) + 1;
+  });
+
+  renderCourses(state.courses, modulesByCourse, lessonsByCourse);
+}
 
 
     // ===== STATE PERSISTENCE =====
@@ -2446,6 +2774,7 @@ body{
 
     // ===== PAGE NAVIGATION =====
     function showPage(pageId) {
+
       // Update state
       state.currentPage = pageId;
       
@@ -2491,20 +2820,36 @@ body{
     }
 
     function handlePageShow(pageId) {
-      switch(pageId) {
-        case 'profilePage':
-          updateProfilePage();
-          break;
-          case 'newsPage':
-            loadNews();
-            break;
-        case 'lessonsPage':
-          if (state.currentModule) {
-            loadLessons(state.currentModule.id);
-          }
-          break;
+  switch(pageId) {
+    case 'courseModulesPage':
+      if (!state.currentCourse?.id) {
+        showPage('mainPage');
+        return;
       }
-    }
+
+      // ✅ catalog жүктелмей қалса — spinner көрсет
+      if (!state.modules || !state.modules.length) {
+        DOM.modulesContainer.innerHTML = `
+          <div class="loading"><div class="spinner"></div><p>Модульдер жүктелуде...</p></div>`;
+        return;
+      }
+
+      loadCourseModules(state.currentCourse.id);
+      break;
+
+    case 'profilePage':
+      updateProfilePage();
+      break;
+
+    case 'newsPage':
+      loadNews();
+      break;
+
+    case 'lessonsPage':
+      if (state.currentModule) loadLessons(state.currentModule.id);
+      break;
+  }
+}
 
 
     async function loadNews(){
@@ -2700,88 +3045,131 @@ async function fetchWithTimeout(url, ms = 12000) {
       });
     }
 
-    async function loadModulesWithCounts() {
-      try {
-        const [modules, lessons] = await Promise.all([
-          fetchSheetData(CONFIG.sheets.modules),
-          fetchSheetData(CONFIG.sheets.lessons)
-        ]);
+    async function loadCatalog() {
+  try {
+    const [courses, modules, lessons] = await Promise.all([
+      fetchSheetData(CONFIG.sheets.courses),
+      fetchSheetData(CONFIG.sheets.modules),
+      fetchSheetData(CONFIG.sheets.lessons),
+    ]);
 
-        state.modules = modules;
-        state.lessonsAll = lessons;
-        state.lessonsFetchedAt = Date.now();
+    state.courses = (courses || []).filter(c => String(c.is_active || '1') !== '0');
+    state.modules = (modules || []).filter(m => String(m.is_active || '1') !== '0');
+    state.lessonsAll = lessons || [];
+    state.lessonsFetchedAt = Date.now();
 
-        const counts = lessons.reduce((a, l) => {
-          const m = String(l.module_id);
-          a[m] = (a[m] || 0) + 1;
-          return a;
-        }, {});
+    // counts: course -> modules count, course -> lessons count
+    const modulesByCourse = {};
+    state.modules.forEach(m => {
+      const cid = String(m.course_id);
+      modulesByCourse[cid] = (modulesByCourse[cid] || 0) + 1;
+    });
 
-        renderModules(modules, counts);
-      } catch (err) {
-        console.error('Модульдерді жүктеу қатесі:', err);
-        DOM.coursesContainer.innerHTML = `
-          <div class="error-message">
-            <i class="fas fa-exclamation-triangle"></i>
-            <h3>Модульдерді жүктеу мүмкін емес</h3>
-            <p>Кейінірек қайталап көріңіз</p>
-          </div>`;
-      }
-    }
+    const lessonsByCourse = {};
+    state.lessonsAll.forEach(l => {
+      const mid = String(l.module_id);
+      const mod = state.modules.find(x => String(x.id) === mid);
+      if (!mod) return;
+      const cid = String(mod.course_id);
+      lessonsByCourse[cid] = (lessonsByCourse[cid] || 0) + 1;
+    });
 
-    function renderModules(modules, lessonCounts) {
+    renderCourses(state.courses, modulesByCourse, lessonsByCourse);
+  } catch (err) {
+    console.error(err);
+    DOM.coursesContainer.innerHTML = `
+      <div class="error-message">
+        <i class="fas fa-exclamation-triangle"></i>
+        <h3>Курстарды жүктеу мүмкін емес</h3>
+        <p>Кейінірек қайталап көріңіз</p>
+      </div>`;
+  }
+}
+
+
+
+function restoreCourseState(){
+  const saved = localStorage.getItem('currentCourse');
+  if (!saved) return;
+
+  try{
+    state.currentCourse = JSON.parse(saved);
+  }catch(e){
+    localStorage.removeItem('currentCourse');
+  }
+}
+
+
+function renderCourses(courses, modulesByCourse, lessonsByCourse){
   DOM.coursesContainer.innerHTML = '';
   DOM.coursesContainer.className = 'academy-modules-grid';
 
-  // ✅ paid = is_active=1, bonus = is_active=0
-  const filtered = (modules || []).filter(m => {
-    const a = String(m.is_active ?? '').trim(); // "1" or "0"
-    if (state.coursesTab === 'paid') return a === '1';
-    if (state.coursesTab === 'bonus') return a === '0';
-    return true;
-  });
+  const filtered = (courses || []).filter(c => {
+  const t = String(c.access_type || '')
+    .trim()
+    .toLowerCase();
 
-  if (!filtered.length) {
+  const isFree =
+    t === 'free' ||
+    t === 'tegín' ||
+    t === 'тегін' ||
+    t === 'bonus' ||
+    t === '0';
+
+  const isPaid =
+    t === 'paid' ||
+    t === 'aqyli' ||
+    t === 'ақылы' ||
+    t === '1';
+
+  if (state.coursesTab === 'paid') return isPaid;
+  if (state.coursesTab === 'free') return isFree;
+  return true;
+});
+  if (!filtered.length){
     DOM.coursesContainer.innerHTML = `
       <div class="error-message" style="grid-column:1/-1;">
         <i class="fas fa-inbox"></i>
         <h3>Әзірше курс жоқ</h3>
-        <p>${state.coursesTab === 'paid' ? 'Ақылы курстар кейін қосылады' : 'Бонус курстар кейін қосылады'}</p>
       </div>`;
     return;
   }
 
-  filtered.forEach((mod, i) => {
-    const count = lessonCounts[String(mod.id)] || 0;
-    const isPaid = String(mod.is_active ?? '').trim() === '1'; // paid => login керек
-    const img = (mod.image_url || mod.image || '').trim();
+  filtered.forEach((c, i) => {
+    const courseId = String(c.id);
+    const modCount = modulesByCourse[courseId] || 0;
+    const lesCount = lessonsByCourse[courseId] || 0;
+
+    const isPaid = String(c.access_type).trim() === 'paid';
+
+    const img = (c.image_url || '').trim();
     const safeImg = img ? img.replace(/'/g, "\\'") : '';
     const bgStyle = img ? `style="background-image:url('${safeImg}');"` : '';
 
     const card = document.createElement('div');
-    card.className = 'academy-card fade-in';
-    card.style.animationDelay = `${i * 0.1}s`;
+card.className = 'academy-card fade-in course-clickable';
+card.dataset.courseId = courseId;
+card.dataset.isPaid = isPaid ? '1' : '0';
+card.dataset.courseName = encodeURIComponent(c.name || '');
+    card.style.animationDelay = `${i * 0.08}s`;
 
     card.innerHTML = `
       <div class="academy-card-image module-bg ${img ? 'is-image' : ''}" ${bgStyle}>
-        ${img ? '' : `<div class="module-label">${mod.name || ''}</div>`}
+        ${img ? '' : `<div class="module-label">${c.name || ''}</div>`}
       </div>
 
       <div class="academy-card-content">
-        <h3>${mod.name || ''}</h3>
-        <p>${mod.description || ''}</p>
-
-        <p style="margin-top:8px; color:var(--brand); font-weight:600;">
-          Сабақ саны: ${count}
+        <h3>${c.name || ''}</h3>
+        <p style="margin-bottom:12px; color:var(--text-secondary);">
+          Модуль: ${modCount} · Сабақ: ${lesCount}
         </p>
 
-        <button class="btn ${isPaid ? 'btn-primary' : 'btn-secondary'} view-lessons"
-          data-module-id="${mod.id}"
+        <button class="btn ${isPaid ? 'btn-primary' : 'btn-secondary'} open-course"
+          data-course-id="${courseId}"
           data-is-paid="${isPaid ? '1' : '0'}"
-          data-module-name="${encodeURIComponent(mod.name || '')}"
-          data-module-description="${encodeURIComponent(mod.description || '')}">
+          data-course-name="${encodeURIComponent(c.name || '')}">
           <i class="fas ${isPaid ? 'fa-lock' : 'fa-gift'}"></i>
-          ${isPaid ? (mod.price ? `${mod.price} ₸` : 'Курсты көру (кіру керек)') : 'Бонус сабақтарды көру'}
+          ${isPaid ? 'Курсты ашу (ақылы)' : 'Курсты ашу (тегін)'}
         </button>
       </div>
     `;
@@ -2789,38 +3177,113 @@ async function fetchWithTimeout(url, ms = 12000) {
     DOM.coursesContainer.appendChild(card);
   });
 
-  document.querySelectorAll('.view-lessons').forEach(btn => {
+  document.querySelectorAll('.open-course').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const courseId = btn.dataset.courseId;
+      const isPaid = btn.dataset.isPaid === '1';
+      const courseName = decodeURIComponent(btn.dataset.courseName || '');
+
+      // ✅ Ақылы курс болса — логин керек
+      if (isPaid && !state.currentUser){
+        state.postLoginAction = () => openCourse(courseId, courseName, isPaid);
+        showAuthGate({
+          title: 'Ақылы курс',
+          text: 'Курсқа кіру үшін алдымен аккаунтқа кіріңіз.',
+          waText: `Сәлеметсіз бе! "${courseName}" курсына доступ керек.`
+        });
+        return;
+      }
+
+      openCourse(courseId, courseName, isPaid);
+    });
+  });
+
+  document.querySelectorAll('.academy-card.course-clickable').forEach(card => {
+  card.addEventListener('click', () => {
+    const courseId = card.dataset.courseId;
+    const isPaid = card.dataset.isPaid === '1';
+    const courseName = decodeURIComponent(card.dataset.courseName || '');
+
+    if (isPaid && !state.currentUser) {
+      state.postLoginAction = () => openCourse(courseId, courseName, isPaid);
+      showAuthGate({
+        title: 'Ақылы курс',
+        text: 'Курсқа кіру үшін алдымен аккаунтқа кіріңіз.',
+        waText: `Сәлеметсіз бе! "${courseName}" курсына доступ керек.`
+      });
+      return;
+    }
+
+    openCourse(courseId, courseName, isPaid);
+  });
+});
+}
+
+
+
+function openCourse(courseId, courseName, isPaid){
+  state.currentCourse = { id: String(courseId), name: courseName, isPaid: !!isPaid };
+
+  // ✅ МЫНАУ ЖОҚ БОЛҒАН:
+  localStorage.setItem('currentCourse', JSON.stringify(state.currentCourse));
+  localStorage.setItem('currentPage', 'courseModulesPage');
+
+  showPage('courseModulesPage'); // showPage өзі loadCourseModules шақырады (төменде түзетеміз)
+}
+function loadCourseModules(courseId){
+  const list = (state.modules || []).filter(m => String(m.course_id) === String(courseId));
+
+  if (!list.length){
+    DOM.modulesContainer.innerHTML = `
+      <div class="error-message" style="grid-column:1/-1;">
+        <i class="fas fa-layer-group"></i>
+        <h3>Модуль табылмады</h3>
+        <p>Бұл курсқа модуль қосылмаған</p>
+      </div>`;
+    return;
+  }
+
+  DOM.modulesContainer.className = 'modules-plain-list';
+  DOM.modulesContainer.innerHTML = '';
+
+  list.forEach(m => {
+    const img = (m.image_url || '').trim();
+    const safeImg = img ? img.replace(/'/g, "\\'") : '';
+    const bgStyle = img ? `style="background-image:url('${safeImg}');"` : '';
+
+    const row = document.createElement('div');
+    row.className = 'module-item';
+
+    row.innerHTML = `
+      <div class="module-item-thumb" ${bgStyle}></div>
+
+      <div class="module-item-main">
+        <p class="module-item-title">${m.name || ''}</p>
+        <p class="module-item-desc">${m.description || 'Сипаттама жақында қосылады'}</p>
+      </div>
+
+      <div class="module-item-actions">
+        <button class="btn btn-primary btn-open open-module"
+          data-module-id="${m.id}"
+          data-module-name="${encodeURIComponent(m.name || '')}"
+          data-module-description="${encodeURIComponent(m.description || '')}">
+          <i class="fas fa-book-open"></i> Ашу
+        </button>
+      </div>
+    `;
+
+    DOM.modulesContainer.appendChild(row);
+  });
+
+  // Сенің бұрынғы handler-ің қалсын:
+  document.querySelectorAll('.open-module').forEach(btn => {
     btn.addEventListener('click', () => {
       const moduleId = btn.dataset.moduleId;
-      const isPaid = btn.dataset.isPaid === '1';
       const moduleName = decodeURIComponent(btn.dataset.moduleName || '');
       const moduleDescription = decodeURIComponent(btn.dataset.moduleDescription || '');
 
-      // ✅ Paid болса — логин міндетті
-      if (isPaid && !state.currentUser) {
-  state.postLoginAction = () => {
-    state.currentModule = { id: moduleId, name: moduleName, description: moduleDescription, isPaid: true };
-    DOM.lessonPageTitle.textContent = moduleName;
-    DOM.moduleTitle.textContent = `${moduleName} модулінің сабақтары`;
-    DOM.moduleDescription.textContent = moduleDescription;
-    showPage('lessonsPage');
-    saveState();
-  };
-
-  showAuthGate({
-    title: 'Ақылы модуль',
-    text: 'Модульге кіру үшін алдымен аккаунтқа кіріңіз.',
-    waText: `Сәлеметсіз бе! "${moduleName}" модуліне доступ керек.`
-  });
-  return;
-}
-
-      state.currentModule = {
-        id: moduleId,
-        name: moduleName,
-        description: moduleDescription,
-        isPaid
-      };
+      state.currentModule = { id: moduleId, name: moduleName, description: moduleDescription };
 
       DOM.lessonPageTitle.textContent = moduleName;
       DOM.moduleTitle.textContent = `${moduleName} модулінің сабақтары`;
@@ -2831,8 +3294,6 @@ async function fetchWithTimeout(url, ms = 12000) {
     });
   });
 }
-
-
 function showAuthGate(opts = {}) {
   const m = document.getElementById('authGateModal');
   if (!m) return;
@@ -2885,7 +3346,7 @@ function bumpLocalNewsViews(newsId){
 
 
     function loadModules() {
-      loadModulesWithCounts();
+
       showPage('mainPage');
     }
 
@@ -3011,55 +3472,52 @@ if (!isPurchased) {
       }
     }
 
-    function renderLessons(lessons) {
-  if (!lessons.length) {
+    function renderLessons(lessons){
+  DOM.lessonsContainer.className = 'lessons-plain-list';
+  DOM.lessonsContainer.innerHTML = '';
+
+  if(!lessons || !lessons.length){
     DOM.lessonsContainer.innerHTML = `
-      <div class="error-message">
-        <i class="fas fa-video"></i>
-        <h3>Сабақтар табылмады</h3>
-        <p>Әзірше осы модульге сабақ жоқ</p>
+      <div class="error-message" style="grid-column:1/-1;">
+        <i class="fas fa-video-slash"></i>
+        <h3>Сабақ табылмады</h3>
+        <p>Бұл модульге сабақ қосылмаған</p>
       </div>`;
     return;
   }
 
-  DOM.lessonsContainer.innerHTML = '';
-  lessons.forEach((l, i) => {
-    const img = (l.image_url || l.cover || '').trim();
-    const bgStyle = img ? `style="background-image:url('${img.replace(/'/g, "\\'")}');"` : '';
+  lessons.forEach((lesson, idx) => {
+    const item = document.createElement('div');
+    item.className = 'lesson-item fade-in';
+    item.style.animationDelay = `${idx * 0.04}s`;
 
-    const card = document.createElement('div');
-    card.className = 'academy-card fade-in';
-    card.style.animationDelay = `${i * 0.1}s`;
+    item.innerHTML = `
+      <div class="lesson-num">${idx + 1}</div>
 
-    card.innerHTML = `
-      <div class="academy-card-image ${img ? 'is-image' : 'lesson-bg'}" ${bgStyle}>
-        ${img ? '' : `<div class="lesson-number">${i + 1}</div>`}
+      <div class="lesson-main">
+        <p class="lesson-title">${lesson.name || ''}</p>
+        <p class="lesson-desc">${lesson.description || 'Сипаттама жазылады'}</p>
       </div>
 
-      <div class="academy-card-content">
-        <h3>${l.name}</h3>
-        <p>${l.description}</p>
-        <div style="display:flex; gap:12px; margin-top:20px;">
-          <button class="btn btn-primary play-video"
-                  data-lesson-id="${l.id}"
-                  data-lesson-index="${i}"
-                  data-video-url="${l.video_url || ''}"
-                  data-lesson-title="${encodeURIComponent(l.name)}">
-            <i class="fas fa-play-circle"></i> Қарау
-          </button>
-          ${l.pdf_url ? `<a href="${l.pdf_url}" class="btn btn-secondary" target="_blank"><i class="fas fa-file-pdf"></i> Презентация</a>` : ''}
-        </div>
+      <div class="lesson-actions">
+        <button class="btn btn-primary btn-watch lesson-open"
+          data-lesson-index="${idx}">
+          <i class="fas fa-play"></i> Қарау
+        </button>
       </div>
     `;
 
-    DOM.lessonsContainer.appendChild(card);
+    DOM.lessonsContainer.appendChild(item);
   });
 
-  document.querySelectorAll('.play-video').forEach(btn => {
-    btn.addEventListener('click', () => playVideo(btn));
+  // open by index (сенің state.currentModuleLessons қолданатын логикаға сай)
+  document.querySelectorAll('.lesson-open').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const index = parseInt(btn.dataset.lessonIndex, 10);
+      playVideo(index);
+    });
   });
 }
-
     // ===== VIDEO PLAYER FUNCTIONS =====
     function playVideo(button) {
       const lessonIndex = parseInt(button.dataset.lessonIndex);
@@ -3246,8 +3704,8 @@ if (!isPurchased) {
           if (ok) {
             updateUserUI();
             startHeartbeat();
-            // Refresh modules to show purchased status
-            loadModulesWithCounts();
+            // Refresh moduloadModulesWithCounts();les to show purchased status
+            loadCatalog();
           } else {
             forceLogout('Сессия аяқталды');
           }
@@ -3299,7 +3757,7 @@ if (!isPurchased) {
       hideAuthGate();
 
       startHeartbeat();
-      loadModulesWithCounts();
+
 
       showNotification('Сәтті кірдіңіз!', 'success');
 
@@ -3340,6 +3798,22 @@ if (!isPurchased) {
       }
     }
 
+    function goBackFromLessons() {
+      // Видео ашық болса — алдымен видеоны жап
+      if (DOM.videoPlayerPage && DOM.videoPlayerPage.style.display !== 'none') {
+        closeVideo();
+        return;
+      }
+
+      // Егер курс таңдалса — модульдер бетіне қайт
+      if (state.currentCourse && state.currentCourse.id) {
+        showPage('courseModulesPage');
+      } else {
+        showPage('mainPage');
+      }
+    }
+
+
     function startHeartbeat() {
       if (sessionTimer) clearInterval(sessionTimer);
       
@@ -3378,7 +3852,7 @@ if (!isPurchased) {
       }
       
       // Refresh modules to show lock status
-      loadModulesWithCounts();
+
     }
 
     function logout() {

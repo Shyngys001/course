@@ -1761,10 +1761,10 @@ body{
 }
 
 
-.profile-header{
+/* .profile-header{
   background: linear-gradient(180deg, #E9B16A, var(--brand));
 }
-
+ */
 
 
 
@@ -2554,11 +2554,12 @@ body{
 
           // click handlers
           box.querySelectorAll('.news-item').forEach(el => {
-            el.addEventListener('click', () => {
-              const i = parseInt(el.dataset.newsIndex, 10);
-              openNewsDetail(news[i]);
-            });
+          el.addEventListener('click', () => {
+            const i = parseInt(el.dataset.newsIndex, 10);
+            const newsId = el.dataset.newsId;
+            openNewsDetail(news[i], newsId);
           });
+        });
 
         }catch(e){
             console.error(e);
@@ -2584,30 +2585,17 @@ body{
   }).filter(x => /^https?:\/\//i.test(x.url));
 }
 
-function openNewsDetail(newsObj){
-  function openNewsDetail(newsObj){
-  // ✅ newsId
-  const allNews = state.selectedNews ? [] : []; // (ештеңе істемейді, тиме)
-  const newsId = (newsObj.id || '').trim() || String(
-    (document.querySelector('.news-item[data-news-index]') ? '' : '')
-  );
-
-  // ✅ idx fallback дұрыс болу үшін:
-  // біз click кезінде newsId-ты data-news-id арқылы аламыз:
-  const clicked = event?.currentTarget;
-  const realId = clicked?.dataset?.newsId || (newsObj.id || '').trim() || '0';
-
-  // ✅ A) localStorage view++
-  const nextViews = bumpLocalNewsViews(realId);
+function openNewsDetail(newsObj, newsId){
+  // ✅ localStorage view++
+  const nextViews = bumpLocalNewsViews(newsId);
 
   // ✅ list-тағы pill санын да жаңартамыз
-  const pill = document.getElementById(`newsViews_${realId}`);
+  const pill = document.getElementById(`newsViews_${newsId}`);
   if (pill) {
     const span = pill.querySelector('span');
     if (span) span.textContent = String(nextViews);
   }
 
-  // ---- қалған сенің кодың ----
   state.selectedNews = newsObj;
 
   const t = document.getElementById('newsDetailTitle');
@@ -2642,43 +2630,6 @@ function openNewsDetail(newsObj){
   showPage('newsDetailPage');
   saveState();
 }
-
-  state.selectedNews = newsObj;
-
-  const t = document.getElementById('newsDetailTitle');
-  const d = document.getElementById('newsDetailDate');
-  const tx = document.getElementById('newsDetailText');
-  const linksBox = document.getElementById('newsDetailLinks');
-
-  if (t) t.textContent = newsObj.title || 'Жаңалық';
-  if (d) d.textContent = newsObj.date || '';
-  if (tx) tx.textContent = newsObj.text || '';
-
-  // Links (optional): sheet-та "link" немесе "links" бағаны болса
-  const links = parseLinks(newsObj.link || newsObj.links || newsObj.url || '');
-
-  if (linksBox) {
-    if (!links.length) {
-      linksBox.style.display = 'none';
-      linksBox.innerHTML = '';
-    } else {
-      linksBox.style.display = 'block';
-      linksBox.innerHTML = `
-        <div class="news-links">
-          ${links.map(l => `
-            <a class="news-link-btn" href="${l.url}" target="_blank" rel="noopener">
-              <i class="fas fa-link"></i> ${l.title}
-            </a>
-          `).join('')}
-        </div>
-      `;
-    }
-  }
-
-  showPage('newsDetailPage');
-  saveState();
-}
-
 
 
     // ===== THEME FUNCTIONS =====
@@ -2703,6 +2654,18 @@ function syncThemeLabels(){
 
   if (left) left.classList.toggle('active', !isDark);
   if (right) right.classList.toggle('active', isDark);
+}
+
+
+async function fetchWithTimeout(url, ms = 12000) {
+  const controller = new AbortController();
+  const t = setTimeout(() => controller.abort(), ms);
+  try {
+    const res = await fetch(url, { signal: controller.signal, cache: 'no-store' });
+    return res;
+  } finally {
+    clearTimeout(t);
+  }
 }
 
     // ===== GOOGLE SHEETS FUNCTIONS =====
@@ -2835,13 +2798,22 @@ function syncThemeLabels(){
 
       // ✅ Paid болса — логин міндетті
       if (isPaid && !state.currentUser) {
-        showAuthGate({
-          title: 'Ақылы модуль',
-          text: 'Модульге кіру үшін алдымен аккаунтқа кіріңіз. Егер курсты сатып алмаған болсаңыз, төлем жасап, чекті WhatsApp-қа жіберіңіз — қолжетімділікті қосамыз.',
-          waText: `Сәлеметсіз бе! "${moduleName}" модуліне доступ керек. Чек жіберемін.`
-        });
-        return;
-      }
+  state.postLoginAction = () => {
+    state.currentModule = { id: moduleId, name: moduleName, description: moduleDescription, isPaid: true };
+    DOM.lessonPageTitle.textContent = moduleName;
+    DOM.moduleTitle.textContent = `${moduleName} модулінің сабақтары`;
+    DOM.moduleDescription.textContent = moduleDescription;
+    showPage('lessonsPage');
+    saveState();
+  };
+
+  showAuthGate({
+    title: 'Ақылы модуль',
+    text: 'Модульге кіру үшін алдымен аккаунтқа кіріңіз.',
+    waText: `Сәлеметсіз бе! "${moduleName}" модуліне доступ керек.`
+  });
+  return;
+}
 
       state.currentModule = {
         id: moduleId,
@@ -3287,59 +3259,71 @@ if (!isPurchased) {
     }
 
     async function login() {
-      const phone = document.getElementById('phoneInput').value;
-      const password = document.getElementById('passwordInput').value;
-      
-      if (!phone || !password) {
-        showNotification('Барлық өрістерді толтырыңыз', 'error');
-        return;
-      }
-      
-      try {
-        const url = `${SESS_URL}?action=login&login=${encodeURIComponent(phone)}&password=${encodeURIComponent(password)}`;
-        const res = await fetch(url);
-        const data = await res.json();
-        
-        console.log('Login response:', data); // Для отладки
-        
-        if (data.ok) {
-          // ВАЖНО: В тестовом режиме даем доступ ко всем курсам
-          // В реальном режиме нужно использовать data.purchasedCourses
-          const purchasedCourses = ALLOW_ALL_COURSES_FOR_LOGGED_IN 
-            ? state.modules.map(m => parseInt(m.id)) // Даем доступ ко всем курсам
-            : (data.purchasedCourses || []);
-          
-          state.currentUser = { 
-            name: data.name || phone, 
-            login: phone, 
-            token: data.token,
-            purchasedCourses: purchasedCourses
-          };
-          
-          localStorage.setItem('eduplatform_user', JSON.stringify(state.currentUser));
-          updateUserUI();
-          hideLoginModal();
-          showNotification('Сәтті кірдіңіз! Сіз курстарды қарай аласыз.', 'success');
-          startHeartbeat();
-          
-          // Refresh modules to show purchased status
-          loadModulesWithCounts();
-          
-          // Execute post-login action if any
-          if (state.postLoginAction) {
-            state.postLoginAction();
-            state.postLoginAction = null;
-          }
-        } else if (data.error === 'expired') {
-          showNotification('Қол жеткізу мерзімі аяқталды. Доступты жаңартыңыз.', 'error');
-        } else {
-          showNotification('Қате логин немесе құпиясөз', 'error');
-        }
-      } catch (error) {
-        console.error('Кіру қатесі:', error);
-        showNotification('Сервер қолжетімсіз', 'error');
-      }
+  const phone = document.getElementById('phoneInput').value;
+  const password = document.getElementById('passwordInput').value;
+
+  if (!phone || !password) {
+    showNotification('Барлық өрістерді толтырыңыз', 'error');
+    return;
+  }
+
+  try {
+    const url = `${SESS_URL}?action=login&login=${encodeURIComponent(phone)}&password=${encodeURIComponent(password)}`;
+
+    const res = await fetchWithTimeout(url, 12000);
+    if (!res.ok) {
+      showNotification(`Сервер қате берді: ${res.status}`, 'error');
+      return;
     }
+
+    const data = await res.json();
+
+    if (data.ok) {
+      const purchasedCourses = ALLOW_ALL_COURSES_FOR_LOGGED_IN
+        ? state.modules.map(m => parseInt(m.id))
+        : (data.purchasedCourses || []);
+
+      state.currentUser = {
+        name: data.name || phone,
+        login: phone,
+        token: data.token,
+        purchasedCourses
+      };
+
+      localStorage.setItem('eduplatform_user', JSON.stringify(state.currentUser));
+
+      updateUserUI();
+
+      // ✅ МІНЕ: логин модал да, authgate та бірден жабылады
+      hideLoginModal();
+      hideAuthGate();
+
+      startHeartbeat();
+      loadModulesWithCounts();
+
+      showNotification('Сәтті кірдіңіз!', 'success');
+
+      // ✅ егер адам модульге кірмек болған болса — сол жерге апарамыз
+      if (state.postLoginAction) {
+        const act = state.postLoginAction;
+        state.postLoginAction = null;
+        act();
+      } else {
+        showPage('mainPage');
+      }
+
+    } else if (data.error === 'expired') {
+      showNotification('Қол жеткізу мерзімі аяқталды. Доступты жаңартыңыз.', 'error');
+    } else {
+      showNotification('Қате логин немесе құпиясөз', 'error');
+    }
+  } catch (error) {
+    const msg = (error.name === 'AbortError')
+      ? 'Сервер жауап бермеді (таймаут). Қайта көріңіз.'
+      : `Сервер қолжетімсіз: ${error.message || 'network error'}`;
+    showNotification(msg, 'error');
+  }
+}
 
     async function verifySession() {
       if (!state.currentUser) return false;
@@ -3429,20 +3413,30 @@ if (!isPurchased) {
       }
       
       // Update stats if logged in
-      if (isLoggedIn) {
-        const purchasedCount = state.currentUser.purchasedCourses?.length || 0;
-        DOM.statCourses.textContent = purchasedCount;
-        DOM.statLessons.textContent = state.lessonsAll.filter(l => 
-          state.currentUser.purchasedCourses?.includes(parseInt(l.module_id))
-        ).length;
-    
-        
-        updateMyCourses();
-      } else {
-        DOM.statCourses.textContent = '0';
-        DOM.statLessons.textContent = '0';
-        DOM.myCourses.innerHTML = '<p style="color: var(--text-secondary); text-align: center; padding: 20px;">Әзірше курс сатып алмадыңыз</p>';
-      }
+      // Update stats if logged in
+if (isLoggedIn) {
+  const purchasedCount = state.currentUser.purchasedCourses?.length || 0;
+
+  if (DOM.statCourses) DOM.statCourses.textContent = String(purchasedCount);
+
+  if (DOM.statLessons) {
+    DOM.statLessons.textContent = String(
+      (state.lessonsAll || []).filter(l =>
+        state.currentUser.purchasedCourses?.includes(parseInt(l.module_id))
+      ).length
+    );
+  }
+
+  updateMyCourses();
+} else {
+  if (DOM.statCourses) DOM.statCourses.textContent = '0';
+  if (DOM.statLessons) DOM.statLessons.textContent = '0';
+
+  if (DOM.myCourses) {
+    DOM.myCourses.innerHTML =
+      '<p style="color: var(--text-secondary); text-align: center; padding: 20px;">Әзірше курс сатып алмадыңыз</p>';
+  }
+}
     }
 
     function updateMyCourses() {

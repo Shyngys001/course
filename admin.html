@@ -1,0 +1,2072 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI-man Academy — Admin (MVP)</title>
+  <meta name="color-scheme" content="light" />
+  <style>
+    :root{
+      --bg:#0b1020;
+      --panel:#0f1730;
+      --card:#111b38;
+      --muted:#8ea0c2;
+      --text:#e9f0ff;
+      --line:rgba(255,255,255,.10);
+      --accent:#46c2ff;
+      --good:#45e28f;
+      --warn:#ffd166;
+      --bad:#ff4d6d;
+      --shadow: 0 20px 50px rgba(0,0,0,.35);
+      --radius:18px;
+      --radius2:14px;
+      --pad:16px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--font);
+      background:
+        radial-gradient(1200px 800px at 20% -10%, rgba(70,194,255,.22), transparent 60%),
+        radial-gradient(900px 600px at 90% 10%, rgba(69,226,143,.14), transparent 55%),
+        radial-gradient(800px 650px at 60% 100%, rgba(255,77,109,.12), transparent 55%),
+        var(--bg);
+      color:var(--text);
+      overflow:hidden;
+    }
+    a{color:inherit}
+    button, input, select{font:inherit}
+    .app{
+      display:grid;
+      grid-template-columns: 300px 1fr;
+      height:100vh;
+    }
+    /* Sidebar */
+    .sidebar{
+      border-right:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      padding:18px;
+      overflow:auto;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      padding:12px 12px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .logo{
+      width:38px; height:38px; border-radius:14px;
+      background:
+        radial-gradient(12px 12px at 30% 30%, rgba(255,255,255,.9), rgba(255,255,255,.2) 55%, transparent 60%),
+        linear-gradient(135deg, rgba(70,194,255,1), rgba(69,226,143,1));
+      border:1px solid rgba(255,255,255,.15);
+    }
+    .brand h1{font-size:14px; margin:0; line-height:1.1}
+    .brand p{margin:2px 0 0; font-size:12px; color:var(--muted)}
+    .nav{
+      margin-top:16px;
+      display:flex; flex-direction:column; gap:8px;
+    }
+    .nav button{
+      width:100%;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.02);
+      color:var(--text);
+      padding:12px 12px;
+      border-radius: 14px;
+      text-align:left;
+      cursor:pointer;
+      transition:.15s transform, .15s background, .15s border-color;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .nav button:hover{transform: translateY(-1px); background: rgba(255,255,255,.04); border-color:rgba(255,255,255,.16)}
+    .nav button.active{
+      background: rgba(70,194,255,.14);
+      border-color: rgba(70,194,255,.35);
+    }
+    .nav .left{display:flex; align-items:center; gap:10px}
+    .dot{
+      width:10px;height:10px;border-radius:999px;
+      background: rgba(255,255,255,.22);
+      box-shadow: 0 0 0 4px rgba(255,255,255,.06);
+      flex:0 0 auto;
+    }
+    .nav button.active .dot{
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(70,194,255,.14);
+    }
+    .badge{
+      font-size:12px;
+      color:var(--muted);
+      padding:4px 8px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background: rgba(255,255,255,.02);
+      white-space:nowrap;
+    }
+    .sideBlock{
+      margin-top:16px;
+      padding:14px;
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.02);
+    }
+    .sideBlock h3{margin:0 0 8px; font-size:12px; letter-spacing:.4px; text-transform:uppercase; color:var(--muted)}
+    .kv{display:grid; grid-template-columns: 1fr auto; gap:8px; align-items:center}
+    .kv .k{color:var(--muted); font-size:12px}
+    .kv .v{font-weight:600; font-size:12px}
+    .tiny{font-size:12px; color:var(--muted); line-height:1.4}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:8px 10px;
+      background: rgba(255,255,255,.02);
+    }
+    .pill .miniDot{width:8px;height:8px;border-radius:999px;background:var(--good)}
+    .footerSide{
+      margin-top:14px;
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+    .footerSide button{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.02);
+      color:var(--text);
+      padding:9px 10px;
+      border-radius: 12px;
+      cursor:pointer;
+      transition:.15s background, .15s border-color;
+    }
+    .footerSide button:hover{background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.18)}
+
+    /* Main */
+    .main{
+      overflow:auto;
+      padding:18px;
+    }
+    .topbar{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+      position:sticky;
+      top:0;
+      z-index:5;
+      padding:10px 0 14px;
+      backdrop-filter: blur(12px);
+      background: linear-gradient(180deg, rgba(11,16,32,.86), rgba(11,16,32,.55), transparent);
+    }
+    .topbar .left{display:flex; flex-direction:column; gap:4px}
+    .topbar h2{margin:0; font-size:18px}
+    .crumb{font-size:12px; color:var(--muted)}
+    .actions{
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+    }
+    .search{
+      display:flex; align-items:center; gap:10px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.02);
+      padding:10px 12px;
+      border-radius: 14px;
+      min-width: 320px;
+    }
+    .search input{
+      border:0; outline:0; background:transparent;
+      color:var(--text);
+      width:100%;
+    }
+    .btn{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.02);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius: 14px;
+      cursor:pointer;
+      transition:.15s transform, .15s background, .15s border-color;
+      display:inline-flex; align-items:center; gap:10px;
+      white-space:nowrap;
+    }
+    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.18)}
+    .btn.primary{
+      background: rgba(70,194,255,.16);
+      border-color: rgba(70,194,255,.38);
+    }
+    .btn.danger{
+      background: rgba(255,77,109,.12);
+      border-color: rgba(255,77,109,.34);
+    }
+    .btn.good{
+      background: rgba(69,226,143,.12);
+      border-color: rgba(69,226,143,.32);
+    }
+    .gridStats{
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap:12px;
+      margin-top:6px;
+    }
+    .card{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.02);
+      border-radius: var(--radius);
+      padding: 14px;
+      box-shadow: var(--shadow);
+    }
+    .statTop{display:flex; align-items:flex-start; justify-content:space-between; gap:12px}
+    .statTop .name{font-size:12px; color:var(--muted); letter-spacing:.3px; text-transform:uppercase}
+    .statTop .tag{
+      font-size:12px; padding:4px 8px; border-radius:999px;
+      border:1px solid var(--line); background: rgba(255,255,255,.02);
+      color:var(--muted);
+    }
+    .statValue{font-size:28px; font-weight:800; margin-top:8px}
+    .statSub{font-size:12px; color:var(--muted); margin-top:6px}
+    .split{
+      display:grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap:12px;
+      margin-top:12px;
+      align-items:start;
+    }
+
+    .panelTitle{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      margin-bottom:10px;
+    }
+    .panelTitle h3{margin:0; font-size:14px}
+    .panelTitle .hint{font-size:12px; color:var(--muted)}
+    .toolbar{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      margin-bottom:10px;
+    }
+    select{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.02);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius: 14px;
+      outline:0;
+    }
+    .tableWrap{
+      overflow:auto;
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.02);
+    }
+    table{width:100%; border-collapse:collapse; min-width:900px}
+    th,td{padding:12px 12px; border-bottom:1px solid var(--line); vertical-align:middle; font-size:13px}
+    th{
+      position:sticky; top:0; z-index:2;
+      text-align:left;
+      background: rgba(11,16,32,.75);
+      backdrop-filter: blur(10px);
+      color: #cfe0ff;
+      font-size:12px;
+      letter-spacing:.35px;
+      text-transform:uppercase;
+    }
+    tr:hover td{background: rgba(255,255,255,.02)}
+    .rowActions{display:flex; gap:8px; flex-wrap:wrap}
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.02);
+      font-size:12px;
+      color: var(--muted);
+      white-space:nowrap;
+    }
+    .chip .cDot{width:8px;height:8px;border-radius:999px;background: rgba(255,255,255,.22)}
+    .chip.good .cDot{background:var(--good)}
+    .chip.warn .cDot{background:var(--warn)}
+    .chip.bad  .cDot{background:var(--bad)}
+    .mono{font-family:var(--mono)}
+    .muted{color:var(--muted)}
+    .rightCol{
+      display:flex; flex-direction:column; gap:12px;
+    }
+    .list{
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .item{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.02);
+      border-radius: var(--radius2);
+      padding:12px;
+      display:flex; flex-direction:column; gap:8px;
+    }
+    .itemTop{display:flex; justify-content:space-between; gap:12px; align-items:flex-start}
+    .itemTop .title{font-weight:700}
+    .itemTop .meta{font-size:12px; color:var(--muted)}
+    .item .desc{font-size:12px; color:var(--muted); line-height:1.45}
+    .divider{height:1px; background: var(--line); margin:8px 0}
+
+    /* Modal */
+    .modalOverlay{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.55);
+      display:none;
+      align-items:center; justify-content:center;
+      padding:16px;
+      z-index:20;
+    }
+    .modal{
+      width:min(760px, 100%);
+      border-radius: 22px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(15,23,48,.9);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 30px 80px rgba(0,0,0,.55);
+      overflow:hidden;
+    }
+    .modalHead{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 16px;
+      border-bottom:1px solid var(--line);
+    }
+    .modalHead h4{margin:0; font-size:14px}
+    .modalBody{padding:16px}
+    .formGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    .field{
+      display:flex; flex-direction:column; gap:6px;
+    }
+    .field label{
+      font-size:12px;
+      color:var(--muted);
+    }
+    .field input, .field textarea{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.02);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius: 14px;
+      outline:0;
+    }
+    .field textarea{min-height:90px; resize:vertical}
+    .modalFoot{
+      display:flex; justify-content:flex-end; gap:10px;
+      padding:14px 16px;
+      border-top:1px solid var(--line);
+      background: rgba(255,255,255,.02);
+    }
+
+    /* Responsive */
+    .mobileTop{display:none}
+    @media (max-width: 980px){
+      body{overflow:auto}
+      .app{grid-template-columns: 1fr}
+      .sidebar{display:none}
+      .main{padding:14px}
+      .gridStats{grid-template-columns: repeat(2, minmax(0,1fr))}
+      .split{grid-template-columns: 1fr; }
+      .search{min-width: 0; width:100%}
+      .mobileTop{
+        display:flex;
+        position:sticky; top:0; z-index:10;
+        padding:10px 0 10px;
+        gap:10px; align-items:center; justify-content:space-between;
+        backdrop-filter: blur(12px);
+        background: linear-gradient(180deg, rgba(11,16,32,.92), rgba(11,16,32,.72), transparent);
+      }
+      .mobileTop .brandMini{
+        display:flex; align-items:center; gap:10px;
+      }
+      .mobileTop .logo{width:32px;height:32px;border-radius:12px}
+      .mobileTop .title{font-weight:800}
+      .drawerBtn{
+        border:1px solid var(--line);
+        background: rgba(255,255,255,.02);
+        color:var(--text);
+        padding:10px 12px;
+        border-radius: 14px;
+        cursor:pointer;
+      }
+      .drawer{
+        position:fixed; inset:0;
+        z-index:30;
+        display:none;
+      }
+      .drawer .backdrop{position:absolute; inset:0; background: rgba(0,0,0,.55)}
+      .drawer .sheet{
+        position:absolute; left:0; top:0; bottom:0;
+        width:min(340px, 92vw);
+        background: rgba(15,23,48,.95);
+        backdrop-filter: blur(16px);
+        border-right:1px solid rgba(255,255,255,.14);
+        padding:14px;
+        overflow:auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="logo"></div>
+        <div>
+          <h1>AI-man Academy — Admin</h1>
+          <p>Управление курсами, доступом и оплатами</p>
+        </div>
+      </div>
+
+      <div class="nav" id="nav">
+        <button class="active" data-view="dashboard">
+          <span class="left"><span class="dot"></span> Дашборд</span>
+          <span class="badge" id="badge-dashboard">•</span>
+        </button>
+        <button data-view="courses">
+          <span class="left"><span class="dot"></span> Курсы</span>
+          <span class="badge" id="badge-courses">0</span>
+        </button>
+        <button data-view="modules">
+          <span class="left"><span class="dot"></span> Модули</span>
+          <span class="badge" id="badge-modules">0</span>
+        </button>
+        <button data-view="lessons">
+          <span class="left"><span class="dot"></span> Видеоуроки</span>
+          <span class="badge" id="badge-lessons">0</span>
+        </button>
+        <button data-view="users">
+          <span class="left"><span class="dot"></span> Пользователи</span>
+          <span class="badge" id="badge-users">0</span>
+        </button>
+        <button data-view="devices">
+          <span class="left"><span class="dot"></span> Устройства</span>
+          <span class="badge" id="badge-devices">0</span>
+        </button>
+        <button data-view="payments">
+          <span class="left"><span class="dot"></span> Оплаты</span>
+          <span class="badge" id="badge-payments">0</span>
+        </button>
+        <button data-view="settings">
+          <span class="left"><span class="dot"></span> Настройки</span>
+          <span class="badge">MVP</span>
+        </button>
+      </div>
+
+      <div class="sideBlock">
+        <h3>Безопасность</h3>
+        <div class="kv">
+          <div class="k">1 устройство на аккаунт</div>
+          <div class="v"><span class="pill"><span class="miniDot"></span> Включено</span></div>
+          <div class="k">Доступ к видео</div>
+          <div class="v muted">Signed token</div>
+          <div class="k">DRM</div>
+          <div class="v muted">позже</div>
+        </div>
+        <div class="divider"></div>
+        <div class="tiny">
+          Это UI-макет админки. Под API подключишь:
+          <span class="mono">/admin/*</span> (courses, modules, lessons, users, devices, payments).
+        </div>
+      </div>
+
+      <div class="footerSide">
+        <button class="btn good" id="btn-seed">Заполнить демо</button>
+        <button class="btn danger" id="btn-reset">Сброс</button>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <!-- Mobile top -->
+      <div class="mobileTop">
+        <div class="brandMini">
+          <div class="logo"></div>
+          <div class="title" id="mobileTitle">Admin</div>
+        </div>
+        <button class="drawerBtn" id="openDrawer">Меню</button>
+      </div>
+
+      <div class="topbar">
+        <div class="left">
+          <h2 id="pageTitle">Дашборд</h2>
+          <div class="crumb" id="pageCrumb">Обзор системы и ключевые показатели</div>
+        </div>
+        <div class="actions">
+          <div class="search">
+            <span class="muted">⌕</span>
+            <input id="globalSearch" placeholder="Поиск по текущему разделу (название, id, телефон…)" />
+          </div>
+          <button class="btn primary" id="btnAdd">＋ Добавить</button>
+          <button class="btn" id="btnExport">⬇ Экспорт JSON</button>
+        </div>
+      </div>
+
+      <!-- Views -->
+      <section id="view-dashboard" class="view">
+        <div class="gridStats">
+          <div class="card">
+            <div class="statTop">
+              <div class="name">Активные пользователи</div>
+              <div class="tag">за 7 дней</div>
+            </div>
+            <div class="statValue" id="statActive">0</div>
+            <div class="statSub" id="statActiveSub">0 новых регистраций</div>
+          </div>
+
+          <div class="card">
+            <div class="statTop">
+              <div class="name">Оплаты</div>
+              <div class="tag">успешные</div>
+            </div>
+            <div class="statValue" id="statPaid">0</div>
+            <div class="statSub" id="statRevenue">Выручка: 0 ₸</div>
+          </div>
+
+          <div class="card">
+            <div class="statTop">
+              <div class="name">Уроки</div>
+              <div class="tag">всего</div>
+            </div>
+            <div class="statValue" id="statLessons">0</div>
+            <div class="statSub" id="statStream">Streaming: HLS + token</div>
+          </div>
+
+          <div class="card">
+            <div class="statTop">
+              <div class="name">Устройства</div>
+              <div class="tag">привязано</div>
+            </div>
+            <div class="statValue" id="statDevices">0</div>
+            <div class="statSub" id="statLocked">Locked accounts: 0</div>
+          </div>
+        </div>
+
+        <div class="split">
+          <div class="card">
+            <div class="panelTitle">
+              <h3>Последние события</h3>
+              <span class="hint">лог действий админки (демо)</span>
+            </div>
+            <div class="list" id="activity"></div>
+          </div>
+
+          <div class="rightCol">
+            <div class="card">
+              <div class="panelTitle">
+                <h3>Очередь модерации</h3>
+                <span class="hint">проверка оплат / доступов</span>
+              </div>
+              <div class="list" id="moderation"></div>
+            </div>
+
+            <div class="card">
+              <div class="panelTitle">
+                <h3>Быстрые действия</h3>
+                <span class="hint">частые операции</span>
+              </div>
+              <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <button class="btn good" onclick="quick('Создан курс')">Создать курс</button>
+                <button class="btn" onclick="quick('Добавлен урок')">Добавить урок</button>
+                <button class="btn" onclick="quick('Сброс устройства')">Сброс устройства</button>
+                <button class="btn danger" onclick="quick('Блок аккаунта')">Блок аккаунта</button>
+              </div>
+              <div class="divider"></div>
+              <div class="tiny">
+                Под реальные действия подключишь API (например: <span class="mono">POST /admin/courses</span>).
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-courses" class="view" hidden>
+        <div class="card">
+          <div class="panelTitle">
+            <h3>Курсы</h3>
+            <span class="hint">уровень 1 (course)</span>
+          </div>
+          <div class="toolbar">
+            <select id="courseStatus">
+              <option value="">Все статусы</option>
+              <option value="active">Active</option>
+              <option value="draft">Draft</option>
+              <option value="archived">Archived</option>
+            </select>
+          </div>
+
+          <div class="tableWrap">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:140px;">ID</th>
+                  <th>Название</th>
+                  <th style="width:140px;">Статус</th>
+                  <th style="width:140px;">Модулей</th>
+                  <th style="width:160px;">Цена</th>
+                  <th style="width:220px;">Действия</th>
+                </tr>
+              </thead>
+              <tbody id="coursesTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-modules" class="view" hidden>
+        <div class="card">
+          <div class="panelTitle">
+            <h3>Модули</h3>
+            <span class="hint">уровень 2 (module)</span>
+          </div>
+          <div class="toolbar">
+            <select id="moduleCourse"></select>
+            <select id="moduleStatus">
+              <option value="">Все статусы</option>
+              <option value="active">Active</option>
+              <option value="draft">Draft</option>
+            </select>
+          </div>
+          <div class="tableWrap">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:140px;">ID</th>
+                  <th>Название</th>
+                  <th style="width:220px;">Курс</th>
+                  <th style="width:140px;">Статус</th>
+                  <th style="width:140px;">Уроков</th>
+                  <th style="width:220px;">Действия</th>
+                </tr>
+              </thead>
+              <tbody id="modulesTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-lessons" class="view" hidden>
+        <div class="card">
+          <div class="panelTitle">
+            <h3>Видеоуроки</h3>
+            <span class="hint">уровень 3 (lesson + video stream)</span>
+          </div>
+          <div class="toolbar">
+            <select id="lessonCourse"></select>
+            <select id="lessonModule"></select>
+            <select id="lessonProtection">
+              <option value="">Любая защита</option>
+              <option value="signed">Signed token</option>
+              <option value="drm">DRM</option>
+            </select>
+          </div>
+
+          <div class="tableWrap">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:140px;">ID</th>
+                  <th>Название</th>
+                  <th style="width:220px;">Модуль</th>
+                  <th style="width:160px;">Видео</th>
+                  <th style="width:180px;">Доступ</th>
+                  <th style="width:220px;">Действия</th>
+                </tr>
+              </thead>
+              <tbody id="lessonsTbody"></tbody>
+            </table>
+          </div>
+          <div class="divider"></div>
+          <div class="tiny">
+            Для реала: храни <span class="mono">playbackId</span> (Mux/Cloudflare), выдавай short-lived token (1–5 минут),
+            проверяй подписку + device lock на backend.
+          </div>
+        </div>
+      </section>
+
+      <section id="view-users" class="view" hidden>
+        <div class="card">
+          <div class="panelTitle">
+            <h3>Пользователи</h3>
+            <span class="hint">аккаунты + статусы + доступ к курсам</span>
+          </div>
+          <div class="toolbar">
+            <select id="userStatus">
+              <option value="">Все статусы</option>
+              <option value="active">Active</option>
+              <option value="blocked">Blocked</option>
+            </select>
+            <select id="userPlan">
+              <option value="">Любой план</option>
+              <option value="trial">Trial</option>
+              <option value="paid">Paid</option>
+              <option value="expired">Expired</option>
+            </select>
+          </div>
+
+          <div class="tableWrap">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:140px;">ID</th>
+                  <th>Имя</th>
+                  <th style="width:180px;">Телефон</th>
+                  <th style="width:150px;">Статус</th>
+                  <th style="width:140px;">План</th>
+                  <th style="width:220px;">Действия</th>
+                </tr>
+              </thead>
+              <tbody id="usersTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-devices" class="view" hidden>
+        <div class="card">
+          <div class="panelTitle">
+            <h3>Устройства</h3>
+            <span class="hint">1 устройство на аккаунт + сброс/привязка</span>
+          </div>
+          <div class="toolbar">
+            <select id="devicePolicy">
+              <option value="">Любая политика</option>
+              <option value="locked">Locked (1 device)</option>
+              <option value="free">Free</option>
+            </select>
+          </div>
+
+          <div class="tableWrap">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:140px;">User ID</th>
+                  <th>Пользователь</th>
+                  <th style="width:220px;">Device ID</th>
+                  <th style="width:160px;">Политика</th>
+                  <th style="width:160px;">Последний вход</th>
+                  <th style="width:240px;">Действия</th>
+                </tr>
+              </thead>
+              <tbody id="devicesTbody"></tbody>
+            </table>
+          </div>
+
+          <div class="divider"></div>
+          <div class="tiny">
+            Реализация: deviceId генерируй в приложении и храни в Keychain/Keystore → backend привязывает.
+            Сброс: <span class="mono">POST /admin/users/:id/reset-device</span>.
+          </div>
+        </div>
+      </section>
+
+      <section id="view-payments" class="view" hidden>
+        <div class="card">
+          <div class="panelTitle">
+            <h3>Оплаты</h3>
+            <span class="hint">Kaspi/Freedom/и т.д. + подтверждение</span>
+          </div>
+          <div class="toolbar">
+            <select id="payStatus">
+              <option value="">Все статусы</option>
+              <option value="success">Success</option>
+              <option value="pending">Pending</option>
+              <option value="failed">Failed</option>
+            </select>
+            <select id="payMethod">
+              <option value="">Любой метод</option>
+              <option value="kaspi">Kaspi</option>
+              <option value="freedom">Freedom</option>
+              <option value="manual">Manual</option>
+            </select>
+          </div>
+
+          <div class="tableWrap">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:140px;">ID</th>
+                  <th style="width:220px;">Пользователь</th>
+                  <th style="width:170px;">Сумма</th>
+                  <th style="width:170px;">Метод</th>
+                  <th style="width:170px;">Статус</th>
+                  <th style="width:220px;">Действия</th>
+                </tr>
+              </thead>
+              <tbody id="paymentsTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-settings" class="view" hidden>
+        <div class="card">
+          <div class="panelTitle">
+            <h3>Настройки</h3>
+            <span class="hint">MVP конфиг</span>
+          </div>
+
+          <div class="formGrid">
+            <div class="field">
+              <label>Video Provider</label>
+              <input value="Cloudflare Stream / Mux" />
+            </div>
+            <div class="field">
+              <label>Token TTL (минуты)</label>
+              <input value="3" />
+            </div>
+            <div class="field">
+              <label>Device Lock</label>
+              <input value="Enabled (1 device per user)" />
+            </div>
+            <div class="field">
+              <label>Android Flag Secure</label>
+              <input value="Enabled" />
+            </div>
+            <div class="field" style="grid-column:1/-1;">
+              <label>Примечание</label>
+              <textarea>Это визуальная админка в одном файле. Дальше подключи API и заменишь демо-данные на реальные.</textarea>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+          <div class="tiny">
+            Рекомендуемые эндпоинты:
+            <span class="mono">GET/POST/PUT/DELETE /admin/courses</span>,
+            <span class="mono">/admin/modules</span>,
+            <span class="mono">/admin/lessons</span>,
+            <span class="mono">/admin/users</span>,
+            <span class="mono">/admin/devices</span>,
+            <span class="mono">/admin/payments</span>.
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Mobile drawer -->
+  <div class="drawer" id="drawer">
+    <div class="backdrop" id="drawerBackdrop"></div>
+    <div class="sheet">
+      <div class="brand" style="box-shadow:none;">
+        <div class="logo"></div>
+        <div>
+          <h1 style="font-size:13px;margin:0;">AI-man Academy — Admin</h1>
+          <p style="margin:2px 0 0; font-size:12px; color:var(--muted)">Мобильное меню</p>
+        </div>
+      </div>
+      <div class="nav" id="navMobile" style="margin-top:12px;"></div>
+      <div class="sideBlock">
+        <h3>Подсказка</h3>
+        <div class="tiny">Это меню дублирует левую панель.</div>
+      </div>
+      <div class="footerSide">
+        <button class="btn good" onclick="seedDemo(); closeDrawer();">Заполнить демо</button>
+        <button class="btn danger" onclick="resetAll(); closeDrawer();">Сброс</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modalOverlay" id="modalOverlay" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modalHead">
+        <h4 id="modalTitle">Добавить</h4>
+        <button class="btn" id="modalClose">✕</button>
+      </div>
+      <div class="modalBody" id="modalBody"></div>
+      <div class="modalFoot">
+        <button class="btn" id="modalCancel">Отмена</button>
+        <button class="btn primary" id="modalSave">Сохранить</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /***********************
+     * Demo state (replace with API)
+     ***********************/
+    const db = {
+      courses: [],
+      modules: [],
+      lessons: [],
+      users: [],
+      devices: [],
+      payments: [],
+      activity: []
+    };
+
+    const $ = (sel, root=document) => root.querySelector(sel);
+    const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+    const fmtMoney = (n) => (Number(n)||0).toLocaleString("ru-RU") + " ₸";
+    const uid = (prefix) => prefix + "_" + Math.random().toString(16).slice(2, 10).toUpperCase();
+    const now = () => new Date().toLocaleString("ru-RU");
+
+    function logActivity(title, desc, kind="info"){
+      db.activity.unshift({ id: uid("log"), title, desc, kind, at: now() });
+      if(db.activity.length > 8) db.activity.pop();
+      renderDashboard();
+    }
+
+    function quick(text){
+      logActivity(text, "Быстрое действие (демо). Подключи к API.", "info");
+      toast(text);
+    }
+
+    /***********************
+     * UI: routing
+     ***********************/
+    const VIEWS = [
+      {id:"dashboard", title:"Дашборд", crumb:"Обзор системы и ключевые показатели"},
+      {id:"courses", title:"Курсы", crumb:"Создание/редактирование курсов и цен"},
+      {id:"modules", title:"Модули", crumb:"Структура внутри курса"},
+      {id:"lessons", title:"Видеоуроки", crumb:"Уроки + параметры стриминга/защиты"},
+      {id:"users", title:"Пользователи", crumb:"Аккаунты, планы, статусы"},
+      {id:"devices", title:"Устройства", crumb:"Привязка 1 устройства + сброс"},
+      {id:"payments", title:"Оплаты", crumb:"Транзакции и подтверждения"},
+      {id:"settings", title:"Настройки", crumb:"Конфигурация MVP"}
+    ];
+
+    let currentView = "dashboard";
+
+    function setView(id){
+      currentView = id;
+      // nav state
+      $$("#nav button").forEach(b => b.classList.toggle("active", b.dataset.view === id));
+      // view visibility
+      $$(".view").forEach(v => v.hidden = true);
+      $("#view-"+id).hidden = false;
+
+      const meta = VIEWS.find(v => v.id===id);
+      $("#pageTitle").textContent = meta?.title || "Admin";
+      $("#pageCrumb").textContent = meta?.crumb || "";
+      $("#mobileTitle").textContent = meta?.title || "Admin";
+
+      $("#btnAdd").style.display = (["settings","dashboard"].includes(id)) ? "none" : "inline-flex";
+      $("#globalSearch").value = "";
+      renderAll();
+    }
+
+    $("#nav").addEventListener("click", (e)=>{
+      const btn = e.target.closest("button[data-view]");
+      if(!btn) return;
+      setView(btn.dataset.view);
+    });
+
+    /***********************
+     * Mobile drawer
+     ***********************/
+    const drawer = $("#drawer");
+    const navMobile = $("#navMobile");
+    function buildMobileNav(){
+      navMobile.innerHTML = "";
+      $$("#nav button").forEach(btn=>{
+        const clone = btn.cloneNode(true);
+        clone.classList.toggle("active", btn.classList.contains("active"));
+        clone.addEventListener("click", ()=>{
+          setView(btn.dataset.view);
+          closeDrawer();
+        });
+        navMobile.appendChild(clone);
+      });
+    }
+    function openDrawer(){
+      buildMobileNav();
+      drawer.style.display = "block";
+    }
+    function closeDrawer(){
+      drawer.style.display = "none";
+    }
+    $("#openDrawer")?.addEventListener("click", openDrawer);
+    $("#drawerBackdrop")?.addEventListener("click", closeDrawer);
+
+    /***********************
+     * Search + filters
+     ***********************/
+    $("#globalSearch").addEventListener("input", ()=> renderAll());
+    const getSearch = () => $("#globalSearch").value.trim().toLowerCase();
+
+    /***********************
+     * Modal builder
+     ***********************/
+    const modal = $("#modalOverlay");
+    let modalCtx = null;
+
+    function openModal(title, html, onSave){
+      $("#modalTitle").textContent = title;
+      $("#modalBody").innerHTML = html;
+      modal.style.display = "flex";
+      modalCtx = { onSave };
+    }
+    function closeModal(){
+      modal.style.display = "none";
+      modalCtx = null;
+    }
+    $("#modalClose").onclick = closeModal;
+    $("#modalCancel").onclick = closeModal;
+    $("#modalSave").onclick = () => {
+      if(modalCtx?.onSave) modalCtx.onSave();
+      closeModal();
+    };
+
+    /***********************
+     * Toast
+     ***********************/
+    const toastEl = document.createElement("div");
+    toastEl.style.cssText = `
+      position:fixed; left:50%; bottom:22px; transform:translateX(-50%);
+      padding:10px 12px; border-radius:14px; border:1px solid rgba(255,255,255,.16);
+      background: rgba(15,23,48,.92); color: var(--text); box-shadow: 0 20px 60px rgba(0,0,0,.5);
+      z-index:50; display:none; max-width:min(560px, 92vw); font-size:13px; backdrop-filter: blur(14px);
+    `;
+    document.body.appendChild(toastEl);
+    let toastT = null;
+    function toast(msg){
+      toastEl.textContent = msg;
+      toastEl.style.display = "block";
+      clearTimeout(toastT);
+      toastT = setTimeout(()=> toastEl.style.display="none", 2200);
+    }
+
+    /***********************
+     * Render helpers
+     ***********************/
+    function chipStatus(status){
+      const map = {
+        active: {cls:"good", label:"Active"},
+        draft: {cls:"warn", label:"Draft"},
+        archived: {cls:"bad", label:"Archived"},
+        blocked: {cls:"bad", label:"Blocked"},
+        success: {cls:"good", label:"Success"},
+        pending: {cls:"warn", label:"Pending"},
+        failed: {cls:"bad", label:"Failed"},
+        signed: {cls:"good", label:"Signed"},
+        drm: {cls:"warn", label:"DRM"},
+        locked: {cls:"good", label:"Locked"},
+        free: {cls:"warn", label:"Free"},
+        trial: {cls:"warn", label:"Trial"},
+        paid: {cls:"good", label:"Paid"},
+        expired: {cls:"bad", label:"Expired"},
+        info: {cls:"warn", label:"Info"}
+      };
+      const m = map[status] || {cls:"", label:String(status||"—")};
+      return `<span class="chip ${m.cls}"><span class="cDot"></span>${m.label}</span>`;
+    }
+
+    function containsAny(obj, q){
+      if(!q) return true;
+      const flat = JSON.stringify(obj).toLowerCase();
+      return flat.includes(q);
+    }
+
+    /***********************
+     * Render: dashboard
+     ***********************/
+    function renderDashboard(){
+      // stats
+      const activeUsers = db.users.filter(u=>u.status==="active").length;
+      const newRegs = Math.min(activeUsers, Math.max(0, Math.round(activeUsers*0.25)));
+      const paid = db.payments.filter(p=>p.status==="success").length;
+      const revenue = db.payments.filter(p=>p.status==="success").reduce((s,p)=>s+Number(p.amount||0),0);
+      const lessons = db.lessons.length;
+      const devices = db.devices.length;
+      const locked = db.devices.filter(d=>d.policy==="locked").length;
+
+      $("#statActive").textContent = activeUsers;
+      $("#statActiveSub").textContent = `${newRegs} новых регистраций`;
+      $("#statPaid").textContent = paid;
+      $("#statRevenue").textContent = `Выручка: ${fmtMoney(revenue)}`;
+      $("#statLessons").textContent = lessons;
+      $("#statDevices").textContent = devices;
+      $("#statLocked").textContent = `Locked accounts: ${locked}`;
+
+      // activity list
+      const act = $("#activity");
+      act.innerHTML = "";
+      (db.activity.length ? db.activity : [
+        {title:"Пока пусто", desc:"Нажми «Заполнить демо», чтобы увидеть макет с данными.", kind:"info", at: now()}
+      ]).forEach(x=>{
+        const div = document.createElement("div");
+        div.className = "item";
+        div.innerHTML = `
+          <div class="itemTop">
+            <div>
+              <div class="title">${x.title}</div>
+              <div class="meta">${x.at}</div>
+            </div>
+            ${chipStatus(x.kind)}
+          </div>
+          <div class="desc">${x.desc}</div>
+        `;
+        act.appendChild(div);
+      });
+
+      // moderation (pending payments + expired users)
+      const mod = $("#moderation");
+      mod.innerHTML = "";
+
+      const pendingPays = db.payments.filter(p=>p.status==="pending").slice(0,3);
+      const expiredUsers = db.users.filter(u=>u.plan==="expired").slice(0,3);
+
+      const items = [
+        ...pendingPays.map(p=>({
+          title: `Платёж ${p.id}`,
+          meta: `${p.method.toUpperCase()} • ${fmtMoney(p.amount)}`,
+          desc: `Пользователь: ${p.userName} (${p.userId}). Статус: Pending.`,
+          action: ()=> { p.status="success"; logActivity("Подтверждён платёж", `${p.userName} • ${fmtMoney(p.amount)} (${p.method})`, "info"); renderAll(); toast("Платёж подтверждён"); }
+        })),
+        ...expiredUsers.map(u=>({
+          title: `Доступ истёк: ${u.name}`,
+          meta: `${u.phone}`,
+          desc: `План: Expired. Можно продлить или блокировать.`,
+          action: ()=> { u.plan="paid"; logActivity("Продлён доступ", `${u.name} переведён на Paid`, "info"); renderAll(); toast("Доступ продлён"); }
+        }))
+      ];
+
+      if(!items.length){
+        const div = document.createElement("div");
+        div.className = "item";
+        div.innerHTML = `<div class="desc">Нет задач модерации (демо).</div>`;
+        mod.appendChild(div);
+      } else {
+        items.forEach(it=>{
+          const div = document.createElement("div");
+          div.className = "item";
+          div.innerHTML = `
+            <div class="itemTop">
+              <div>
+                <div class="title">${it.title}</div>
+                <div class="meta">${it.meta}</div>
+              </div>
+              <button class="btn good" style="padding:8px 10px;" data-act="1">Применить</button>
+            </div>
+            <div class="desc">${it.desc}</div>
+          `;
+          div.querySelector("[data-act]").onclick = it.action;
+          mod.appendChild(div);
+        });
+      }
+    }
+
+    /***********************
+     * Render: tables
+     ***********************/
+    function renderCourses(){
+      $("#badge-courses").textContent = db.courses.length;
+      const q = getSearch();
+      const st = $("#courseStatus").value;
+      const rows = db.courses
+        .filter(c => (!st || c.status===st))
+        .filter(c => containsAny(c, q));
+
+      $("#coursesTbody").innerHTML = rows.map(c=>{
+        const modulesCount = db.modules.filter(m=>m.courseId===c.id).length;
+        return `
+          <tr>
+            <td class="mono">${c.id}</td>
+            <td>
+              <div style="font-weight:800">${c.title}</div>
+              <div class="muted" style="font-size:12px;">${c.desc || ""}</div>
+            </td>
+            <td>${chipStatus(c.status)}</td>
+            <td>${modulesCount}</td>
+            <td><b>${fmtMoney(c.price)}</b></td>
+            <td>
+              <div class="rowActions">
+                <button class="btn" style="padding:8px 10px" onclick="editCourse('${c.id}')">Редакт.</button>
+                <button class="btn" style="padding:8px 10px" onclick="goModules('${c.id}')">Модули</button>
+                <button class="btn danger" style="padding:8px 10px" onclick="delCourse('${c.id}')">Удалить</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join("") || `
+        <tr><td colspan="6" class="muted">Нет данных. Нажми «Заполнить демо».</td></tr>
+      `;
+    }
+
+    function renderModules(){
+      $("#badge-modules").textContent = db.modules.length;
+      // course select
+      const sel = $("#moduleCourse");
+      if(sel.options.length === 0){
+        sel.innerHTML = `<option value="">Все курсы</option>` +
+          db.courses.map(c=>`<option value="${c.id}">${c.title}</option>`).join("");
+      } else if(sel.options.length !== db.courses.length + 1){
+        sel.innerHTML = `<option value="">Все курсы</option>` +
+          db.courses.map(c=>`<option value="${c.id}">${c.title}</option>`).join("");
+      }
+
+      const q = getSearch();
+      const courseId = $("#moduleCourse").value;
+      const st = $("#moduleStatus").value;
+
+      const rows = db.modules
+        .filter(m => (!courseId || m.courseId===courseId))
+        .filter(m => (!st || m.status===st))
+        .filter(m => containsAny(m, q));
+
+      $("#modulesTbody").innerHTML = rows.map(m=>{
+        const c = db.courses.find(x=>x.id===m.courseId);
+        const lessonsCount = db.lessons.filter(l=>l.moduleId===m.id).length;
+        return `
+          <tr>
+            <td class="mono">${m.id}</td>
+            <td>
+              <div style="font-weight:800">${m.title}</div>
+              <div class="muted" style="font-size:12px;">Порядок: ${m.order}</div>
+            </td>
+            <td>${c ? c.title : '<span class="muted">—</span>'}</td>
+            <td>${chipStatus(m.status)}</td>
+            <td>${lessonsCount}</td>
+            <td>
+              <div class="rowActions">
+                <button class="btn" style="padding:8px 10px" onclick="editModule('${m.id}')">Редакт.</button>
+                <button class="btn" style="padding:8px 10px" onclick="goLessonsByModule('${m.id}')">Уроки</button>
+                <button class="btn danger" style="padding:8px 10px" onclick="delModule('${m.id}')">Удалить</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join("") || `
+        <tr><td colspan="6" class="muted">Нет модулей.</td></tr>
+      `;
+    }
+
+    function renderLessons(){
+      $("#badge-lessons").textContent = db.lessons.length;
+
+      // course select
+      const courseSel = $("#lessonCourse");
+      const moduleSel = $("#lessonModule");
+      if(courseSel.options.length === 0 || courseSel.options.length !== db.courses.length + 1){
+        courseSel.innerHTML = `<option value="">Все курсы</option>` +
+          db.courses.map(c=>`<option value="${c.id}">${c.title}</option>`).join("");
+      }
+      const courseId = courseSel.value;
+      const modulesFiltered = courseId ? db.modules.filter(m=>m.courseId===courseId) : db.modules;
+      moduleSel.innerHTML = `<option value="">Все модули</option>` +
+        modulesFiltered.map(m=>`<option value="${m.id}">${m.title}</option>`).join("");
+
+      const q = getSearch();
+      const moduleId = moduleSel.value;
+      const prot = $("#lessonProtection").value;
+
+      const rows = db.lessons
+        .filter(l => (!courseId || l.courseId===courseId))
+        .filter(l => (!moduleId || l.moduleId===moduleId))
+        .filter(l => (!prot || l.protection===prot))
+        .filter(l => containsAny(l, q));
+
+      $("#lessonsTbody").innerHTML = rows.map(l=>{
+        const m = db.modules.find(x=>x.id===l.moduleId);
+        const video = l.provider === "mux"
+          ? `Mux • <span class="mono">${l.playbackId}</span>`
+          : `CF Stream • <span class="mono">${l.playbackId}</span>`;
+        return `
+          <tr>
+            <td class="mono">${l.id}</td>
+            <td>
+              <div style="font-weight:800">${l.title}</div>
+              <div class="muted" style="font-size:12px;">Длительность: ${l.durationMin} мин</div>
+            </td>
+            <td>${m ? m.title : '<span class="muted">—</span>'}</td>
+            <td>${video}</td>
+            <td>
+              ${chipStatus(l.protection)}
+              <div class="muted" style="font-size:12px;margin-top:6px;">TTL: ${l.tokenTtlMin} мин</div>
+            </td>
+            <td>
+              <div class="rowActions">
+                <button class="btn" style="padding:8px 10px" onclick="previewLesson('${l.id}')">Превью</button>
+                <button class="btn" style="padding:8px 10px" onclick="editLesson('${l.id}')">Редакт.</button>
+                <button class="btn danger" style="padding:8px 10px" onclick="delLesson('${l.id}')">Удалить</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join("") || `
+        <tr><td colspan="6" class="muted">Нет уроков.</td></tr>
+      `;
+    }
+
+    function renderUsers(){
+      $("#badge-users").textContent = db.users.length;
+
+      const q = getSearch();
+      const st = $("#userStatus").value;
+      const plan = $("#userPlan").value;
+
+      const rows = db.users
+        .filter(u => (!st || u.status===st))
+        .filter(u => (!plan || u.plan===plan))
+        .filter(u => containsAny(u, q));
+
+      $("#usersTbody").innerHTML = rows.map(u=>{
+        return `
+          <tr>
+            <td class="mono">${u.id}</td>
+            <td>
+              <div style="font-weight:800">${u.name}</div>
+              <div class="muted" style="font-size:12px;">${u.email || "—"}</div>
+            </td>
+            <td class="mono">${u.phone}</td>
+            <td>${chipStatus(u.status)}</td>
+            <td>${chipStatus(u.plan)}</td>
+            <td>
+              <div class="rowActions">
+                <button class="btn" style="padding:8px 10px" onclick="toggleBlock('${u.id}')">${u.status==="blocked"?"Разблок":"Блок"}</button>
+                <button class="btn" style="padding:8px 10px" onclick="resetDevice('${u.id}')">Сброс устройства</button>
+                <button class="btn" style="padding:8px 10px" onclick="editUser('${u.id}')">Редакт.</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join("") || `
+        <tr><td colspan="6" class="muted">Нет пользователей.</td></tr>
+      `;
+    }
+
+    function renderDevices(){
+      $("#badge-devices").textContent = db.devices.length;
+
+      const q = getSearch();
+      const pol = $("#devicePolicy").value;
+
+      const rows = db.devices
+        .filter(d => (!pol || d.policy===pol))
+        .filter(d => containsAny(d, q));
+
+      $("#devicesTbody").innerHTML = rows.map(d=>{
+        return `
+          <tr>
+            <td class="mono">${d.userId}</td>
+            <td>
+              <div style="font-weight:800">${d.userName}</div>
+              <div class="muted" style="font-size:12px;">${d.phone}</div>
+            </td>
+            <td class="mono">${d.deviceId}</td>
+            <td>${chipStatus(d.policy)}</td>
+            <td class="mono">${d.lastLogin}</td>
+            <td>
+              <div class="rowActions">
+                <button class="btn" style="padding:8px 10px" onclick="resetDevice('${d.userId}')">Сброс</button>
+                <button class="btn" style="padding:8px 10px" onclick="togglePolicy('${d.userId}')">Сменить policy</button>
+                <button class="btn danger" style="padding:8px 10px" onclick="unbindDevice('${d.userId}')">Отвязать</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join("") || `
+        <tr><td colspan="6" class="muted">Нет устройств.</td></tr>
+      `;
+    }
+
+    function renderPayments(){
+      $("#badge-payments").textContent = db.payments.length;
+
+      const q = getSearch();
+      const st = $("#payStatus").value;
+      const m = $("#payMethod").value;
+
+      const rows = db.payments
+        .filter(p => (!st || p.status===st))
+        .filter(p => (!m || p.method===m))
+        .filter(p => containsAny(p, q));
+
+      $("#paymentsTbody").innerHTML = rows.map(p=>{
+        return `
+          <tr>
+            <td class="mono">${p.id}</td>
+            <td>
+              <div style="font-weight:800">${p.userName}</div>
+              <div class="muted" style="font-size:12px;">${p.userId}</div>
+            </td>
+            <td><b>${fmtMoney(p.amount)}</b></td>
+            <td class="mono">${p.method}</td>
+            <td>${chipStatus(p.status)}</td>
+            <td>
+              <div class="rowActions">
+                <button class="btn good" style="padding:8px 10px" onclick="approvePay('${p.id}')">Approve</button>
+                <button class="btn" style="padding:8px 10px" onclick="viewPay('${p.id}')">Details</button>
+                <button class="btn danger" style="padding:8px 10px" onclick="failPay('${p.id}')">Fail</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join("") || `
+        <tr><td colspan="6" class="muted">Нет оплат.</td></tr>
+      `;
+    }
+
+    function renderBadges(){
+      $("#badge-dashboard").textContent = "•";
+      $("#badge-courses").textContent = db.courses.length;
+      $("#badge-modules").textContent = db.modules.length;
+      $("#badge-lessons").textContent = db.lessons.length;
+      $("#badge-users").textContent = db.users.length;
+      $("#badge-devices").textContent = db.devices.length;
+      $("#badge-payments").textContent = db.payments.length;
+    }
+
+    function renderAll(){
+      renderBadges();
+      if(currentView==="dashboard") renderDashboard();
+      if(currentView==="courses") renderCourses();
+      if(currentView==="modules") renderModules();
+      if(currentView==="lessons") renderLessons();
+      if(currentView==="users") renderUsers();
+      if(currentView==="devices") renderDevices();
+      if(currentView==="payments") renderPayments();
+    }
+
+    /***********************
+     * Actions (CRUD demo)
+     ***********************/
+    function addEntity(){
+      if(currentView==="courses") return addCourse();
+      if(currentView==="modules") return addModule();
+      if(currentView==="lessons") return addLesson();
+      if(currentView==="users") return addUser();
+      if(currentView==="devices") return toast("Устройства создаются при логине пользователя.");
+      if(currentView==="payments") return addPayment();
+    }
+
+    $("#btnAdd").onclick = addEntity;
+
+    function addCourse(){
+      openModal("Добавить курс", `
+        <div class="formGrid">
+          <div class="field"><label>Название</label><input id="f_title" placeholder="Напр: 原始点 — 8 дней (онлайн)" /></div>
+          <div class="field"><label>Цена (₸)</label><input id="f_price" type="number" placeholder="19990" /></div>
+          <div class="field"><label>Статус</label>
+            <select id="f_status">
+              <option value="active">Active</option>
+              <option value="draft">Draft</option>
+              <option value="archived">Archived</option>
+            </select>
+          </div>
+          <div class="field"><label>Короткое описание</label><input id="f_desc" placeholder="1–2 строки" /></div>
+        </div>
+      `, ()=>{
+        const c = {
+          id: uid("course"),
+          title: $("#f_title").value.trim() || "Новый курс",
+          price: Number($("#f_price").value||0),
+          status: $("#f_status").value,
+          desc: $("#f_desc").value.trim()
+        };
+        db.courses.unshift(c);
+        logActivity("Создан курс", `${c.title} • ${fmtMoney(c.price)}`, "info");
+        renderAll();
+        toast("Курс добавлен");
+      });
+    }
+
+    function editCourse(id){
+      const c = db.courses.find(x=>x.id===id);
+      if(!c) return;
+      openModal("Редактировать курс", `
+        <div class="formGrid">
+          <div class="field"><label>ID</label><input value="${c.id}" disabled /></div>
+          <div class="field"><label>Цена (₸)</label><input id="f_price" type="number" value="${c.price}" /></div>
+          <div class="field" style="grid-column:1/-1;"><label>Название</label><input id="f_title" value="${escapeHtml(c.title)}" /></div>
+          <div class="field"><label>Статус</label>
+            <select id="f_status">
+              ${["active","draft","archived"].map(s=>`<option value="${s}" ${c.status===s?"selected":""}>${s}</option>`).join("")}
+            </select>
+          </div>
+          <div class="field"><label>Описание</label><input id="f_desc" value="${escapeHtml(c.desc||"")}" /></div>
+        </div>
+      `, ()=>{
+        c.title = $("#f_title").value.trim() || c.title;
+        c.price = Number($("#f_price").value||0);
+        c.status = $("#f_status").value;
+        c.desc = $("#f_desc").value.trim();
+        logActivity("Обновлён курс", `${c.title}`, "info");
+        renderAll();
+        toast("Сохранено");
+      });
+    }
+
+    function delCourse(id){
+      const c = db.courses.find(x=>x.id===id);
+      if(!c) return;
+      if(!confirm(`Удалить курс "${c.title}"? Также удалятся его модули и уроки (демо).`)) return;
+      db.modules = db.modules.filter(m=>m.courseId!==id);
+      db.lessons = db.lessons.filter(l=>l.courseId!==id);
+      db.courses = db.courses.filter(x=>x.id!==id);
+      logActivity("Удалён курс", `${c.title}`, "info");
+      renderAll();
+      toast("Удалено");
+    }
+
+    function goModules(courseId){
+      setView("modules");
+      $("#moduleCourse").value = courseId;
+      renderAll();
+    }
+
+    function addModule(){
+      if(!db.courses.length) return toast("Сначала создай курс.");
+      const options = db.courses.map(c=>`<option value="${c.id}">${escapeHtml(c.title)}</option>`).join("");
+      openModal("Добавить модуль", `
+        <div class="formGrid">
+          <div class="field"><label>Курс</label><select id="f_course">${options}</select></div>
+          <div class="field"><label>Порядок</label><input id="f_order" type="number" value="1" /></div>
+          <div class="field" style="grid-column:1/-1;"><label>Название</label><input id="f_title" placeholder="Напр: Модуль 1 — Основы" /></div>
+          <div class="field"><label>Статус</label>
+            <select id="f_status">
+              <option value="active">Active</option>
+              <option value="draft">Draft</option>
+            </select>
+          </div>
+          <div class="field"><label>Описание</label><input id="f_desc" placeholder="необязательно" /></div>
+        </div>
+      `, ()=>{
+        const m = {
+          id: uid("mod"),
+          courseId: $("#f_course").value,
+          title: $("#f_title").value.trim() || "Новый модуль",
+          order: Number($("#f_order").value||1),
+          status: $("#f_status").value,
+          desc: $("#f_desc").value.trim()
+        };
+        db.modules.unshift(m);
+        const c = db.courses.find(x=>x.id===m.courseId);
+        logActivity("Создан модуль", `${m.title} • курс: ${c?.title||"—"}`, "info");
+        renderAll();
+        toast("Модуль добавлен");
+      });
+    }
+
+    function editModule(id){
+      const m = db.modules.find(x=>x.id===id);
+      if(!m) return;
+      const options = db.courses.map(c=>`<option value="${c.id}" ${m.courseId===c.id?"selected":""}>${escapeHtml(c.title)}</option>`).join("");
+      openModal("Редактировать модуль", `
+        <div class="formGrid">
+          <div class="field"><label>ID</label><input value="${m.id}" disabled /></div>
+          <div class="field"><label>Порядок</label><input id="f_order" type="number" value="${m.order}" /></div>
+          <div class="field" style="grid-column:1/-1;"><label>Название</label><input id="f_title" value="${escapeHtml(m.title)}" /></div>
+          <div class="field"><label>Курс</label><select id="f_course">${options}</select></div>
+          <div class="field"><label>Статус</label>
+            <select id="f_status">
+              ${["active","draft"].map(s=>`<option value="${s}" ${m.status===s?"selected":""}>${s}</option>`).join("")}
+            </select>
+          </div>
+          <div class="field" style="grid-column:1/-1;"><label>Описание</label><input id="f_desc" value="${escapeHtml(m.desc||"")}" /></div>
+        </div>
+      `, ()=>{
+        m.title = $("#f_title").value.trim() || m.title;
+        m.order = Number($("#f_order").value||m.order);
+        m.courseId = $("#f_course").value;
+        m.status = $("#f_status").value;
+        m.desc = $("#f_desc").value.trim();
+        logActivity("Обновлён модуль", `${m.title}`, "info");
+        renderAll();
+        toast("Сохранено");
+      });
+    }
+
+    function delModule(id){
+      const m = db.modules.find(x=>x.id===id);
+      if(!m) return;
+      if(!confirm(`Удалить модуль "${m.title}"? Уроки внутри удалятся (демо).`)) return;
+      db.lessons = db.lessons.filter(l=>l.moduleId!==id);
+      db.modules = db.modules.filter(x=>x.id!==id);
+      logActivity("Удалён модуль", `${m.title}`, "info");
+      renderAll();
+      toast("Удалено");
+    }
+
+    function goLessonsByModule(moduleId){
+      setView("lessons");
+      const m = db.modules.find(x=>x.id===moduleId);
+      if(m){
+        $("#lessonCourse").value = m.courseId;
+        renderLessons();
+        $("#lessonModule").value = moduleId;
+      }
+      renderAll();
+    }
+
+    function addLesson(){
+      if(!db.modules.length) return toast("Сначала создай модуль.");
+      const moduleOptions = db.modules
+        .sort((a,b)=> (a.order||0)-(b.order||0))
+        .map(m=>{
+          const c = db.courses.find(x=>x.id===m.courseId);
+          return `<option value="${m.id}">${escapeHtml((c?c.title+" / ":"") + m.title)}</option>`;
+        }).join("");
+
+      openModal("Добавить урок", `
+        <div class="formGrid">
+          <div class="field" style="grid-column:1/-1;"><label>Модуль</label><select id="f_module">${moduleOptions}</select></div>
+          <div class="field" style="grid-column:1/-1;"><label>Название</label><input id="f_title" placeholder="Напр: Урок 01 — Введение" /></div>
+          <div class="field"><label>Provider</label>
+            <select id="f_provider">
+              <option value="cf">Cloudflare Stream</option>
+              <option value="mux">Mux</option>
+            </select>
+          </div>
+          <div class="field"><label>playbackId</label><input id="f_playback" placeholder="ex: 6d6e... (id)" /></div>
+          <div class="field"><label>Защита</label>
+            <select id="f_protection">
+              <option value="signed">Signed token</option>
+              <option value="drm">DRM</option>
+            </select>
+          </div>
+          <div class="field"><label>TTL (мин)</label><input id="f_ttl" type="number" value="3" /></div>
+          <div class="field"><label>Длительность (мин)</label><input id="f_dur" type="number" value="12" /></div>
+          <div class="field"><label>Порядок</label><input id="f_order" type="number" value="1" /></div>
+        </div>
+      `, ()=>{
+        const moduleId = $("#f_module").value;
+        const m = db.modules.find(x=>x.id===moduleId);
+        const c = db.courses.find(x=>x.id===m.courseId);
+        const l = {
+          id: uid("les"),
+          courseId: c.id,
+          moduleId,
+          title: $("#f_title").value.trim() || "Новый урок",
+          provider: $("#f_provider").value === "mux" ? "mux" : "cf",
+          playbackId: ($("#f_playback").value.trim() || "demo_playback"),
+          protection: $("#f_protection").value,
+          tokenTtlMin: Number($("#f_ttl").value||3),
+          durationMin: Number($("#f_dur").value||10),
+          order: Number($("#f_order").value||1)
+        };
+        db.lessons.unshift(l);
+        logActivity("Добавлен урок", `${l.title} • ${c.title}`, "info");
+        renderAll();
+        toast("Урок добавлен");
+      });
+    }
+
+    function editLesson(id){
+      const l = db.lessons.find(x=>x.id===id);
+      if(!l) return;
+      const moduleOptions = db.modules
+        .map(m=>{
+          const c = db.courses.find(x=>x.id===m.courseId);
+          return `<option value="${m.id}" ${l.moduleId===m.id?"selected":""}>${escapeHtml((c?c.title+" / ":"")+m.title)}</option>`;
+        }).join("");
+
+      openModal("Редактировать урок", `
+        <div class="formGrid">
+          <div class="field"><label>ID</label><input value="${l.id}" disabled /></div>
+          <div class="field"><label>Длительность (мин)</label><input id="f_dur" type="number" value="${l.durationMin}" /></div>
+          <div class="field" style="grid-column:1/-1;"><label>Название</label><input id="f_title" value="${escapeHtml(l.title)}" /></div>
+          <div class="field" style="grid-column:1/-1;"><label>Модуль</label><select id="f_module">${moduleOptions}</select></div>
+          <div class="field"><label>Provider</label>
+            <select id="f_provider">
+              <option value="cf" ${l.provider==="cf"?"selected":""}>Cloudflare Stream</option>
+              <option value="mux" ${l.provider==="mux"?"selected":""}>Mux</option>
+            </select>
+          </div>
+          <div class="field"><label>playbackId</label><input id="f_playback" value="${escapeHtml(l.playbackId)}" /></div>
+          <div class="field"><label>Защита</label>
+            <select id="f_protection">
+              <option value="signed" ${l.protection==="signed"?"selected":""}>Signed token</option>
+              <option value="drm" ${l.protection==="drm"?"selected":""}>DRM</option>
+            </select>
+          </div>
+          <div class="field"><label>TTL (мин)</label><input id="f_ttl" type="number" value="${l.tokenTtlMin}" /></div>
+          <div class="field"><label>Порядок</label><input id="f_order" type="number" value="${l.order}" /></div>
+        </div>
+      `, ()=>{
+        l.title = $("#f_title").value.trim() || l.title;
+        l.provider = $("#f_provider").value === "mux" ? "mux" : "cf";
+        l.playbackId = $("#f_playback").value.trim() || l.playbackId;
+        l.protection = $("#f_protection").value;
+        l.tokenTtlMin = Number($("#f_ttl").value||l.tokenTtlMin);
+        l.durationMin = Number($("#f_dur").value||l.durationMin);
+        l.order = Number($("#f_order").value||l.order);
+
+        // update courseId based on new module
+        const newModuleId = $("#f_module").value;
+        l.moduleId = newModuleId;
+        const m = db.modules.find(x=>x.id===newModuleId);
+        l.courseId = m?.courseId || l.courseId;
+
+        logActivity("Обновлён урок", `${l.title}`, "info");
+        renderAll();
+        toast("Сохранено");
+      });
+    }
+
+    function delLesson(id){
+      const l = db.lessons.find(x=>x.id===id);
+      if(!l) return;
+      if(!confirm(`Удалить урок "${l.title}"?`)) return;
+      db.lessons = db.lessons.filter(x=>x.id!==id);
+      logActivity("Удалён урок", `${l.title}`, "info");
+      renderAll();
+      toast("Удалено");
+    }
+
+    function previewLesson(id){
+      const l = db.lessons.find(x=>x.id===id);
+      if(!l) return;
+      const html = `
+        <div class="item">
+          <div class="itemTop">
+            <div>
+              <div class="title">${escapeHtml(l.title)}</div>
+              <div class="meta">ID: <span class="mono">${l.id}</span> • ${l.durationMin} мин</div>
+            </div>
+            ${chipStatus(l.protection)}
+          </div>
+          <div class="desc">
+            Provider: <b>${l.provider==="mux"?"Mux":"Cloudflare Stream"}</b><br/>
+            playbackId: <span class="mono">${escapeHtml(l.playbackId)}</span><br/>
+            Token TTL: <b>${l.tokenTtlMin} мин</b>
+          </div>
+          <div class="divider"></div>
+          <div class="desc">
+            Здесь должен быть плеер приложения (RN). В веб-админке обычно только метаданные.
+          </div>
+        </div>
+      `;
+      openModal("Превью урока", html, ()=> toast("Превью — это демо"));
+      $("#modalSave").textContent = "Ок";
+    }
+
+    function addUser(){
+      openModal("Добавить пользователя", `
+        <div class="formGrid">
+          <div class="field"><label>Имя</label><input id="f_name" placeholder="Имя Фамилия" /></div>
+          <div class="field"><label>Телефон</label><input id="f_phone" placeholder="+7 7xx xxx xx xx" /></div>
+          <div class="field"><label>Email</label><input id="f_email" placeholder="optional@email.com" /></div>
+          <div class="field"><label>Статус</label>
+            <select id="f_status">
+              <option value="active">Active</option>
+              <option value="blocked">Blocked</option>
+            </select>
+          </div>
+          <div class="field"><label>План</label>
+            <select id="f_plan">
+              <option value="trial">Trial</option>
+              <option value="paid">Paid</option>
+              <option value="expired">Expired</option>
+            </select>
+          </div>
+          <div class="field"><label>Device policy</label>
+            <select id="f_policy">
+              <option value="locked">Locked</option>
+              <option value="free">Free</option>
+            </select>
+          </div>
+        </div>
+      `, ()=>{
+        const u = {
+          id: uid("user"),
+          name: $("#f_name").value.trim() || "Новый пользователь",
+          phone: $("#f_phone").value.trim() || "+7 700 000 00 00",
+          email: $("#f_email").value.trim(),
+          status: $("#f_status").value,
+          plan: $("#f_plan").value
+        };
+        db.users.unshift(u);
+        // create device record
+        const d = {
+          userId: u.id,
+          userName: u.name,
+          phone: u.phone,
+          deviceId: uid("dev"),
+          policy: $("#f_policy").value,
+          lastLogin: now()
+        };
+        db.devices.unshift(d);
+        logActivity("Создан пользователь", `${u.name} • ${u.phone}`, "info");
+        renderAll();
+        toast("Пользователь добавлен");
+      });
+    }
+
+    function editUser(id){
+      const u = db.users.find(x=>x.id===id);
+      if(!u) return;
+      openModal("Редактировать пользователя", `
+        <div class="formGrid">
+          <div class="field"><label>ID</label><input value="${u.id}" disabled /></div>
+          <div class="field"><label>Телефон</label><input id="f_phone" value="${escapeHtml(u.phone)}" /></div>
+          <div class="field" style="grid-column:1/-1;"><label>Имя</label><input id="f_name" value="${escapeHtml(u.name)}" /></div>
+          <div class="field"><label>Статус</label>
+            <select id="f_status">
+              ${["active","blocked"].map(s=>`<option value="${s}" ${u.status===s?"selected":""}>${s}</option>`).join("")}
+            </select>
+          </div>
+          <div class="field"><label>План</label>
+            <select id="f_plan">
+              ${["trial","paid","expired"].map(s=>`<option value="${s}" ${u.plan===s?"selected":""}>${s}</option>`).join("")}
+            </select>
+          </div>
+          <div class="field" style="grid-column:1/-1;"><label>Email</label><input id="f_email" value="${escapeHtml(u.email||"")}" /></div>
+        </div>
+      `, ()=>{
+        u.name = $("#f_name").value.trim() || u.name;
+        u.phone = $("#f_phone").value.trim() || u.phone;
+        u.email = $("#f_email").value.trim();
+        u.status = $("#f_status").value;
+        u.plan = $("#f_plan").value;
+
+        const d = db.devices.find(x=>x.userId===u.id);
+        if(d){ d.userName = u.name; d.phone = u.phone; }
+
+        logActivity("Обновлён пользователь", `${u.name}`, "info");
+        renderAll();
+        toast("Сохранено");
+      });
+    }
+
+    function toggleBlock(id){
+      const u = db.users.find(x=>x.id===id);
+      if(!u) return;
+      u.status = (u.status==="blocked") ? "active" : "blocked";
+      logActivity(u.status==="blocked" ? "Пользователь заблокирован" : "Пользователь разблокирован", `${u.name}`, "info");
+      renderAll();
+      toast("Статус обновлён");
+    }
+
+    function resetDevice(userId){
+      const d = db.devices.find(x=>x.userId===userId);
+      if(!d) return toast("Устройство не найдено.");
+      d.deviceId = uid("dev");
+      d.lastLogin = now();
+      logActivity("Сброс устройства", `${d.userName} • новый deviceId`, "info");
+      renderAll();
+      toast("Device reset");
+    }
+
+    function togglePolicy(userId){
+      const d = db.devices.find(x=>x.userId===userId);
+      if(!d) return;
+      d.policy = (d.policy==="locked") ? "free" : "locked";
+      logActivity("Изменена политика устройства", `${d.userName} → ${d.policy}`, "info");
+      renderAll();
+      toast("Policy updated");
+    }
+
+    function unbindDevice(userId){
+      const d = db.devices.find(x=>x.userId===userId);
+      if(!d) return;
+      if(!confirm("Отвязать устройство? (демо)")) return;
+      db.devices = db.devices.filter(x=>x.userId!==userId);
+      logActivity("Отвязано устройство", `${d.userName}`, "info");
+      renderAll();
+      toast("Unbound");
+    }
+
+    function addPayment(){
+      if(!db.users.length) return toast("Сначала добавь пользователя.");
+      const options = db.users.map(u=>`<option value="${u.id}">${escapeHtml(u.name)} • ${escapeHtml(u.phone)}</option>`).join("");
+      openModal("Добавить оплату", `
+        <div class="formGrid">
+          <div class="field" style="grid-column:1/-1;"><label>Пользователь</label><select id="f_user">${options}</select></div>
+          <div class="field"><label>Сумма (₸)</label><input id="f_amount" type="number" value="19990" /></div>
+          <div class="field"><label>Метод</label>
+            <select id="f_method">
+              <option value="kaspi">Kaspi</option>
+              <option value="freedom">Freedom</option>
+              <option value="manual">Manual</option>
+            </select>
+          </div>
+          <div class="field"><label>Статус</label>
+            <select id="f_status">
+              <option value="success">Success</option>
+              <option value="pending">Pending</option>
+              <option value="failed">Failed</option>
+            </select>
+          </div>
+          <div class="field"><label>Комментарий</label><input id="f_note" placeholder="чек / id транзакции (опц.)" /></div>
+        </div>
+      `, ()=>{
+        const userId = $("#f_user").value;
+        const u = db.users.find(x=>x.id===userId);
+        const p = {
+          id: uid("pay"),
+          userId,
+          userName: u?.name || "—",
+          amount: Number($("#f_amount").value||0),
+          method: $("#f_method").value,
+          status: $("#f_status").value,
+          note: $("#f_note").value.trim()
+        };
+        db.payments.unshift(p);
+        if(p.status==="success" && u) u.plan = "paid";
+        logActivity("Добавлен платёж", `${p.userName} • ${fmtMoney(p.amount)} (${p.method})`, "info");
+        renderAll();
+        toast("Оплата добавлена");
+      });
+    }
+
+    function approvePay(id){
+      const p = db.payments.find(x=>x.id===id);
+      if(!p) return;
+      p.status = "success";
+      const u = db.users.find(x=>x.id===p.userId);
+      if(u) u.plan = "paid";
+      logActivity("Подтверждён платёж", `${p.userName} • ${fmtMoney(p.amount)}`, "info");
+      renderAll();
+      toast("Approved");
+    }
+    function failPay(id){
+      const p = db.payments.find(x=>x.id===id);
+      if(!p) return;
+      p.status = "failed";
+      logActivity("Платёж отклонён", `${p.userName} • ${fmtMoney(p.amount)}`, "info");
+      renderAll();
+      toast("Failed");
+    }
+    function viewPay(id){
+      const p = db.payments.find(x=>x.id===id);
+      if(!p) return;
+      openModal("Детали оплаты", `
+        <div class="item">
+          <div class="itemTop">
+            <div>
+              <div class="title">Платёж ${p.id}</div>
+              <div class="meta">${p.userName} • ${p.userId}</div>
+            </div>
+            ${chipStatus(p.status)}
+          </div>
+          <div class="desc">
+            Сумма: <b>${fmtMoney(p.amount)}</b><br/>
+            Метод: <span class="mono">${p.method}</span><br/>
+            Note: <span class="mono">${escapeHtml(p.note||"—")}</span>
+          </div>
+          <div class="divider"></div>
+          <div class="desc muted">Здесь обычно ссылка на чек/транзакцию, и кнопки approve/reject.</div>
+        </div>
+      `, ()=> toast("Ок"));
+      $("#modalSave").textContent = "Закрыть";
+    }
+
+    /***********************
+     * Export
+     ***********************/
+    $("#btnExport").onclick = ()=>{
+      const payload = JSON.stringify(db, null, 2);
+      openModal("Экспорт JSON", `
+        <div class="field">
+          <label>Скопируй и сохрани</label>
+          <textarea style="min-height:320px;font-family:var(--mono)">${escapeHtml(payload)}</textarea>
+        </div>
+      `, ()=> toast("Готово"));
+      $("#modalSave").textContent = "Закрыть";
+    };
+
+    /***********************
+     * Demo data
+     ***********************/
+    function seedDemo(){
+      resetAll(false);
+
+      db.courses = [
+        {id:"course_A1", title:"原始点 — Онлайн курс (8 дней)", status:"active", price:19990, desc:"Основной курс. Доступ по подписке."},
+        {id:"course_B2", title:"原始点 — Продвинутый модуль", status:"draft", price:29990, desc:"В разработке."}
+      ];
+
+      db.modules = [
+        {id:"mod_M1", courseId:"course_A1", title:"Модуль 1 — Введение", order:1, status:"active", desc:"Старт"},
+        {id:"mod_M2", courseId:"course_A1", title:"Модуль 2 — Практика", order:2, status:"active", desc:"Упражнения"},
+        {id:"mod_M3", courseId:"course_B2", title:"Модуль 1 — Advanced", order:1, status:"draft", desc:"Скоро"}
+      ];
+
+      db.lessons = [
+        {id:"les_001", courseId:"course_A1", moduleId:"mod_M1", title:"Урок 01 — Что внутри курса", provider:"cf", playbackId:"cf_6d6e9c1a", protection:"signed", tokenTtlMin:3, durationMin:8, order:1},
+        {id:"les_002", courseId:"course_A1", moduleId:"mod_M1", title:"Урок 02 — Правила доступа", provider:"cf", playbackId:"cf_3a9f0b2c", protection:"signed", tokenTtlMin:3, durationMin:10, order:2},
+        {id:"les_003", courseId:"course_A1", moduleId:"mod_M2", title:"Урок 03 — Практика 1", provider:"mux", playbackId:"mux_p_91AF02", protection:"signed", tokenTtlMin:3, durationMin:14, order:1},
+        {id:"les_004", courseId:"course_A1", moduleId:"mod_M2", title:"Урок 04 — Практика 2", provider:"mux", playbackId:"mux_p_12CC77", protection:"drm", tokenTtlMin:3, durationMin:16, order:2}
+      ];
+
+      db.users = [
+        {id:"user_U1", name:"Aruzhan K.", phone:"+7 707 123 45 67", email:"", status:"active", plan:"paid"},
+        {id:"user_U2", name:"Dias S.", phone:"+7 775 222 33 44", email:"", status:"active", plan:"trial"},
+        {id:"user_U3", name:"Madi R.", phone:"+7 701 999 00 11", email:"", status:"blocked", plan:"expired"}
+      ];
+
+      db.devices = [
+        {userId:"user_U1", userName:"Aruzhan K.", phone:"+7 707 123 45 67", deviceId:"dev_8F2A11CC", policy:"locked", lastLogin: now()},
+        {userId:"user_U2", userName:"Dias S.", phone:"+7 775 222 33 44", deviceId:"dev_1C0B77EE", policy:"locked", lastLogin: now()},
+        {userId:"user_U3", userName:"Madi R.", phone:"+7 701 999 00 11", deviceId:"dev_44AA08DD", policy:"locked", lastLogin: now()}
+      ];
+
+      db.payments = [
+        {id:"pay_P1", userId:"user_U1", userName:"Aruzhan K.", amount:19990, method:"kaspi", status:"success", note:"Kaspi чек #A1"},
+        {id:"pay_P2", userId:"user_U2", userName:"Dias S.", amount:19990, method:"manual", status:"pending", note:"ждём подтверждение"},
+        {id:"pay_P3", userId:"user_U3", userName:"Madi R.", amount:29990, method:"freedom", status:"failed", note:"insufficient"}
+      ];
+
+      db.activity = [
+        {id: uid("log"), title:"Заполнено демо-данными", desc:"Сейчас это статичный UI. Подключи API — и будет рабочая админка.", kind:"info", at: now()},
+        {id: uid("log"), title:"Включён device lock", desc:"Ограничение: 1 устройство на аккаунт (backend rule).", kind:"info", at: now()},
+        {id: uid("log"), title:"Видео: Signed token", desc:"Выдача short-lived token на playback (1–5 минут).", kind:"info", at: now()}
+      ];
+
+      // refresh selects
+      $("#moduleCourse").innerHTML = "";
+      $("#lessonCourse").innerHTML = "";
+      $("#lessonModule").innerHTML = "";
+
+      renderAll();
+      toast("Демо заполнено");
+    }
+
+    function resetAll(withToast=true){
+      db.courses = [];
+      db.modules = [];
+      db.lessons = [];
+      db.users = [];
+      db.devices = [];
+      db.payments = [];
+      db.activity = [];
+
+      $("#moduleCourse").innerHTML = "";
+      $("#lessonCourse").innerHTML = "";
+      $("#lessonModule").innerHTML = "";
+
+      renderAll();
+      if(withToast) toast("Сброшено");
+    }
+
+    $("#btn-seed").onclick = seedDemo;
+    $("#btn-reset").onclick = ()=> resetAll(true);
+
+    /***********************
+     * Wiring filters to re-render
+     ***********************/
+    ["courseStatus","moduleCourse","moduleStatus","lessonCourse","lessonModule","lessonProtection","userStatus","userPlan","devicePolicy","payStatus","payMethod"]
+      .forEach(id=>{
+        const el = $("#"+id);
+        if(el) el.addEventListener("change", ()=> renderAll());
+      });
+
+    $("#lessonCourse")?.addEventListener("change", ()=> renderLessons());
+
+    /***********************
+     * Utilities
+     ***********************/
+    function escapeHtml(str){
+      return String(str ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    /***********************
+     * Init
+     ***********************/
+    setView("dashboard");
+    renderAll();
+  </script>
+</body>
+</html>

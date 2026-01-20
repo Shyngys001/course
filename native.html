@@ -2272,11 +2272,11 @@ body{
                       <span class="theme-label" id="themeLabelRight"><i class="fas fa-moon"></i> Қара</span>
                     </div>
                   </div>
-                  <div style="display: none; align-items: center; justify-content: space-between;">
-                    <span>Тіл</span>
+                  <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <span id="labelLanguage">Тіл</span>
                     <select class="form-control" style="width: auto; padding: 8px 12px;" id="languageSelect">
                       <option value="kk">Қазақша</option>
-                      <option value="ru">Орысша</option>
+                      <option value="ru">Русский</option>
                     </select>
                   </div>
                 </div>
@@ -2633,6 +2633,121 @@ body{
 
     let sessionTimer = null;
 
+
+
+    // ===== I18N =====
+const I18N = {
+  kk: {
+    tabs_courses: "Курстар",
+    tabs_news: "Жаңалықтар",
+    tabs_faq: "Cұрақ-жауап",
+    tabs_profile: "Профиль",
+
+    btn_login: "Кіру",
+    btn_logout: "Шығу",
+    hero_badge: "Себебін тапсаң-шипасы табылады",
+    hero_title_1: "«Себепті нүкте сауықтыру»",
+    hero_title_2: "орталығы",
+
+    section_courses_title: "Онлайн курстар",
+    section_courses_sub: "Өз жылдамдығыңызбен үйретіңіз. Үйде-ақ меңгеріңіз",
+
+    tab_paid: "Ақылы",
+    tab_free: "Тегін",
+
+    profile_title: "Профиль",
+    profile_settings: "Параметрлер",
+    profile_my_courses: "Менің курстарым",
+    profile_no_courses: "Әзірше курс сатып алмадыңыз",
+    profile_theme: "Тема",
+    profile_language: "Тіл",
+    theme_light: "Ақ",
+    theme_dark: "Қара",
+  },
+  ru: {
+    tabs_courses: "Курсы",
+    tabs_news: "Новости",
+    tabs_faq: "Вопрос-ответ",
+    tabs_profile: "Профиль",
+
+    btn_login: "Войти",
+    btn_logout: "Выйти",
+    hero_badge: "Найдёшь причину — найдёшь исцеление",
+    hero_title_1: "Центр",
+    hero_title_2: "«Точка причины»",
+
+    section_courses_title: "Онлайн курсы",
+    section_courses_sub: "Учитесь в своём темпе. Осваивайте дома",
+
+    tab_paid: "Платные",
+    tab_free: "Бесплатные",
+
+    profile_title: "Профиль",
+    profile_settings: "Настройки",
+    profile_my_courses: "Мои курсы",
+    profile_no_courses: "Пока вы не покупали курсы",
+    profile_theme: "Тема",
+    profile_language: "Язык",
+    theme_light: "Светлая",
+    theme_dark: "Тёмная",
+  }
+};
+
+function t(key){
+  const lang = localStorage.getItem("language") || "kk";
+  return (I18N[lang] && I18N[lang][key]) ? I18N[lang][key] : (I18N.kk[key] || key);
+}
+
+function applyLanguage(){
+  const lang = localStorage.getItem("language") || "kk";
+
+  // selector value sync
+  if (DOM.languageSelect) DOM.languageSelect.value = lang;
+
+  // Profile labels
+  const labelLang = document.getElementById("labelLanguage");
+  if (labelLang) labelLang.textContent = t("profile_language");
+
+  // Тема жолындағы "Ақ/Қара" мәтіндері
+  const left = document.getElementById("themeLabelLeft");
+  const right = document.getElementById("themeLabelRight");
+  if (left) left.innerHTML = `<i class="fas fa-sun"></i> ${t("theme_light")}`;
+  if (right) right.innerHTML = `<i class="fas fa-moon"></i> ${t("theme_dark")}`;
+
+  // Header login button
+  if (DOM.loginButtonHeader){
+    const icon = `<i class="fas fa-sign-in-alt"></i>`;
+    DOM.loginButtonHeader.innerHTML = `${icon} ${t("btn_login")}`;
+  }
+  if (DOM.loginBtn){
+    DOM.loginBtn.innerHTML = `<i class="fas fa-sign-in-alt"></i> ${t("btn_login")}`;
+  }
+  if (DOM.logoutBtn){
+    DOM.logoutBtn.innerHTML = `<i class="fas fa-sign-out-alt"></i> ${t("btn_logout")}`;
+  }
+
+  // Tabs text
+  const tabs = document.querySelectorAll(".tab-bar .tab-item span");
+  if (tabs && tabs.length >= 4){
+    tabs[0].textContent = t("tabs_courses");
+    tabs[1].textContent = t("tabs_news");
+    tabs[2].textContent = t("tabs_faq");
+    tabs[3].textContent = t("tabs_profile");
+  }
+
+  // Courses section title/subtitle
+  const coursesSection = document.querySelector("#modules .section-title h2");
+  const coursesSub = document.querySelector("#modules .section-title p");
+  if (coursesSection) coursesSection.textContent = t("section_courses_title");
+  if (coursesSub) coursesSub.textContent = t("section_courses_sub");
+
+  // Segmented buttons (Ақылы/Тегін)
+  const paidBtn = document.getElementById("tabPaid");
+  const freeBtn = document.getElementById("tabBonus");
+  if (paidBtn) paidBtn.innerHTML = `<i class="fas fa-lock"></i> ${t("tab_paid")}`;
+  if (freeBtn) freeBtn.innerHTML = `<i class="fas fa-gift"></i> ${t("tab_free")}`;
+}
+
     // ===== DOM ELEMENTS =====
     const DOM = {
       pages: document.querySelectorAll('.page'),
@@ -2681,6 +2796,7 @@ async function initApp() {
   restoreCourseState();  // currentCourse оқиды
 
   await loadCatalog();   // ✅ МІНДЕТТІ: courses/modules/lessons толсын
+  
 
   // ✅ енді ғана қай бет ашылатынын шешеміз
   const savedPage = localStorage.getItem('currentPage') || 'mainPage';
@@ -4067,6 +4183,15 @@ if (isLoggedIn) {
           hideCustomModal();
         }
       });
+
+
+      const sel = DOM.languageSelect;
+  if (sel){
+    sel.addEventListener("change", () => {
+      localStorage.setItem("language", sel.value);
+      applyLanguage();
+    });
+  }
 
       // Close modal with Escape key
       document.addEventListener('keydown', (e) => {
